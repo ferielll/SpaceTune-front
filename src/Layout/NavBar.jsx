@@ -1,8 +1,18 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import {
+  BellIcon,
+  ExclamationIcon,
+  MenuIcon,
+  XIcon,
+} from "@heroicons/react/outline";
 import Spacetune from "../assets/spacetuneWidth.png";
+import ConfirmModal from "../components/Modal/ConfirmModal";
+import Breadcrum from "../components/Breadcrum";
+import Breadcrumb from "../components/Breadcrum";
+import Loader from "../components/Loader";
+import Test from "../pages/app/test";
 
 const user = {
   name: "Tom Cook",
@@ -28,21 +38,14 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-100">
-        <body class="h-full">
-        ```
-      */}
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-black">
           {({ open }) => (
             <>
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="max-w-maxxl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
@@ -202,21 +205,7 @@ export default function NavBar() {
             </>
           )}
         </Disclosure>
-
-        <header className="bg-white shadow">
-          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          </div>
-        </header>
-        <main>
-          <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-            {/* Replace with your content */}
-            <div className="px-4 py-6 sm:px-0">
-              <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
-            </div>
-            {/* /End replace */}
-          </div>
-        </main>
+        <Test />
       </div>
     </>
   );
