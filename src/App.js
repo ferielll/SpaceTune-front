@@ -1,11 +1,13 @@
-import logo from "./logo.svg";
 import "./App.css";
-import NavBar from "./Layout/NavBar";
+import Login from "./pages/authentification/Login";
+
+import { Register } from "./pages/authentification/Register";
 
 function App() {
   return (
     <div className="App">
-      <NavBar></NavBar>
+      <Login />
+      <Register />
     </div>
   );
 }

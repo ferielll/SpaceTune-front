@@ -1,0 +1,97 @@
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import Input from "../../components/form/Input";
+import { useLoading } from "../../hooks/useLoading";
+
+export default function Login() {
+  // const { isLoading, startLoading, stopLoading } = useLoading(false);
+  const {
+    handleSubmit,
+    control,
+    formState: { isValid },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    mode: "onChange",
+  });
+  const onSubmit = async (data) => {
+    console.log("yes it works");
+  };
+  return (
+    <div className="h-screen flex bg-gradient-to-tr from-black to-gray-800">
+      <div className="flex w-1/2 justify-around items-center">
+        <div>
+          <h1 className="text-white font-bold text-4xl font-sans">SpaceTune</h1>
+          <p className="text-white mt-1">
+            The most popular plateform online music universe
+          </p>
+          <button
+            type="submit"
+            className="block w-28 bg-white text-indigo-800 mt-4 py-2 rounded-2xl font-bold mb-2"
+          >
+            Read More
+          </button>
+        </div>
+      </div>
+      <div className="flex w-1/2 justify-center items-center">
+        <form
+          className="w-1/2 p-12 bg-white rounded-2xl"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="flex justify-center"></div>
+          <h1 className="mb-4 text-2xl font-bold text-center">Login</h1>
+          <Controller
+            name="email"
+            control={control}
+            rules={{
+              required: `Please enter your email.`,
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email",
+              },
+            }}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Input
+                {...field}
+                label="Email"
+                placeholder="Email Address"
+                hasError={invalid}
+                error={error && error.message}
+              />
+            )}
+          />
+          <Controller
+            name="password"
+            control={control}
+            rules={{
+              required: "Please enter your passwword",
+              minLength: { value: 6, message: "min length 6 characters" },
+            }}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Input
+                {...field}
+                label="Password"
+                type="password"
+                placeholder="Password"
+                hasError={invalid}
+                error={error && error.message}
+              />
+            )}
+          />
+          <button
+            className="block cursor-pointer w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white rounded-2xl transition-colors duration-150 bg-blue-600 border border-transparent active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
+            href="#"
+            disabled={isValid}
+          >
+            Sign in
+          </button>
+          <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
+            Forgot Password ?
+          </span>
+        </form>
+      </div>
+    </div>
+  );
+}

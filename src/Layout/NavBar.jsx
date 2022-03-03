@@ -8,11 +8,7 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 import Spacetune from "../assets/spacetuneWidth.png";
-import ConfirmModal from "../components/Modal/ConfirmModal";
-import Breadcrum from "../components/Breadcrum";
-import Breadcrumb from "../components/Breadcrum";
-import Loader from "../components/Loader";
-import Test from "../pages/app/test";
+
 
 const user = {
   name: "Tom Cook",
@@ -205,7 +201,6 @@ export default function NavBar() {
             </>
           )}
         </Disclosure>
-        <Test />
       </div>
     </>
   );
