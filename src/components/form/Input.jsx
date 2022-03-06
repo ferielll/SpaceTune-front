@@ -32,7 +32,7 @@ const Input = React.forwardRef(
           <input
             ref={ref}
             className={`${defaultClassNames} form-input ${
-              others.icon ? "pl-20" : icon ? "ps-8" : ""
+              icon && "pl-20 "
             } w-full  ${className} ${
               others?.disabled && "bg-gray-200 opacity-70 cursor-not-allowed"
             }`}

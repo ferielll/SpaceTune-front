@@ -1,10 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useRef, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationIcon } from "@heroicons/react/outline";
-import ConfirmModal from "./Modal/ConfirmModal";
-import Loader from "./Loader";
-
 export default function Breadcrumb(props) {
   return (
     <div className="bg-white shadow">

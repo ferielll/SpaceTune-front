@@ -1,8 +1,12 @@
+import axios from "axios";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import Input from "../../components/form/Input";
+import { useLoading } from "../../hooks/useLoading";
 
-export const Register = () => {
+export default function Register() {
+  const { isLoading, startLoading, stopLoading } = useLoading(false);
+
   const {
     handleSubmit,
     control,
@@ -22,14 +26,33 @@ export const Register = () => {
 
   const password = watch("password");
   const onSubmit = async (data) => {
-    console.log("yes it works");
+    startLoading();
+    try {
+      await axios
+        .post("http://localhost:3000/spacetune/api/register", {
+          data,
+        })
+        .then((res) => {
+          console.log(res, "res");
+          if (!res.data.success) {
+            stopLoading();
+            return;
+          }
+        });
+      stopLoading();
+    } catch (err) {
+      console.log(err, "erreur => signInWithEmailAndPassword");
+    }
   };
   return (
     <div className="h-screen flex bg-gradient-to-tr from-black to-gray-800">
       <div className="flex w-1/2 justify-around items-center">
         <div>
           <h1 className="text-white font-bold text-4xl font-sans">SpaceTune</h1>
-          <p className="text-white mt-1">The most popular plateform music</p>
+          <p className="text-white mt-1">
+            {" "}
+            The most popular platform music in the world
+          </p>
           <button
             type="submit"
             className="block w-28 bg-white text-indigo-800 mt-4 py-2 rounded-2xl font-bold mb-2"
@@ -85,17 +108,17 @@ export const Register = () => {
             name="phone"
             control={control}
             rules={{
-              required: `Please enter your email.`,
               pattern: {
-                value: /^[0-9]$/i,
+                value: /^[0-9]{8}$/i,
                 message: "Invalid phone number",
               },
             }}
             render={({ field, fieldState: { invalid, error } }) => (
               <Input
                 {...field}
+                icon="(+216)"
                 label="Phone"
-                type="number"
+                type="text"
                 placeholder="phone number"
                 hasError={invalid}
                 error={error && error.message}
@@ -180,4 +203,4 @@ export const Register = () => {
       </div>
     </div>
   );
-};
+}

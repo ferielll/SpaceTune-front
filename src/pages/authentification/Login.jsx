@@ -1,10 +1,11 @@
+import axios from "axios";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import Input from "../../components/form/Input";
 import { useLoading } from "../../hooks/useLoading";
 
-export default function Login() {
-  // const { isLoading, startLoading, stopLoading } = useLoading(false);
+export default function Login({ setLoggedIn }) {
+  const { isLoading, startLoading, stopLoading } = useLoading(false);
   const {
     handleSubmit,
     control,
@@ -17,7 +18,25 @@ export default function Login() {
     mode: "onChange",
   });
   const onSubmit = async (data) => {
-    console.log("yes it works");
+    const { email, password } = data;
+    startLoading();
+    try {
+      await axios
+        .post("http://localhost:3000/spacetune/api/login", {
+          email,
+          password,
+        })
+        .then((res) => {
+          setLoggedIn(true);
+          if (!res.data.success) {
+            stopLoading();
+            return;
+          }
+          localStorage.setItem("token", res.data.token);
+        });
+    } catch (err) {
+      console.log(err, "erreur => signInWithEmailAndPassword");
+    }
   };
   return (
     <div className="h-screen flex bg-gradient-to-tr from-black to-gray-800">
@@ -25,7 +44,7 @@ export default function Login() {
         <div>
           <h1 className="text-white font-bold text-4xl font-sans">SpaceTune</h1>
           <p className="text-white mt-1">
-            The most popular plateform online music universe
+            The most popular platform music in the world
           </p>
           <button
             type="submit"
@@ -67,7 +86,6 @@ export default function Login() {
             control={control}
             rules={{
               required: "Please enter your passwword",
-              minLength: { value: 6, message: "min length 6 characters" },
             }}
             render={({ field, fieldState: { invalid, error } }) => (
               <Input
@@ -83,7 +101,7 @@ export default function Login() {
           <button
             className="block cursor-pointer w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white rounded-2xl transition-colors duration-150 bg-blue-600 border border-transparent active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
             href="#"
-            disabled={isValid}
+            disabled={!isValid}
           >
             Sign in
           </button>
