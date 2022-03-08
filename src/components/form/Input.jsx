@@ -1,7 +1,6 @@
 import React from "react";
 
-const Input = React.forwardRef(
-  (
+const Input = React.forwardRef( (
     {
       icon = undefined,
       hasError = false,

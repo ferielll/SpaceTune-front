@@ -1,5 +1,10 @@
 import { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
 import FallBackSuspense from "./components/FallBackSuspense";
 
@@ -12,12 +17,12 @@ const Application = lazy(() => import("./pages/app"));
 function App() {
   //custom hook to check if user is logged In
   const { isLoggedIn, setLoggedIn } = useAuth();
-  console.log(isLoggedIn, "islogeedin");
   return (
     <div className="App">
       <Suspense fallback={<FallBackSuspense />}>
-        <BrowserRouter>
+        <Router>
           <Routes>
+            <Route path="/app/*" element={<Application />} />
             <Route path="/register" element={<Register />} />
             <Route
               path="/login"
@@ -25,17 +30,16 @@ function App() {
                 isLoggedIn === false ? (
                   <Login setLoggedIn={setLoggedIn} />
                 ) : (
-                  <Navigate to="/" />
+                  <Navigate to="/app" />
                 )
               }
             />
-            <Route path="/app" element={<Application auth={isLoggedIn} />} />
             <Route
               path="*"
               element={<Navigate to={isLoggedIn ? "/app" : "/login"} />}
             />
           </Routes>
-        </BrowserRouter>
+        </Router>
       </Suspense>
     </div>
   );

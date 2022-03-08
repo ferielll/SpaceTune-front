@@ -1,13 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-
-import {
-  BellIcon,
-  ExclamationIcon,
-  MenuIcon,
-  XIcon,
-} from "@heroicons/react/outline";
+import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import Spacetune from "../assets/spacetuneWidth.png";
 import { NavLink } from "react-router-dom";
 
@@ -20,27 +14,27 @@ const user = {
 const navigation = [
   {
     name: "Shop",
-    to: "/shop",
+    to: "shop",
     current: true,
   },
   {
     name: "Tools",
-    to: "/tools",
+    to: "tools",
     current: false,
   },
   {
     name: "Entertainement",
-    to: "/entertainement",
+    to: "entertainement",
     current: false,
   },
   {
     name: "Training",
-    to: "/training",
+    to: "training",
     current: false,
   },
   {
     name: "Contact",
-    to: "/contact",
+    to: "contact",
     current: false,
   },
 ];
@@ -55,7 +49,6 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <div className="min-h-full">
@@ -77,7 +70,7 @@ export default function NavBar() {
                         {navigation.map((item) => (
                           <NavLink
                             key={item.name}
-                            to={item.href}
+                            to={item.to}
                             className={classNames(
                               item.current
                                 ? "bg-gray-900 text-white"
@@ -128,7 +121,7 @@ export default function NavBar() {
                               <Menu.Item key={item.name}>
                                 {({ active }) => (
                                   <NavLink
-                                    to={item.href}
+                                    to={item.to}
                                     className={classNames(
                                       active ? "bg-gray-100" : "",
                                       "block px-4 py-2 text-sm text-gray-700"
@@ -167,7 +160,7 @@ export default function NavBar() {
                     <Disclosure.Button
                       key={item.name}
                       as="a"
-                      href={item.href}
+                      href={item.to}
                       className={classNames(
                         item.current
                           ? "bg-gray-900 text-white"
@@ -210,7 +203,7 @@ export default function NavBar() {
                       <Disclosure.Button
                         key={item.name}
                         as="a"
-                        href={item.href}
+                        to={item.to}
                         className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
                       >
                         {item.name}

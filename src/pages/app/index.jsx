@@ -1,6 +1,6 @@
 import React from "react";
 import { lazy, Suspense } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import FallBackSuspense from "../../components/FallBackSuspense";
 import NavBar from "../../Layout/NavBar";
 
@@ -10,21 +10,23 @@ const Shop = lazy(() => import("./shop"));
 const Entertainment = lazy(() => import("./entertainment"));
 const Contact = lazy(() => import("./contact"));
 
-export const Application = ({auth}) => {
+export default function App() {
   return (
     <div>
-      <NavBar />
-      <Suspense fallback={<FallBackSuspense />}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/tools" element={Tools}></Route>
-            <Route path="/shop" element={Shop}></Route>
-            <Route path="/entertainment" element={Entertainment}></Route>
-            <Route path="/training" element={Training}></Route>
-            <Route path="/contact" element={Contact}></Route>
-          </Routes>
-        </BrowserRouter>
-      </Suspense>
+      <div className="flex flex-col h-full">
+        <NavBar />
+        <div>
+          <Suspense fallback={<FallBackSuspense />}>
+            <Routes>
+              <Route path="/tools" element={Tools}></Route>
+              <Route path="/shop" element={Shop}></Route>
+              <Route path="/entertainement" element={Entertainment}></Route>
+              <Route path="/training" element={Training}></Route>
+              <Route path="/contact" element={Contact}></Route>
+            </Routes>
+          </Suspense>
+        </div>
+      </div>
     </div>
   );
-};
+}

@@ -1,5 +1,9 @@
 import React from "react";
 
-export const Tools = () => {
-  return <div></div>;
-};
+export default function Tools() {
+  return (
+    <div className="bg-red-500">
+      <h1>Moahned</h1>
+    </div>
+  );
+}

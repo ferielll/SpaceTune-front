@@ -1,5 +1,9 @@
 import React from "react";
 
-export const Entertainment = () => {
-  return <div></div>;
-};
+export default function Entertainment() {
+  return (
+    <div>
+      <h1>Hello space</h1>
+    </div>
+  );
+}
