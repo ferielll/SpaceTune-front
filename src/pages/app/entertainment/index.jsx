@@ -1,9 +1,10 @@
 import React from "react";
+import Breadcrumb from "../../../components/Breadcrum";
 
 export default function Entertainment() {
   return (
     <div>
-      <h1>Hello space</h1>
+      <Breadcrumb title={"Entertainment"} />
     </div>
   );
 }

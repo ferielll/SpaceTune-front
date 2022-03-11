@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import Spacetune from "../assets/spacetuneWidth.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const user = {
   name: "Tom Cook",
@@ -11,6 +11,7 @@ const user = {
   imageUrl:
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
+
 const navigation = [
   {
     name: "Shop",
@@ -49,10 +50,15 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
+  let navigate = useNavigate();
+  function goHome() {
+    navigate("/");
+  }
+
   return (
-    <>
+    <div className="sticky top-0 left-0 right-0  w-full">
       <div className="min-h-full">
-        <Disclosure as="nav" className="bg-black">
+        <Disclosure as="nav" className="bg-navbar-color">
           {({ open }) => (
             <>
               <div className="max-w-maxxl mx-auto px-4 sm:px-6 lg:px-8">
@@ -60,22 +66,23 @@ export default function NavBar() {
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
                       <img
-                        className="h-20 w-18"
+                        onClick={goHome}
+                        className="h-20 w-18 cursor-pointer"
                         src={Spacetune}
                         alt="Spacetune"
                       />
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
-                        {navigation.map((item) => (
+                        {navigation.map((item, index) => (
                           <NavLink
-                            key={item.name}
+                            key={index}
                             to={item.to}
                             className={classNames(
                               item.current
-                                ? "bg-gray-900 text-white"
-                                : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                              "px-3 py-2 rounded-md text-sm font-medium"
+                                ? "underline underline-offset-4 decoration-blue-700 decoration-4 text-white"
+                                : "text-gray-300 hover:underline underline-offset-4 decoration-blue-700 decoration-4 hover:text-white",
+                              "px-3 py-2 rounded-md text-base font-medium"
                             )}
                             aria-current={item.current ? "page" : undefined}
                           >
@@ -161,12 +168,10 @@ export default function NavBar() {
                       key={item.name}
                       as="a"
                       href={item.to}
-                      className={classNames(
-                        item.current
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                        "block px-3 py-2 rounded-md text-base font-medium"
-                      )}
+                      className={
+                        ("text-gray-300 hover:bg-red-700 hover:text-white",
+                        "block px-3 py-2 rounded-md text-base font-medium")
+                      }
                       aria-current={item.current ? "page" : undefined}
                     >
                       {item.name}
@@ -216,6 +221,6 @@ export default function NavBar() {
           )}
         </Disclosure>
       </div>
-    </>
+    </div>
   );
 }

@@ -22,7 +22,6 @@ function App() {
       <Suspense fallback={<FallBackSuspense />}>
         <Router>
           <Routes>
-            <Route path="/app/*" element={<Application />} />
             <Route path="/register" element={<Register />} />
             <Route
               path="/login"
@@ -34,8 +33,9 @@ function App() {
                 )
               }
             />
+            <Route path="/app/*" element={<Application />} />
             <Route
-              path="*"
+              path="/"
               element={<Navigate to={isLoggedIn ? "/app" : "/login"} />}
             />
           </Routes>

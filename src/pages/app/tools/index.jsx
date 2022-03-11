@@ -1,9 +1,10 @@
 import React from "react";
+import Breadcrumb from "../../../components/Breadcrum";
 
 export default function Tools() {
   return (
-    <div className="bg-red-500">
-      <h1>Moahned</h1>
+    <div>
+      <Breadcrumb title={"Tools"} />
     </div>
   );
 }
