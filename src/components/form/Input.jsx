@@ -1,6 +1,7 @@
 import React from "react";
 
-const Input = React.forwardRef( (
+const Input = React.forwardRef(
+  (
     {
       icon = undefined,
       hasError = false,
@@ -30,11 +31,12 @@ const Input = React.forwardRef( (
           )}
           <input
             ref={ref}
-            className={`${defaultClassNames} form-input ${
-              icon && "pl-20 "
-            } w-full  ${className} ${
-              others?.disabled && "bg-gray-200 opacity-70 cursor-not-allowed"
-            }`}
+            className={`${defaultClassNames} form-input ${className} ${
+              icon && "pl-20"
+            }
+             ${
+               others?.disabled && "bg-gray-200 opacity-70 cursor-not-allowed"
+             }`}
             {...others}
           />
         </div>
