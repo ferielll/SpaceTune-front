@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import Breadcrumb from "../../../components/Breadcrum";
 import InputSearch from "../../../components/InputSearch";
+import Title from "../../../components/Title";
 import { UserAvatar } from "../../../components/UserAvatar";
 
 function ListTraining() {
@@ -24,20 +25,16 @@ function ListTraining() {
       <div className="flex flex-row pt-1">
         <section className="mt-6 mx-auto px-2 max-w-screen-xl lg:px-4">
           <div className="flex justify-between text-start">
-            <div>
-              <h2 className="text-4xl text-gray-800 font-semibold">
-                List of trainings
-              </h2>
-              <p className="mt-3 text-gray-500">
-                Trainings that are loved by the community. Updated every hour.
-              </p>
-            </div>
+            <Title
+              title="List of trainings"
+              subtitle="Trainings that are loved by the community. Updated every hour."
+            />
             <InputSearch />
           </div>
           <div className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {!isLoading &&
               trainings.map((items, key) => (
-                <article
+                <div
                   className="max-w-md w-md mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm"
                   key={key}
                 >
@@ -72,7 +69,7 @@ function ListTraining() {
                       </p>
                     </div>
                   </a>
-                </article>
+                </div>
               ))}
           </div>
         </section>
