@@ -1,13 +1,21 @@
 import axios from "axios";
 import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import Breadcrumb from "../../../components/Breadcrum";
 import InputSearch from "../../../components/InputSearch";
 import Title from "../../../components/Title";
 import { UserAvatar } from "../../../components/UserAvatar";
+import useLightBox from "../../../hooks/useLightBox";
+import LightBox from "../../../components/LightBox";
 
 function ListTraining() {
+  // custom hook for handle the lightbox component
+  const lightBox = useLightBox();
+  //exemple for test
+  const images = "//placekitten.com/1500/500";
+  //useQuery is function from react-query,  1 param key, second param func()
+  //we use it for fetch (method get), create update delete we use useMutation instaed of this hook
   const {
     data: trainings,
     isError,
@@ -18,7 +26,6 @@ function ListTraining() {
       .then((res) => res.data)
   );
 
-  console.log(trainings, "trainings");
   return (
     <div>
       <Breadcrumb title={"Training > List of trainings"} />
@@ -38,8 +45,17 @@ function ListTraining() {
                   className="max-w-md w-md mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm"
                   key={key}
                 >
+                  {/* LightBox component, images can be [String] == group of images || String */}
+                  {lightBox.isLightBoxOpen && images && (
+                    <LightBox
+                      images={images}
+                      {...lightBox}
+                      closePortal={lightBox.close}
+                    />
+                  )}
                   <a href={items.href}>
                     <img
+                      onClick={lightBox.open}
                       src={items.img}
                       loading="lazy"
                       alt={items.name}
