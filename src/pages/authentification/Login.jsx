@@ -1,11 +1,13 @@
 import axios from "axios";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
+import {useNavigate } from "react-router-dom";
 import Input from "../../components/form/Input";
 import { useLoading } from "../../hooks/useLoading";
 
 export default function Login({ setLoggedIn }) {
   const { isLoading, startLoading, stopLoading } = useLoading(false);
+  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -105,9 +107,17 @@ export default function Login({ setLoggedIn }) {
           >
             Sign in
           </button>
-          <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer">
+          <span className="text-sm ml-2 hover:font-semibold cursor-pointer">
             Forgot Password ?
           </span>
+          <div onClick={() => navigate("/Register")}>
+            <span className="text-sm ml-2 text-blue-500 hover:text-black font-semibold cursor-pointer">
+              Don't have an account ?
+            </span>
+            <span className="text-sm ml-2 text-dark font-semibold cursor-pointer">
+              Register
+            </span>
+          </div>
         </form>
       </div>
     </div>

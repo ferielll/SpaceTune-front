@@ -12,7 +12,7 @@ const Input = React.forwardRef(
     },
     ref
   ) => {
-    const defaultClassNames = `w-full px-4 py-2 text-sm border rounded-md focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600`;
+    const defaultClassNames = `w-full px-4 py-2 text-sm border rounded-md form-input focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600`;
     return (
       <div className="flex flex-col w-full relative">
         {label && (
@@ -31,9 +31,7 @@ const Input = React.forwardRef(
           )}
           <input
             ref={ref}
-            className={`${defaultClassNames} form-input ${className} ${
-              icon && "pl-20"
-            }
+            className={`${defaultClassNames} ${className} ${icon && "pl-20"}
              ${
                others?.disabled && "bg-gray-200 opacity-70 cursor-not-allowed"
              }`}

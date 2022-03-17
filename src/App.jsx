@@ -17,14 +17,23 @@ const Application = lazy(() => import("./pages/app"));
 function App() {
   //custom hook to check if user is logged In
   const { isLoggedIn, setLoggedIn } = useAuth();
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        notifyOnChangeProps: "tracked",
+      },
+    },
+  });
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
         <Suspense fallback={<FallBackSuspense />}>
           <Router>
             <Routes>
-              <Route path="/register" element={<Register />} />
+              <Route
+                path="/"
+                element={<Navigate to={isLoggedIn ? "/app" : "/login"} />}
+              />
               <Route
                 path="/login"
                 element={
@@ -35,10 +44,16 @@ function App() {
                   )
                 }
               />
-              <Route path="/app/*" element={<Application />} />
+              <Route path="/register" element={<Register />} />
               <Route
-                path="/"
-                element={<Navigate to={isLoggedIn ? "/app" : "/login"} />}
+                path="/app/*"
+                element={
+                  isLoggedIn ? (
+                    <Application />
+                  ) : (
+                    <Login setLoggedIn={setLoggedIn} />
+                  )
+                }
               />
             </Routes>
           </Router>

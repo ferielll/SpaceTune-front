@@ -8,19 +8,19 @@ import Title from "../../../components/Title";
 import { UserAvatar } from "../../../components/UserAvatar";
 import useLightBox from "../../../hooks/useLightBox";
 import LightBox from "../../../components/LightBox";
+import capture from "../../../assets/capture.png";
+import { useUser } from "../../../hooks/useUser";
 
 function ListTraining() {
+  const { user } = useUser();
+  console.log(user, "user");
   // custom hook for handle the lightbox component
   const lightBox = useLightBox();
   //exemple for test
-  const images = "//placekitten.com/1500/500";
+  const images = capture;
   //useQuery is function from react-query,  1 param key, second param func()
   //we use it for fetch (method get), create update delete we use useMutation instaed of this hook
-  const {
-    data: trainings,
-    isError,
-    isLoading,
-  } = useQuery(["fetchListTraining"], () =>
+  const { data: trainings, isLoading } = useQuery(["fetchListTraining"], () =>
     axios
       .get("http://localhost:3000/spacetune/api/formation/getAll")
       .then((res) => res.data)
@@ -30,19 +30,19 @@ function ListTraining() {
     <div>
       <Breadcrumb title={"Training > List of trainings"} />
       <div className="flex flex-row pt-1">
-        <section className="mt-6 mx-auto px-2 max-w-screen-xl lg:px-4">
+        <div className="mt-6 mx-auto px-2 max-w-screen-xl lg:px-4">
           <div className="flex justify-between text-start">
             <Title
-              title="List of trainings"
+              title="Trainings"
               subtitle="Trainings that are loved by the community. Updated every hour."
             />
             <InputSearch />
           </div>
-          <div className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="my-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {!isLoading &&
               trainings.map((items, key) => (
                 <div
-                  className="max-w-md w-md mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm"
+                  className="max-w-md w-full mx-auto mt-3 shadow-lg border-black rounded-md duration-300 hover:shadow-sm"
                   key={key}
                 >
                   {/* LightBox component, images can be [String] == group of images || String */}
@@ -56,13 +56,13 @@ function ListTraining() {
                   <a href={items.href}>
                     <img
                       onClick={lightBox.open}
-                      src={items.img}
+                      src={images}
                       loading="lazy"
                       alt={items.name}
-                      className="w-full h-48 rounded-t-md"
+                      className="w-full h-48 rounded-t-md cursor-pointer"
                     />
-                    <div className="flex items-center mt-2 pt-3 ml-4 mr-2">
-                      <div className="flex-none w-10 h-10 rounded-full">
+                    <div className="flex items-center pt-2 ml-4 mr-2">
+                      <div className="flex items-center w-10 h-10 rounded-full">
                         <UserAvatar
                           user={items.teacher}
                           rounded={true}
@@ -78,17 +78,24 @@ function ListTraining() {
                         </span>
                       </div>
                     </div>
-                    <div className="pt-3 ml-4 mr-2 mb-3">
-                      <h3 className="text-xl text-gray-900">{items.name}</h3>
-                      <p className="text-gray-400 text-sm mt-1">
+                    <div className="pt-2 ml-4 mr-2 mb-3">
+                      <h3 className="text-xl font-semibold text-gray-900">
+                        {items.name}
+                      </h3>
+                      <p className="text-gray-500 text-sm mt-1 line-clamp-2">
                         {items.description}
                       </p>
+                      <div className="flex justify-start mt-2">
+                        <button className="font-semibold text-red-700 hover:font-bold">
+                          subscribe
+                        </button>
+                      </div>
                     </div>
                   </a>
                 </div>
               ))}
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );

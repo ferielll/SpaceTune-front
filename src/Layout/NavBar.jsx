@@ -4,6 +4,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import Spacetune from "../assets/spacetuneWidth.png";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useUser } from "../hooks/useUser";
 
 const user = {
   name: "Tom Cook",
@@ -39,34 +40,38 @@ const navigation = [
     current: false,
   },
 ];
-const userNavigation = [
-  { name: "Your Profile", to: "#" },
-  { name: "Settings", to: "#" },
-  { name: "Sign out", to: "#" },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function NavBar() {
-  let navigate = useNavigate();
-  function goHome() {
-    navigate("/");
-  }
+  //helpers
+  const navigate = useNavigate();
+  const { user } = useUser();
 
+  //logout function 1/ clear localStorage 2/ redirect user to login page
+  function logout() {
+    localStorage.clear();
+  }
+  //user Menu
+  const userNavigation = [
+    { name: "Your Profile", to: "#" },
+    { name: "Settings", to: "#" },
+    { name: "Sign out", to: "/login", onClick: logout },
+  ];
   return (
     <div className="sticky top-0 left-0 right-0  w-full">
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-navbar-color">
           {({ open }) => (
             <>
-              <div className="max-w-maxxl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
                       <img
-                        onClick={goHome}
+                        onClick={() => navigate("/")}
                         className="h-20 w-18 cursor-pointer"
                         src={Spacetune}
                         alt="Spacetune"
@@ -129,6 +134,7 @@ export default function NavBar() {
                                 {({ active }) => (
                                   <NavLink
                                     to={item.to}
+                                    onClick={() => item.onClick()}
                                     className={classNames(
                                       active ? "bg-gray-100" : "",
                                       "block px-4 py-2 text-sm text-gray-700"
