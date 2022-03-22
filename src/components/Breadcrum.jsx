@@ -2,7 +2,7 @@ import { SearchIcon } from "@heroicons/react/outline";
 
 export default function Breadcrumb({ title, setIsOpen, isOpen }) {
   return (
-    <div className="bg-white shadow">
+    <div className="bg-white shadow ">
       <div className="max-w-full mx-auto py-2 px-2 sm:px-6 lg:px-4">
         {isOpen ? (
           <svg
@@ -35,6 +35,9 @@ export default function Breadcrumb({ title, setIsOpen, isOpen }) {
 
         }
 
+
+      </div>
+      <div>
         <h3 className="text-base   font-medium text-gray-700">
           {title && title}
         </h3>
