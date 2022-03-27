@@ -5,9 +5,11 @@ import Drawer from "../../../Layout/Drawer";
 import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import Metronome from "./metronome";
+import MetronomePage from "./metronome";
 import Tuner from "./tuner";
 import FallBackSuspense from "../../../components/FallBackSuspense";
+import BeatMaker from "./beatMaker"
+import PianoComponent from "./piano"
 
 export default function Tools() {
   const [isOpen, setIsOpen] = useState(false)
@@ -23,7 +25,34 @@ export default function Tools() {
       to: "tuner",
       current: false
 
-    },]
+    },
+
+
+    {
+      name: "Tab generator",
+      to: "tabgenerator",
+      current: false
+
+    },
+    {
+      name: "Ear training",
+      to: "eartraining",
+      current: false
+
+    },
+    {
+      name: "Beat Maker",
+      to: "beatmaker",
+      current: false
+
+    },
+    ,
+    {
+      name: "Piano",
+      to: "piano",
+      current: false
+
+    }]
   return (
     <div>
 
@@ -39,8 +68,11 @@ export default function Tools() {
         <div className={`${isOpen ? 'w-11/12' : 'w-full'} flex flex-col p-1`}>
           <Suspense fallback={<FallBackSuspense />}>
             <Routes>
-              <Route path="/metronome" element={<Metronome />}></Route>
+              <Route path="/metronome" element={<MetronomePage />}></Route>
               <Route path="/tuner" element={<Tuner />}></Route>
+              <Route path="/beatmaker" element={<BeatMaker />}></Route>
+              <Route path="/piano" element={<PianoComponent />}></Route>
+
             </Routes>
           </Suspense>
         </div>
