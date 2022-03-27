@@ -1,6 +1,6 @@
 import axios from "axios";
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 import InputSearch from "../../../components/InputSearch";
@@ -10,14 +10,21 @@ import useLightBox from "../../../hooks/useLightBox";
 import LightBox from "../../../components/LightBox";
 
 function AllItemsList() {
-  const [cart, setCart] = useState([]);
+  //states
+ const[cart, setCart]=useState([]);
 
-  const addToCart = (e, item) => {
-    e.preventDefault();
-    setCart([...cart, item]);
-    console.log(cart);
-  };
-
+  const addToCart = (e,item)=>{ 
+ setCart([...cart,item]);
+ e.preventDefault();
+console.log(cart);
+  }
+useEffect(()=>{
+  setCart(sessionStorage.getItem('cart'));
+},[])
+  useEffect(()=>{
+    sessionStorage.setItem('cart',JSON.stringify(cart));
+  },[cart])
+   
   // const handleClick = (id) => {
   //   fetch('http://localhost:3000/spacetune/api/shop/delete/' + id, {
   //     method: 'DELETE'
