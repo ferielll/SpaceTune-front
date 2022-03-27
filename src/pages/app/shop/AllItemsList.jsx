@@ -1,6 +1,6 @@
 import axios from "axios";
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 import InputSearch from "../../../components/InputSearch";
@@ -10,14 +10,20 @@ import useLightBox from "../../../hooks/useLightBox";
 import LightBox from "../../../components/LightBox";
 
 function AllItemsList() {
-  
-  const [cart,setCart] = useState([]);
-  
-  const addToCart = (e,item)=>{
-    e.preventDefault();
+  //states
+ const[cart, setCart]=useState([]);
+
+  const addToCart = (e,item)=>{ 
  setCart([...cart,item]);
+ e.preventDefault();
 console.log(cart);
   }
+useEffect(()=>{
+  setCart(sessionStorage.getItem('cart'));
+},[])
+  useEffect(()=>{
+    sessionStorage.setItem('cart',JSON.stringify(cart));
+  },[cart])
    
   // const handleClick = (id) => {
   //   fetch('http://localhost:3000/spacetune/api/shop/delete/' + id, {
@@ -87,7 +93,7 @@ console.log(cart);
                     {/* <button onClick={()=>handleClick(item._id)}>delete</button> */}
                   </a>
                  <center> <button className="block w-1-2 px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white rounded-2xl transition-colors duration-150 bg-blue-600 border border-transparent active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
-                      onClick={(e) => addToCart(e,item)} >Order now</button></center>
+                      onClick={(e) => addToCart(e,item)} >Add to cart</button></center>
                 </div>
               ))}
           </div>

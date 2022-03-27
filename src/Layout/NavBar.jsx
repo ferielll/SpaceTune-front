@@ -1,10 +1,10 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
+import { Fragment,useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon ,ShoppingCartIcon} from "@heroicons/react/outline";
 import Spacetune from "../assets/spacetuneWidth.png";
 import { NavLink, useNavigate } from "react-router-dom";
-
+import Cart from "../pages/app/shop/Cart";
 const user = {
   name: "Tom Cook",
   email: "tom@example.com",
@@ -50,6 +50,8 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
+  const [cartOpen,setCartOpen] = useState(false);
+
   let navigate = useNavigate();
   function goHome() {
     navigate("/");
@@ -97,10 +99,13 @@ export default function NavBar() {
                     <button
                         type="button"
                         className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                        onClick={()=>setCartOpen(!cartOpen)}
                       >
                         <span className="sr-only">Cart</span>
                         <div className="cart">
                         <span >
+                          <div>      {cartOpen && <Cart />}
+</div>
                         <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
                         
                         </span>
