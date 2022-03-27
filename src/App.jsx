@@ -16,11 +16,19 @@ const Login = lazy(() => import("./pages/authentification/Login"));
 const Register = lazy(() => import("./pages/authentification/Register"));
 const Application = lazy(() => import("./pages/app"));
 const Single = lazy(() => import("./pages/app/Single/Single"))
+const Error = lazy(() => import("./pages/app/Error"));
 
 function App() {
   //custom hook to check if user is logged In
   const { isLoggedIn, setLoggedIn } = useAuth();
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        cacheTime: 300000,
+      },
+    },
+  });
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">

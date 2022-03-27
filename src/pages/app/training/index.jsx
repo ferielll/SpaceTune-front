@@ -1,11 +1,23 @@
 import React from "react";
 import Single from "../Single/Single";
+import { Route, Routes } from "react-router-dom";
+import DetailsMyLessons from "./DetailsMyLessons.";
+import DetailsTraining from "./DetailsTraining";
+import EditTraining from "./EditTraining";
 import ListTraining from "./ListTraining";
+import MyTrainings from "./MyTrainings";
+import NewTraining from "./NewTraining";
 
 const Training = () => {
   return (
     <div>
-      <ListTraining />
+      <Routes>
+        <Route path="/" element={<ListTraining />}></Route>
+        <Route path="/dashboardLessons" element={<MyTrainings />}></Route>
+        <Route path="/add" element={<NewTraining />}></Route>
+        <Route path="/:id" element={<DetailsTraining />}></Route>
+        <Route path="dashboardLessons/details/:id" element={<DetailsMyLessons />}></Route>
+      </Routes>
     </div>
   );
 };
