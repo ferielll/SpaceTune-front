@@ -13,6 +13,7 @@ const Entertainment = lazy(() => import("./entertainment"));
 const Contact = lazy(() => import("./contact"));
 const Home = lazy(() => import("./home"));
 const Single = lazy(() => import("./Single/Single"));
+const Shop = lazy(() => import("./shop"));
 
 export default function App() {
    return (
