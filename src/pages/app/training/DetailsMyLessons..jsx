@@ -4,7 +4,8 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import Breadcrumb from "../../../components/Breadcrum";
 import capture from "../../../assets/capture.png";
-const DetailsTraining = () => {
+import EditTraining from "./EditTraining";
+const DetailsMyLessons = () => {
   //réperer id in param
   const { id } = useParams();
   const { data: training, isLoading } = useQuery(
@@ -22,7 +23,7 @@ const DetailsTraining = () => {
       <Breadcrumb title="Training > Details training" />
       <div className="px-2 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-14">
         {!isLoading && (
-          <div className="flex flex-col max-w-screen-lg overflow-hidden bg-white border rounded shadow-sm lg:flex-row sm:mx-auto">
+          <div className="flex flex-col max-w-screen-lg bg-white border rounded shadow-sm lg:flex-row sm:mx-auto">
             <div className="relative lg:w-1/2">
               <img
                 src={capture}
@@ -73,9 +74,10 @@ const DetailsTraining = () => {
             </div>
           </div>
         )}
+        <EditTraining />
       </div>
     </div>
   );
 };
 
-export default DetailsTraining;
+export default DetailsMyLessons;
