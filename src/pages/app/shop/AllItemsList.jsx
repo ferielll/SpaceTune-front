@@ -11,20 +11,20 @@ import LightBox from "../../../components/LightBox";
 
 function AllItemsList() {
   //states
- const[cart, setCart]=useState([]);
+  const [cart, setCart] = useState([]);
 
-  const addToCart = (e,item)=>{ 
- setCart([...cart,item]);
- e.preventDefault();
-console.log(cart);
-  }
-useEffect(()=>{
-  setCart(sessionStorage.getItem('cart'));
-},[])
-  useEffect(()=>{
-    sessionStorage.setItem('cart',JSON.stringify(cart));
-  },[cart])
-   
+  const addToCart = (e, item) => {
+    setCart([...cart, item]);
+    e.preventDefault();
+    console.log(cart);
+  };
+  useEffect(() => {
+    setCart(sessionStorage.getItem("cart"));
+  }, []);
+  useEffect(() => {
+    sessionStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
   // const handleClick = (id) => {
   //   fetch('http://localhost:3000/spacetune/api/shop/delete/' + id, {
   //     method: 'DELETE'
@@ -56,10 +56,10 @@ useEffect(()=>{
           </div>
           <div className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
             {!isLoading &&
-              items.map((item, key) => (
+              items.map((item, i) => (
                 <div
                   className="max-w-md w-full mx-auto mt-3 shadow-lg border-black rounded-md duration-300 hover:shadow-sm"
-                  key={key}
+                  key={i}
                 >
                   {/* LightBox component, images can be [String] == group of images || String */}
                   {lightBox.isLightBoxOpen && images && (
@@ -76,7 +76,7 @@ useEffect(()=>{
                     alt={items.name}
                     className="w-full h-48 rounded-t-md cursor-pointer"
                   />
-                  <div className="space-y-1 pt-2 ml-4 mr-2 mb-3" onClick={""}>
+                  <div className="space-y-1 pt-2 ml-4 mr-2 mb-3">
                     <h3 className="text-xl font-semibold text-gray-900">
                       {item.name}
                     </h3>

@@ -1,22 +1,22 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment,useState } from "react";
+import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { BellIcon, MenuIcon, XIcon ,ShoppingCartIcon} from "@heroicons/react/outline";
+import {
+  BellIcon,
+  MenuIcon,
+  XIcon,
+  ShoppingCartIcon,
+} from "@heroicons/react/outline";
 import Spacetune from "../assets/spacetuneWidth.png";
 import { NavLink, useNavigate } from "react-router-dom";
-import Cart from "../pages/app/shop/Cart";
-const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
+import { useUser } from "../hooks/useUser";
+import { UserAvatar } from "../components/UserAvatar";
 
 const navigation = [
   {
     name: "Shop",
     to: "shop",
-    current: true,
+    current: false,
   },
   {
     name: "Tools",
@@ -30,8 +30,17 @@ const navigation = [
   },
   {
     name: "Training",
-    to: "training",
     current: false,
+    children: [
+      {
+        name: "List trainings",
+        to: "training",
+      },
+      {
+        name: "My lessons",
+        to: "training/dashboardLessons",
+      },
+    ],
   },
   {
     name: "Contact",
@@ -39,36 +48,42 @@ const navigation = [
     current: false,
   },
 ];
-const userNavigation = [
-  { name: "Your Profile", to: "#" },
-  { name: "Settings", to: "#" },
-  { name: "Sign out", to: "#" },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function NavBar() {
-  const [cartOpen,setCartOpen] = useState(false);
+  //helpers
+  const navigate = useNavigate();
+  const { user } = useUser();
 
-  let navigate = useNavigate();
-  function goHome() {
-    navigate("/");
-  }
-
+  //user Menu
+  const userNavigation = [
+    { name: "Your Profile", to: "#" },
+    { name: "Settings", to: "#" },
+    {
+      name: "Sign out",
+      to: "/login",
+      onClick: async () => {
+        await localStorage.clear();
+        await sessionStorage.clear();
+        window.location.href = "/login";
+      },
+    },
+  ];
   return (
     <div className="sticky top-0 left-0 right-0  w-full">
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-navbar-color">
           {({ open }) => (
             <>
-              <div className="max-w-maxxl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
                       <img
-                        onClick={goHome}
+                        onClick={() => navigate("/")}
                         className="h-20 w-18 cursor-pointer"
                         src={Spacetune}
                         alt="Spacetune"
@@ -76,41 +91,85 @@ export default function NavBar() {
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
-                        {navigation.map((item, index) => (
-                          <NavLink
-                            key={index}
-                            to={item.to}
-                            className={classNames(
-                              item.current
-                                ? "underline underline-offset-4 decoration-blue-700 decoration-4 text-white"
-                                : "text-gray-300 hover:underline underline-offset-4 decoration-blue-700 decoration-4 hover:text-white",
-                              "px-3 py-2 rounded-md text-base font-medium"
-                            )}
-                            aria-current={item.current ? "page" : undefined}
-                          >
-                            {item.name}
-                          </NavLink>
-                        ))}
+                        {navigation.map((item, index) =>
+                          item.children ? (
+                            <Menu
+                              as="div"
+                              className="relative inline-block text-left"
+                            >
+                              <div>
+                                <Menu.Button
+                                  className={classNames(
+                                    "text-gray-300 hover:underline underline-offset-4 decoration-blue-700 decoration-4 hover:text-white",
+                                    "px-3 py-2 rounded-md text-base font-medium"
+                                  )}
+                                >
+                                  {item.name}
+                                </Menu.Button>
+                              </div>
+                              <Transition
+                                as={Fragment}
+                                enter="transition ease-out duration-100"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                              >
+                                <Menu.Items className="flex justify-center absolute w-28 mt-1 bg-navbar-color divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black  focus:outline-none">
+                                  <div className="px-1 py-1">
+                                    {item.children.map((i) => (
+                                      <Menu.Item key={i}>
+                                        <NavLink
+                                          key={i}
+                                          to={i.to}
+                                          className={
+                                            "text-gray-200 flex rounded-md items-center w-full py-2 font-normal hover:text-white"
+                                          }
+                                        >
+                                          {i.name}
+                                        </NavLink>
+                                      </Menu.Item>
+                                    ))}
+                                  </div>
+                                </Menu.Items>
+                              </Transition>
+                            </Menu>
+                          ) : (
+                            <NavLink
+                              key={index}
+                              to={item.to}
+                              className={classNames(
+                                item.current
+                                  ? "underline underline-offset-4 decoration-blue-700 decoration-4 text-white"
+                                  : "text-gray-300 hover:underline underline-offset-4 decoration-blue-700 decoration-4 hover:text-white",
+                                "px-3 py-2 rounded-md text-base font-medium"
+                              )}
+                              aria-current={item.current ? "page" : undefined}
+                            >
+                              {item.name}
+                            </NavLink>
+                          )
+                        )}
                       </div>
                     </div>
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-4 flex items-center md:ml-6">
-                    <button
+                      <button
                         type="button"
                         className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                        onClick={()=>setCartOpen(!cartOpen)}
                       >
                         <span className="sr-only">Cart</span>
                         <div className="cart">
-                        <span >
-                          <div>      {cartOpen && <Cart />}
-</div>
-                        <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
-                        
-                        </span>
+                          <span>
+                            <ShoppingCartIcon
+                              className="h-6 w-6"
+                              aria-hidden="true"
+                            />
+                          </span>
                         </div>
-                      </button> 
+                      </button>
                       <button
                         type="button"
                         className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
@@ -118,7 +177,7 @@ export default function NavBar() {
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-6 w-6" aria-hidden="true" />
                       </button>
-                              
+
                       {/* Profile dropdown */}
                       <Menu as="div" className="ml-3 relative">
                         <div>
@@ -126,7 +185,7 @@ export default function NavBar() {
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full"
-                              src={user.imageUrl}
+                              src={user.avatar}
                               alt=""
                             />
                           </Menu.Button>
@@ -146,6 +205,9 @@ export default function NavBar() {
                                 {({ active }) => (
                                   <NavLink
                                     to={item.to}
+                                    onClick={() =>
+                                      item.onClick() && item.onClick()
+                                    }
                                     className={classNames(
                                       active ? "bg-gray-100" : "",
                                       "block px-4 py-2 text-sm text-gray-700"
@@ -198,15 +260,11 @@ export default function NavBar() {
                 <div className="pt-4 pb-3 border-t border-gray-700">
                   <div className="flex items-center px-5">
                     <div className="flex-shrink-0">
-                      <img
-                        className="h-10 w-10 rounded-full"
-                        src={user.imageUrl}
-                        alt=""
-                      />
+                      <UserAvatar user={user} />
                     </div>
                     <div className="ml-3">
                       <div className="text-base font-medium leading-none text-white">
-                        {user.name}
+                        {user.userName}
                       </div>
                       <div className="text-sm font-medium leading-none text-gray-400">
                         {user.email}
