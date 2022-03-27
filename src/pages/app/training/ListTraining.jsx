@@ -13,11 +13,17 @@ import Loader from "../../../components/Loader";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../hooks/useUser";
 import { Fragment } from "react";
+import { useLoading } from "../../../hooks/useLoading";
 
 function ListTraining() {
   //helpers
   const { user } = useUser();
   const navigate = useNavigate();
+  const {
+    isLoading: subscribeLoading,
+    startLoading: subscribeStartLoading,
+    stopLoading: subscribeStopLoading,
+  } = useLoading(false);
   // custom hook for handle the lightbox component
   const lightBox = useLightBox();
   //Fetch List Trainings
@@ -32,7 +38,7 @@ function ListTraining() {
     ];
   }
 
-  const { data, isLoading } = useQuery(["fetchListTraining"], () =>
+  const { data, isLoading, refetch } = useQuery(["fetchListTraining"], () =>
     axios
       .get(
         `http://localhost:3000/spacetune/api/formation/getAll?filters=${JSON.stringify(
@@ -46,18 +52,18 @@ function ListTraining() {
     if (isLoading) return [];
     return data;
   }, [data]);
-
   console.log(trainings, "training");
-  console.log(search, "search");
-  console.log(textToSearch, "textToSearch");
 
   //Update training
-  function subscribe(_id) {
-    axios({
+  async function subscribe(_id) {
+    subscribeStartLoading();
+    await axios({
       method: "put",
       url: `http://localhost:3000/spacetune/api/formation/subscribe/${_id}`,
       data: { _id: user._id },
     });
+    refetch();
+    subscribeStopLoading();
   }
   //testing image view
   const images = capture;
@@ -131,7 +137,9 @@ function ListTraining() {
                   <div className="flex justify-start pt-2 ml-4 mr-2 mb-3">
                     <button
                       type="submit"
-                      className={`inline-flex items-center justify-center py-1 px-4 font-medium tracking-wide text-white transition duration-200 rounded border border-gray-300
+                      className={`${
+                        items.users.includes(user._id) && "bg-red-400"
+                      } inline-flex items-center justify-center py-1 px-4 font-medium tracking-wide text-white transition duration-200 rounded-xl border border-gray-300
                            shadow-md bg-gray-500 hover:animate-bounce focus:shadow-outline focus:outline-none
                          `}
                       onClick={() => subscribe(items._id)}

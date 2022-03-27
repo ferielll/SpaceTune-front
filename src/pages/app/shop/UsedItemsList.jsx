@@ -10,9 +10,6 @@ import useLightBox from "../../../hooks/useLightBox";
 import LightBox from "../../../components/LightBox";
 
 function UsedItemsList() {
-
- 
-
   const handleClick = (id) => {
     fetch('http://localhost:3000/spacetune/api/shop/delete/' + id, {
       method: 'DELETE'

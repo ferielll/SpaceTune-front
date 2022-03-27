@@ -10,14 +10,11 @@ import useLightBox from "../../../hooks/useLightBox";
 import LightBox from "../../../components/LightBox";
 
 function NewItemsList() {
-
- 
-
   const handleClick = (id) => {
-    fetch('http://localhost:3000/spacetune/api/shop/delete/' + id, {
-      method: 'DELETE'
-    })
-  }
+    fetch("http://localhost:3000/spacetune/api/shop/delete/" + id, {
+      method: "DELETE",
+    });
+  };
   // custom hook for handle the lightbox component
   const lightBox = useLightBox();
   //exemple for test
@@ -36,14 +33,10 @@ function NewItemsList() {
 
   return (
     <div>
-    
       <div className="flex flex-row pt-1">
         <section className="mt-6 mx-auto px-2 max-w-screen-xl lg:px-4">
           <div className="flex justify-between text-start">
-            <Title
-              title="List of items"
-              subtitle="Here you find all items."
-            />
+            <Title title="List of items" subtitle="Here you find all items." />
             <InputSearch />
           </div>
           <div className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -69,14 +62,17 @@ function NewItemsList() {
                       alt={item.name}
                       className="w-full h-48 rounded-t-md"
                     />
-                    
+
                     <div className="pt-3 ml-4 mr-2 mb-3">
                       <h3 className="text-xl text-gray-900">{item.name}</h3>
-                      <h5 className="text-xl text-gray-600"> price: {item.price}</h5>
+                      <h5 className="text-xl text-gray-600">
+                        {" "}
+                        price: {item.price}
+                      </h5>
                       <p className="text-gray-400 text-sm mt-1">
                         {item.description}
                       </p>
-                      <button >Order now</button>
+                      <button>Order now</button>
                     </div>
                     {/* <button onClick={()=>handleClick(item._id)}>delete</button> */}
                   </a>
