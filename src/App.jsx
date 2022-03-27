@@ -10,9 +10,12 @@ import FallBackSuspense from "./components/FallBackSuspense";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useAuth } from "./hooks/useAuth";
 
+
+
 const Login = lazy(() => import("./pages/authentification/Login"));
 const Register = lazy(() => import("./pages/authentification/Register"));
 const Application = lazy(() => import("./pages/app"));
+const Single = lazy(() => import("./pages/app/Single/Single"))
 
 function App() {
   //custom hook to check if user is logged In
@@ -25,6 +28,7 @@ function App() {
           <Router>
             <Routes>
               <Route path="/register" element={<Register />} />
+              <Route path="/post/:postId" element={<Single/>}></Route>
               <Route
                 path="/login"
                 element={

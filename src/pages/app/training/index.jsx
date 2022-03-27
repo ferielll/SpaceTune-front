@@ -1,5 +1,5 @@
 import React from "react";
-import Breadcrumb from "../../../components/Breadcrum";
+import Single from "../Single/Single";
 import ListTraining from "./ListTraining";
 
 const Training = () => {

@@ -14,9 +14,14 @@ const user = {
 
 const navigation = [
   {
-    name: "Shop",
-    to: "shop",
+    name: "Home",
+    to: "home",
     current: true,
+  },
+  {
+    name: "Blogs",
+    to: "blogs",
+    current: false,
   },
   {
     name: "Tools",
@@ -24,8 +29,8 @@ const navigation = [
     current: false,
   },
   {
-    name: "Entertainement",
-    to: "entertainement",
+    name: "Entertainment",
+    to: "entertainment",
     current: false,
   },
   {

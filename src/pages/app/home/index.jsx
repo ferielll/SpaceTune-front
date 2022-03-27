@@ -7,7 +7,7 @@ import {
   LightningBoltIcon,
   ScaleIcon,
 } from "@heroicons/react/outline";
-import { Footer } from "./footer";
+import { Footer } from "../home/footer";
 
 export default function Home() {
   const features = [
@@ -37,7 +37,8 @@ export default function Home() {
     },
   ];
   return (
-    <>
+    <div>
+      <>
       <div className="pt-24 pb-36 mx-auto px-4 sm:px-8 bg-black">
         <div className="text-center space-y-4">
           <h1 className="text-white font-bold text-4xl md:text-5xl">
@@ -137,6 +138,22 @@ export default function Home() {
                   </p>
                 </div>
               </div>
+              <a
+                    href="javascript:void(0)"
+                    className="
+                     inline-block
+                     py-2
+                     px-7
+                     border border-[#E5E7EB]
+                     rounded-full
+                     text-base text-body-color
+                     font-medium
+                     hover:border-primary hover:bg-primary hover:text-black
+                     transition
+                     "
+                  >
+                    View Details
+                  </a>
             </div>
             <div className="w-full md:w-1/2 lg:w-1/3 px-4">
               <div className="max-w-[370px] mx-auto mb-10">
@@ -185,6 +202,22 @@ export default function Home() {
                   </p>
                 </div>
               </div>
+              <a
+                    href="javascript:void(0)"
+                    className="
+                     inline-block
+                     py-2
+                     px-7
+                     border border-[#E5E7EB]
+                     rounded-full
+                     text-base text-body-color
+                     font-medium
+                     hover:border-primary hover:bg-primary hover:text-black
+                     transition
+                     "
+                  >
+                    View Details
+                  </a>
             </div>
             <div className="w-full md:w-1/2 lg:w-1/3 px-4">
               <div className="max-w-[370px] mx-auto mb-10">
@@ -233,6 +266,22 @@ export default function Home() {
                   </p>
                 </div>
               </div>
+              <a
+                    href="javascript:void(0)"
+                    className="
+                     inline-block
+                     py-2
+                     px-7
+                     border border-[#E5E7EB]
+                     rounded-full
+                     text-base text-body-color
+                     font-medium
+                     hover:border-primary hover:bg-primary hover:text-black
+                     transition
+                     "
+                  >
+                    View Details
+                  </a>
             </div>
           </div>
         </div>
@@ -444,5 +493,6 @@ export default function Home() {
       </div>
       <Footer logo={Spacetune} />
     </>
+    </div>
   );
 }
