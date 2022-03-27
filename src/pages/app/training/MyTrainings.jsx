@@ -26,7 +26,11 @@ const MyTrainings = () => {
   const { user } = useUser();
   console.log(user, "user");
   const navigate = useNavigate();
-  const { isLoading: deleting, startLoading, stopLoading } = useLoading(false);
+  const {
+    isLoading: deletingLoading,
+    startLoading,
+    stopLoading,
+  } = useLoading(false);
   // custom hook for handle the lightbox component
   const lightBox = useLightBox();
   //exemple for test
@@ -44,16 +48,16 @@ const MyTrainings = () => {
       .then((res) => res.data)
   );
 
-  async function deleteTraining(items) {
-    setShowDeleteModal(true);
+  async function deleteTraining(selectedItem) {
     startLoading();
     await axios.delete(
-      `http://localhost:3000/spacetune/api/formation/delete/${items._id}`
+      `http://localhost:3000/spacetune/api/formation/delete/${selectedItem._id}`
     );
     stopLoading();
+    setShowDeleteModal(false);
     refetch();
   }
-
+  console.log(selectedItem);
   return (
     <Fragment>
       <Breadcrumb title={"Dashboard"} />
@@ -65,12 +69,12 @@ const MyTrainings = () => {
           </div>
           {showDeleteModal && (
             <ConfirmModal
-              title={`Are you sure to delete lesson ${selectedItem}?`}
+              title={`Are you sure to delete lesson ${selectedItem.name}?`}
               content=""
               confirmButton="Delete"
               cancelButton="Cancel"
               onClickCancel={() => setShowDeleteModal(false)}
-              onClickConfirm={() => deleteTraining()}
+              onClickConfirm={() => deleteTraining(selectedItem)}
             />
           )}
           <div className="my-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -96,10 +100,7 @@ const MyTrainings = () => {
                     className="w-full h-48 rounded-t-md cursor-pointer"
                   />
                   <div className="flex justify-between">
-                    <div
-                      className="flex items-center pt-2 ml-4 mr-2"
-                      onClick={() => navigate(`${items._id}`)}
-                    >
+                    <div className="flex items-center pt-2 ml-4 mr-2">
                       <div className="flex items-center w-10 h-10 rounded-full">
                         <UserAvatar
                           user={items.teacher}
@@ -147,9 +148,7 @@ const MyTrainings = () => {
                                 >
                                   <>
                                     <EditIcon
-                                      className={`w-5 h-5 mr-2 ${
-                                        !active && `text-blue-500`
-                                      }`}
+                                      className={`w-5 h-5 mr-2 text-blue-500`}
                                       aria-hidden="true"
                                     />
                                     Edit
@@ -163,13 +162,13 @@ const MyTrainings = () => {
                               <button
                                 className={`${"text-gray-700"} group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                                 onClick={() => {
-                                  deleteTraining(items);
-                                  setSelectedItem(items.name);
+                                  setShowDeleteModal(true);
+                                  setSelectedItem(items);
                                 }}
                               >
                                 <>
                                   <TrashIcon
-                                    className={`w-5 h-5 mr-2`}
+                                    className={`w-5 h-5 mr-2 text-red-500`}
                                     aria-hidden="true"
                                   />
                                   Delete
@@ -183,7 +182,7 @@ const MyTrainings = () => {
                   </div>
                   <div
                     className="pt-2 ml-4 mr-2 mb-3"
-                    onClick={() => navigate(`${items._id}`)}
+                    onClick={() => navigate(`details/${items._id}`)}
                   >
                     <h3 className="text-xl font-semibold text-gray-900">
                       {items.name}

@@ -14,15 +14,17 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../hooks/useUser";
 import { Fragment } from "react";
 import { useLoading } from "../../../hooks/useLoading";
+import { Button } from "antd";
 
 function ListTraining() {
   //helpers
   const { user } = useUser();
   const navigate = useNavigate();
+  //loading subscribe
   const {
     isLoading: subscribeLoading,
-    startLoading: subscribeStartLoading,
-    stopLoading: subscribeStopLoading,
+    startLoading: startLoadingSubscribe,
+    stopLoading: stopLoadingSubscribe,
   } = useLoading(false);
   // custom hook for handle the lightbox component
   const lightBox = useLightBox();
@@ -56,14 +58,14 @@ function ListTraining() {
 
   //Update training
   async function subscribe(_id) {
-    subscribeStartLoading();
+    startLoadingSubscribe();
     await axios({
       method: "put",
       url: `http://localhost:3000/spacetune/api/formation/subscribe/${_id}`,
       data: { _id: user._id },
     });
+    stopLoadingSubscribe();
     refetch();
-    subscribeStopLoading();
   }
   //testing image view
   const images = capture;
@@ -135,17 +137,18 @@ function ListTraining() {
                     </p>
                   </div>
                   <div className="flex justify-start pt-2 ml-4 mr-2 mb-3">
-                    <button
-                      type="submit"
+                    <Button
+                      type="primary"
                       className={`${
                         items.users.includes(user._id) && "bg-red-400"
                       } inline-flex items-center justify-center py-1 px-4 font-medium tracking-wide text-white transition duration-200 rounded-xl border border-gray-300
                            shadow-md bg-gray-500 hover:animate-bounce focus:shadow-outline focus:outline-none
                          `}
                       onClick={() => subscribe(items._id)}
+                      loading={subscribeLoading}
                     >
                       Subscribe
-                    </button>
+                    </Button>
                   </div>
                 </div>
               ))
