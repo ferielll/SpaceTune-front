@@ -3,10 +3,12 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import Input from "../../../components/form/Input";
 import { useLoading } from "../../../hooks/useLoading";
+import { useUser } from "../../../hooks/useUser";
 
 function NewTraining() {
+  //helpers
+  const { user } = useUser();
   const { isLoading, startLoading, stopLoading } = useLoading(false);
-
   const { handleSubmit, control } = useForm({
     defaultValues: {
       name: "",
@@ -18,11 +20,15 @@ function NewTraining() {
 
   const onSubmit = async (data) => {
     startLoading();
-    data.teacher = { _id: "622209559c3db32e1c610e61" };
+    const { name, description, price } = data;
+    const teacher = user._id;
     try {
       await axios
         .post("http://localhost:3000/spacetune/api/formation/create", {
-          data,
+          name,
+          description,
+          price,
+          teacher,
         })
         .then((res) => {
           console.log(res, "res");
@@ -37,7 +43,7 @@ function NewTraining() {
     }
   };
 
-  return (
+  return ( 
     <div className="flex w-1/2 justify-center items-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -74,6 +80,7 @@ function NewTraining() {
               {...field}
               label="Description"
               placeholder="Write description..."
+              className="whitespace-pre-wrap"
               hasError={invalid}
               error={error && error.message}
             />

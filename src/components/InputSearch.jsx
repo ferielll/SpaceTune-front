@@ -4,7 +4,7 @@ import React from "react";
 const InputSearch = ({ onChange, className, placeholder }) => {
   return (
     <form>
-      <div className="relative">
+      <div className="flex relative">
         <input
           onChange={onChange}
           type="text"

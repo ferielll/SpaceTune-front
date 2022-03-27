@@ -16,7 +16,7 @@ export default function Register() {
     watch,
   } = useForm({
     defaultValues: {
-      username: "",
+      userName: "",
       email: "",
       phone: "",
       birthday: "",
@@ -30,18 +30,18 @@ export default function Register() {
   const onSubmit = async (data) => {
     startLoading();
     try {
-      await axios
-        .post("http://localhost:3000/spacetune/api/register", {
-          data,
-        })
-        .then((res) => {
-          console.log(res, "res");
-          if (!res.data.success) {
-            stopLoading();
-            return;
-          }
-        });
+      await axios({
+        method: "post",
+        url: "http://localhost:3000/spacetune/api/register",
+        data: data,
+      }).then((res) => {
+        if (!res.data.success) {
+          stopLoading();
+          return;
+        }
+      });
       stopLoading();
+      navigate("/login");
     } catch (err) {
       console.log(err, "erreur => signInWithEmailAndPassword");
     }
@@ -71,7 +71,7 @@ export default function Register() {
           <div className="flex justify-center"></div>
           <h1 className="mb-4 text-2xl font-bold text-center">Register</h1>
           <Controller
-            name="username"
+            name="userName"
             control={control}
             rules={{
               required: `Please enter your username.`,
