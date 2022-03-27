@@ -12,7 +12,7 @@ const Contact = lazy(() => import("./contact"));
 const Home = lazy(() => import("./home"));
 
 export default function App() {
-  return (
+   return (
     <div>
       <NavBar />
       <div>

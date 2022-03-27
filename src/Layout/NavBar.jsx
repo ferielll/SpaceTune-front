@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import { BellIcon, MenuIcon, XIcon ,ShoppingCartIcon} from "@heroicons/react/outline";
 import Spacetune from "../assets/spacetuneWidth.png";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -94,6 +94,18 @@ export default function NavBar() {
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-4 flex items-center md:ml-6">
+                    <button
+                        type="button"
+                        className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                      >
+                        <span className="sr-only">Cart</span>
+                        <div className="cart">
+                        <span >
+                        <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                        
+                        </span>
+                        </div>
+                      </button> 
                       <button
                         type="button"
                         className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
@@ -101,7 +113,7 @@ export default function NavBar() {
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-6 w-6" aria-hidden="true" />
                       </button>
-
+                              
                       {/* Profile dropdown */}
                       <Menu as="div" className="ml-3 relative">
                         <div>

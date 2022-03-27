@@ -1,23 +1,29 @@
 import axios from "axios";
 import dayjs from "dayjs";
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
-import Breadcrumb from "../../../components/Breadcrum";
+
 import InputSearch from "../../../components/InputSearch";
 import Title from "../../../components/Title";
-import { UserAvatar } from "../../../components/UserAvatar";
+import NewItem from "./NewItem"
 import useLightBox from "../../../hooks/useLightBox";
 import LightBox from "../../../components/LightBox";
 
 function AllItemsList() {
-
- 
-
-  const handleClick = (id) => {
-    fetch('http://localhost:3000/spacetune/api/shop/delete/' + id, {
-      method: 'DELETE'
-    })
+  
+  const [cart,setCart] = useState([]);
+  
+  const addToCart = (e,item)=>{
+    e.preventDefault();
+ setCart([...cart,item]);
+console.log(cart);
   }
+   
+  // const handleClick = (id) => {
+  //   fetch('http://localhost:3000/spacetune/api/shop/delete/' + id, {
+  //     method: 'DELETE'
+  //   })
+  // }
   // custom hook for handle the lightbox component
   const lightBox = useLightBox();
   //exemple for test
@@ -35,8 +41,8 @@ function AllItemsList() {
   );
 
   return (
-    <div>
     
+    <div>
       <div className="flex flex-row pt-1">
         <section className="mt-6 mx-auto px-2 max-w-screen-xl lg:px-4">
           <div className="flex justify-between text-start">
@@ -76,9 +82,12 @@ function AllItemsList() {
                       <p className="text-gray-400 text-sm mt-1">
                         {item.description}
                       </p>
+                      
                     </div>
                     {/* <button onClick={()=>handleClick(item._id)}>delete</button> */}
                   </a>
+                 <center> <button className="block w-1-2 px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white rounded-2xl transition-colors duration-150 bg-blue-600 border border-transparent active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
+                      onClick={(e) => addToCart(e,item)} >Order now</button></center>
                 </div>
               ))}
           </div>
@@ -87,5 +96,4 @@ function AllItemsList() {
     </div>
   );
 }
-
 export default AllItemsList;

@@ -76,6 +76,7 @@ function UsedItemsList() {
                       <p className="text-gray-400 text-sm mt-1">
                         {item.description}
                       </p>
+                      <button >Order now</button>
                     </div>
                     {/* <button onClick={()=>handleClick(item._id)}>delete</button> */}
                   </a>
