@@ -14,7 +14,6 @@ export default function LightBox({
   if (typeof images === "string") {
     return (
       <Light
-        imageTitle={<span></span>}
         mainSrc={images}
         onCloseRequest={closePortal}
       />
@@ -22,7 +21,6 @@ export default function LightBox({
   }
   return (
     <Light
-      imageTitle={<span></span>}
       mainSrc={images[photoIndex]}
       nextSrc={images[(photoIndex + 1) % images.length]}
       prevSrc={images[(photoIndex + images.length - 1) % images.length]}
