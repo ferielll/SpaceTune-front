@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Breadcrumb from "../../../components/Breadcrum";
 import AllItemsList from "./AllItemsList";
 import NewItemsList from "./NewItemsList";
@@ -13,6 +13,7 @@ import FallBackSuspense from "../../../components/FallBackSuspense";
 //import NewItem from "./NewItem";
 
 export default function Shop() {
+
   const [isOpen, setIsOpen] = useState(false)
   const navigation = [
     {
@@ -29,7 +30,7 @@ export default function Shop() {
     },]
   return (
     <div>
-
+      
       <Breadcrumb title={"Shop"} setIsOpen={setIsOpen} isOpen={isOpen} />
 
 
