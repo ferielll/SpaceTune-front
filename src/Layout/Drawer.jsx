@@ -6,8 +6,6 @@ export default function Drawer({ isOpen, setIsOpen, navigation }) {
     }
     return (
         <>
-
-
             <div
                 className={` fixed  h-full bg-slate-900 p-2  ease-in-out duration-300 ${isOpen ? "translate-x-0 " : "-translate-x-full"
                     }`}

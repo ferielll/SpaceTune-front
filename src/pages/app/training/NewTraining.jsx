@@ -1,11 +1,14 @@
+import { Button, Upload } from "antd";
+import ImgCrop from "antd-img-crop";
+import Modal from "antd/lib/modal/Modal";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Input from "../../../components/form/Input";
 import { useLoading } from "../../../hooks/useLoading";
 import { useUser } from "../../../hooks/useUser";
 
-function NewTraining() {
+function NewTraining({ isModalVisible, setModalVisible }) {
   //helpers
   const { user } = useUser();
   const { isLoading, startLoading, stopLoading } = useLoading(false);
@@ -38,21 +41,31 @@ function NewTraining() {
           }
         });
       stopLoading();
+      setModalVisible(false);
     } catch (err) {
       console.log(err, "error");
     }
   };
 
-  return ( 
-    <div className="flex w-1/2 justify-center items-center">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-1/2 p-12 bg-white rounded-2xl"
-      >
-        <div className="flex justify-center"></div>
-        <h1 className="mb-4 text-2xl font-bold text-center">
-          Add new training
-        </h1>
+  return (
+    <Modal
+      title="Add new training"
+      visible={isModalVisible}
+      width="350px"
+      onCancel={() => setModalVisible(false)}
+      centered
+      footer={[
+        <Button
+          loading={isLoading}
+          onClick={handleSubmit(onSubmit)}
+          className={` text-white text-sm font-medium py-1 px-4 mr-4 rounded-lg transition-duration-200
+                           shadow-md bg-blue-600 `}
+        >
+          Confirm
+        </Button>,
+      ]}
+    >
+      <div>
         <Controller
           name="name"
           control={control}
@@ -106,17 +119,8 @@ function NewTraining() {
             />
           )}
         />
-        <button className="block w-1/2 px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white rounded-2xl transition-colors duration-150 bg-blue-600 border border-transparent active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="block w-1-2 px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white rounded-2xl transition-colors duration-150 bg-blue-600 border border-transparent active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
-        >
-          Confirm
-        </button>
-      </form>
-    </div>
+      </div>
+    </Modal>
   );
 }
 

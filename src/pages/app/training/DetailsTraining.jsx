@@ -4,18 +4,43 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import Breadcrumb from "../../../components/Breadcrum";
 import capture from "../../../assets/capture.png";
+import { useLoading } from "../../../hooks/useLoading";
+import { toaster } from "evergreen-ui";
+import { useUser } from "../../../hooks/useUser";
+import { Button } from "antd";
+
 const DetailsTraining = () => {
   //réperer id in param
   const { id } = useParams();
-  const { data: training, isLoading } = useQuery(
-    ["fetchDetailsTraining", id],
-    () =>
-      axios
-        .get(`http://localhost:3000/spacetune/api/formation/findOne/${id}`)
-        .then((res) => res.data)
+  //helpers
+  const { user } = useUser();
+  const {
+    isLoading: subscribeLoading,
+    startLoading: startLoadingSubscribe,
+    stopLoading: stopLoadingSubscribe,
+  } = useLoading(false);
+  //Fetch details training
+  const {
+    data: training,
+    isLoading,
+    refetch,
+  } = useQuery(["fetchDetailsTraining"], () =>
+    axios
+      .get(`http://localhost:3000/spacetune/api/formation/findOne/${id}`)
+      .then((res) => res.data)
   );
-
   console.log(training, "training");
+
+  async function subscribe(id) {
+    startLoadingSubscribe();
+    await axios({
+      method: "put",
+      url: `http://localhost:3000/spacetune/api/formation/subscribe/${id}`,
+      data: { _id: user._id },
+    });
+    stopLoadingSubscribe();
+    refetch();
+  }
 
   return (
     <div>
@@ -48,13 +73,21 @@ const DetailsTraining = () => {
               </h5>
               <p className="mb-5 text-gray-800">{training.description}</p>
               <div className="flex items-center">
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center py-2 px-5 mr-6 font-medium tracking-wide text-white transition duration-200 rounded border border-gray-300
-                           shadow-md bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none"
+                <Button
+                  className={`${
+                    training.users.includes(user._id) &&
+                    "opacity-50 cursor-not-allowed"
+                  } inline-flex justify-center text-white text-sm leading-6 font-medium py-1 px-4 mr-4 rounded-lg  tracking-wide transition-duration-200
+                           shadow-md bg-indigo-600 focus:shadow-outline focus:outline-none
+                         `}
+                  disabled={training.users.includes(user._id)}
+                  onClick={() => subscribe(training._id)}
+                  loading={subscribeLoading}
                 >
-                  Subscribe
-                </button>
+                  {training.users.includes(user._id)
+                    ? "subscribed"
+                    : "subscribe"}
+                </Button>
                 <a
                   href="/"
                   aria-label=""

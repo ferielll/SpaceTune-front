@@ -17,7 +17,6 @@ export default function Breadcrumb({ title, setIsOpen, isOpen }) {
             <rect x="30" width="10" height="100"></rect>
             <rect x="60" width="10" height="100"></rect>
           </svg>
-
         ) : (
           <svg
             onClick={() => setIsOpen(!isOpen)}
@@ -31,11 +30,7 @@ export default function Breadcrumb({ title, setIsOpen, isOpen }) {
             <rect y="30" width="100" height="10"></rect>
             <rect y="60" width="100" height="10"></rect>
           </svg>
-        )
-
-        }
-
-
+        )}
       </div>
       <div>
         <h3 className="text-base   font-medium text-gray-700">
