@@ -36,7 +36,7 @@ export const Footer = ({ logo }) => {
           </div>
           <div className="w-full sm:w-1/2 lg:w-2/12 px-4">
             <div className="w-full mb-10">
-              <h4 className="text-dark text-lg font-semibold mb-9">
+              <h4 className="text-gray-200 text-lg font-semibold mb-9">
                 Resources
               </h4>
               <ul>
@@ -101,7 +101,9 @@ export const Footer = ({ logo }) => {
           </div>
           <div className="w-full sm:w-1/2 lg:w-2/12 px-4">
             <div className="w-full mb-10">
-              <h4 className="text-dark text-lg font-semibold mb-9">Company</h4>
+              <h4 className="text-gray-200 text-lg font-semibold mb-9">
+                Company
+              </h4>
               <ul>
                 <li>
                   <a
@@ -164,7 +166,7 @@ export const Footer = ({ logo }) => {
           </div>
           <div className="w-full sm:w-1/2 lg:w-2/12 px-4">
             <div className="w-full mb-10">
-              <h4 className="text-dark text-lg font-semibold mb-9">
+              <h4 className="text-gray-200 text-lg font-semibold mb-9">
                 Quick Links
               </h4>
               <ul>

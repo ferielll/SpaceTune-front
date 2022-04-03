@@ -8,6 +8,7 @@ import {
   ScaleIcon,
 } from "@heroicons/react/outline";
 import { Footer } from "../home/footer";
+import { BackTop } from "antd";
 
 export default function Home() {
   const features = [
@@ -38,7 +39,6 @@ export default function Home() {
   ];
   return (
     <div>
-      <>
       <div className="pt-24 pb-36 mx-auto px-4 sm:px-8 bg-black">
         <div className="text-center space-y-4">
           <h1 className="text-white font-bold text-4xl md:text-5xl">
@@ -139,8 +139,8 @@ export default function Home() {
                 </div>
               </div>
               <a
-                    href="javascript:void(0)"
-                    className="
+                href="javascript:void(0)"
+                className="
                      inline-block
                      py-2
                      px-7
@@ -151,9 +151,9 @@ export default function Home() {
                      hover:border-primary hover:bg-primary hover:text-black
                      transition
                      "
-                  >
-                    View Details
-                  </a>
+              >
+                View Details
+              </a>
             </div>
             <div className="w-full md:w-1/2 lg:w-1/3 px-4">
               <div className="max-w-[370px] mx-auto mb-10">
@@ -203,8 +203,8 @@ export default function Home() {
                 </div>
               </div>
               <a
-                    href="javascript:void(0)"
-                    className="
+                href="javascript:void(0)"
+                className="
                      inline-block
                      py-2
                      px-7
@@ -215,9 +215,9 @@ export default function Home() {
                      hover:border-primary hover:bg-primary hover:text-black
                      transition
                      "
-                  >
-                    View Details
-                  </a>
+              >
+                View Details
+              </a>
             </div>
             <div className="w-full md:w-1/2 lg:w-1/3 px-4">
               <div className="max-w-[370px] mx-auto mb-10">
@@ -267,8 +267,8 @@ export default function Home() {
                 </div>
               </div>
               <a
-                    href="javascript:void(0)"
-                    className="
+                href="javascript:void(0)"
+                className="
                      inline-block
                      py-2
                      px-7
@@ -279,9 +279,9 @@ export default function Home() {
                      hover:border-primary hover:bg-primary hover:text-black
                      transition
                      "
-                  >
-                    View Details
-                  </a>
+              >
+                View Details
+              </a>
             </div>
           </div>
         </div>
@@ -458,7 +458,7 @@ export default function Home() {
       <div className="py-12 bg-navbar-color text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:text-center">
-            <h2 className="text-base text-indigo-300 font-semibold tracking-wide uppercase">
+            <h2 className="text-base text-indigo-400 font-semibold tracking-wide uppercase">
               Spacetune
             </h2>
             <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">
@@ -491,8 +491,27 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <BackTop
+        visibilityHeight={100}
+        duration={500}
+        className=" text-white rounded-xl"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-10 w-16"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M5 10l7-7m0 0l7 7m-7-7v18"
+          />
+        </svg>
+      </BackTop>
       <Footer logo={Spacetune} />
-    </>
     </div>
   );
 }
