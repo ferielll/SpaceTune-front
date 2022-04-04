@@ -8,10 +8,22 @@ import Title from "../../../components/Title";
 import NewItem from "./NewItem";
 import useLightBox from "../../../hooks/useLightBox";
 import LightBox from "../../../components/LightBox";
+import { NavLink } from "react-router-dom";
 
-function AllItemsList() {
+function AllItemsList(props) {
   //states
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState([true]);
+  const [items,setItems ]= useState([]);
+  const url = 'http://localhost:3000/spacetune/api/shop/'+props.strr;
+  const getAllItems = () => {
+    axios.get(url)
+    .then((response)=>{
+      const allItems = response.data;
+      console.log(response);
+      setItems(allItems);
+    })
+    .catch(error=> console.error("erreur"))
+  }
 
   const addToCart = (e, item) => {
     setCart([...cart, item]);
@@ -36,15 +48,22 @@ function AllItemsList() {
   const images = "//placekitten.com/1500/500";
   //useQuery is function from react-query,  1 param key, second param func()
   //we use it for fetch (method get), create update delete we use useMutation instaed of this hook
-  const {
-    data: items,
-    isError,
-    isLoading,
-  } = useQuery(["fetchAllItemsList"], () =>
-    axios
-      .get("http://localhost:3000/spacetune/api/shop/getAll")
-      .then((res) => res.data)
-  );
+  useEffect(()=>{
+    getAllItems();
+  },[props]);
+
+
+  //  const{
+  //   data: items,
+  //   isError,
+  //   isLoading,
+  // } = useQuery(["fetchAllItemsList"], () =>
+  
+  //   axios
+  //     .get("http://localhost:3000/spacetune/api/shop/"+props.strr)
+  //     .then((res) => res.data)
+
+  //     );
 
   return (
     <div>
@@ -55,7 +74,7 @@ function AllItemsList() {
             <InputSearch />
           </div>
           <div className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-            {!isLoading &&
+            { 
               items.map((item, i) => (
                 <div
                   className="max-w-md w-full mx-auto mt-3 shadow-lg border-black rounded-md duration-300 hover:shadow-sm"
@@ -88,12 +107,13 @@ function AllItemsList() {
                     </p>
                   </div>
                   <div className="flex justify-start pt-2 ml-4 mr-2 mb-3">
-                    <button
+                    <NavLink
                       className="px-4 py-2 text-sm font-medium text-center text-white rounded-xl transition-colors duration-150 bg-blue-600 border border-transparent active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
-                      onClick={(e) => addToCart(e, item)}
+                      // onClick={(e) => addToCart(e, item)}
+                      to = {"/app/shop/productDetail"}
                     >
                       Order now
-                    </button>
+                    </NavLink>
                   </div>
                 </div>
 

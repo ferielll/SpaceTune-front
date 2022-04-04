@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,6 +16,7 @@ const Application = lazy(() => import("./pages/app"));
 const Single = lazy(() => import("./pages/app/Single/Single"));
 
 function App() {
+ 
   //custom hook to check if user is logged In
   const { isLoggedIn, setLoggedIn } = useAuth();
   const queryClient = new QueryClient({
