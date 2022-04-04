@@ -17,17 +17,19 @@ import { DotsVerticalIcon, TrashIcon } from "@heroicons/react/outline";
 import { EditIcon } from "evergreen-ui";
 import ConfirmModal from "../../../components/Modal/ConfirmModal";
 import { useLoading } from "../../../hooks/useLoading";
-import { Modal } from "antd";
 import NewTraining from "./NewTraining";
+import EditTraining from "./EditTraining";
+import { SideBar } from "../../../Layout/SideBar";
 
 const MyTrainings = () => {
-  //states
+  //states (modals visibles)
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
+  //select item to delete
+  const [selectedItem, setSelectedItem] = useState(null);
   //helpers
   const { user } = useUser();
-  console.log(user, "user");
   const navigate = useNavigate();
   const {
     isLoading: isDeletingLoading,
@@ -58,27 +60,52 @@ const MyTrainings = () => {
     );
     stopLoading();
     setShowDeleteModal(false);
+    setSelectedItem(null);
     refetch();
   }
+
+  const items = [
+    {
+      name: "My lessons",
+      icon: "",
+      to: "#",
+    },
+    {
+      name: "Courses",
+      icon: "",
+      to: "#",
+    },
+    {
+      name: "Calendar",
+      icon: "",
+      to: "#",
+    },
+  ];
 
   return (
     <Fragment>
       <Breadcrumb title={"Dashboard"} />
+      <SideBar items={items} />
       <div className="flex flex-row justify-center pt-1 mx-auto">
         <div className="mt-4 px-2 w-full max-w-7xl lg:px-4">
           <div className="flex justify-between text-start w-full">
-            <Title title="My Lessons" />
-            <InputSearch />
-            <button
-              onClick={() => setModalVisible(true)}
-              className={`text-base leading-6 font-medium py-1 px-4 mr-4 rounded-lg tracking-wide shadow-md bg-navbar-color text-gray-100`}
-            >
-              Add new training
-            </button>
+            <div>
+              <Title title="My Lessons" />
+            </div>
+            <div className="flex space-x-5">
+              <InputSearch />
+              <button
+                onClick={() => setModalVisible(true)}
+                className={`text-base leading-6 font-medium py-1 px-4 mr-4 rounded-lg tracking-wide shadow-md bg-navbar-color text-gray-100`}
+              >
+                Add new training
+              </button>
+            </div>
             {isModalVisible && (
               <NewTraining
                 isModalVisible={isModalVisible}
                 setModalVisible={setModalVisible}
+                refetch={refetch}
               />
             )}
           </div>
@@ -89,6 +116,14 @@ const MyTrainings = () => {
               cancelButton="Cancel"
               onClickCancel={() => setShowDeleteModal(false)}
               onClickConfirm={() => deleteTraining(selectedItem)}
+            />
+          )}
+          {showEditModal && (
+            <EditTraining
+              isModalVisible={showEditModal}
+              setModalVisible={setShowEditModal}
+              refetch={refetch}
+              item={selectedItem}
             />
           )}
           <div className="my-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -153,6 +188,10 @@ const MyTrainings = () => {
                             <Menu.Item>
                               {({ active }) => (
                                 <button
+                                  onClick={() => {
+                                    setShowEditModal(true);
+                                    setSelectedItem(items);
+                                  }}
                                   className={`${
                                     active ? `bg-gray-100` : "text-gray-700"
                                   } group flex rounded-md items-center w-full px-2 py-2 text-sm`}

@@ -1,23 +1,22 @@
-import { Button, Upload } from "antd";
-import ImgCrop from "antd-img-crop";
+import { Button } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import Input from "../../../components/form/Input";
 import { useLoading } from "../../../hooks/useLoading";
 import { useUser } from "../../../hooks/useUser";
 
-function NewTraining({ isModalVisible, setModalVisible, refetch }) {
+function EditTraining({ item, isModalVisible, setModalVisible, refetch }) {
   //helpers
   const { user } = useUser();
   const { isLoading, startLoading, stopLoading } = useLoading(false);
   const { handleSubmit, control } = useForm({
     defaultValues: {
-      name: "",
-      description: "",
-      price: "",
-      type: "",
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      type: item.type,
     },
     mode: "onChange",
   });
@@ -28,13 +27,16 @@ function NewTraining({ isModalVisible, setModalVisible, refetch }) {
     const teacher = user._id;
     try {
       await axios
-        .post("http://localhost:3000/spacetune/api/formation/create", {
-          name,
-          description,
-          price,
-          type,
-          teacher,
-        })
+        .put(
+          `http://localhost:3000/spacetune/api/formation/update/${item._id}`,
+          {
+            name,
+            description,
+            price,
+            type,
+            teacher,
+          }
+        )
         .then((res) => {
           console.log(res, "res");
           if (!res.data.success) {
@@ -52,7 +54,7 @@ function NewTraining({ isModalVisible, setModalVisible, refetch }) {
 
   return (
     <Modal
-      title="Add new training"
+      title="Edit training"
       visible={isModalVisible}
       width="350px"
       onCancel={() => setModalVisible(false)}
@@ -134,4 +136,4 @@ function NewTraining({ isModalVisible, setModalVisible, refetch }) {
   );
 }
 
-export default NewTraining;
+export default EditTraining;

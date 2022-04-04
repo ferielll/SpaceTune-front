@@ -62,16 +62,16 @@ const DetailsTraining = () => {
                 <polygon points="17.3036738 5.68434189e-14 20 5.68434189e-14 20 104 0.824555778 104" />
               </svg>
             </div>
-            <div className="flex flex-col justify-center p-8 bg-white lg:p-16 lg:pl-10 lg:w-1/2">
+            <div className="flex flex-col justify-center p-4 bg-white lg:p-8 lg:pl-10 lg:w-1/2">
               <div>
                 <p className="bg-green-300 inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-teal-900 uppercase rounded-full bg-teal-accent-400">
                   Guitar
                 </p>
               </div>
-              <h5 className="mb-3 text-3xl font-extrabold leading-none sm:text-4xl">
+              <h3 className="text-2xl mb-3 lg:text-3xl font-bold leading-tightsm:text-4xl">
                 {training.name}
-              </h5>
-              <p className="mb-5 text-gray-800">{training.description}</p>
+              </h3>
+              <p className="mb-5 text-gray-600">{training.description}</p>
               <div className="flex items-center">
                 <Button
                   className={`${

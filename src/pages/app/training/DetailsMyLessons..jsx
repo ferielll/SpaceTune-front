@@ -1,15 +1,21 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import Breadcrumb from "../../../components/Breadcrum";
 import capture from "../../../assets/capture.png";
 import ListParticipants from "./ListParticipants";
+import EditTraining from "./EditTraining";
 const DetailsMyLessons = () => {
   //réperer id in param
   const { id } = useParams();
+  const [showEditModal, setShowEditModal] = useState(false);
   //fetch details training
-  const { data: training, isLoading } = useQuery(["fetchDetailsMylesson"], () =>
+  const {
+    data: training,
+    isLoading,
+    refetch,
+  } = useQuery(["fetchDetailsMylesson"], () =>
     axios
       .get(`http://localhost:3000/spacetune/api/formation/myLessonById/${id}`)
       .then((res) => res.data)
@@ -17,11 +23,16 @@ const DetailsMyLessons = () => {
   console.log(training);
   return (
     <div>
-      <Breadcrumb title="Training > Details training" />
-      <div
-        className="
-      px-2 py-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-6"
-      >
+      <Breadcrumb title="My trainings > Details training" />
+      <div className="px-2 py-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-6">
+        {showEditModal && (
+          <EditTraining
+            isModalVisible={showEditModal}
+            setModalVisible={setShowEditModal}
+            refetch={refetch}
+            item={training}
+          />
+        )}
         {!isLoading && (
           <>
             <div className="flex flex-col h-full max-w-screen-lg bg-white border rounded shadow-sm lg:flex-row sm:mx-auto">
@@ -45,7 +56,7 @@ const DetailsMyLessons = () => {
                     Guitar
                   </p>
                 </div>
-                <h5 className="mb-3 text-3xl font-extrabold leading-none sm:text-4xl">
+                <h5 className="mb-3 text-2xl font-bold leading-none sm:text-4xl">
                   {training.name}
                 </h5>
                 <p className="mb-5 text-gray-800">{training.description}</p>
@@ -57,6 +68,9 @@ const DetailsMyLessons = () => {
                     Start live
                   </button>
                   <button
+                    onClick={() => {
+                      setShowEditModal(true);
+                    }}
                     className={` text-gray-700 text-base leading-6 font-medium py-1 px-4 mr-4 rounded-lg tracking-wide transition-duration-200
                            shadow-md focus:shadow-outline focus:outline-none hover:-translate-y-1`}
                   >
