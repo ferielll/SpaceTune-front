@@ -9,7 +9,7 @@ import useLightBox from "../../../hooks/useLightBox";
 import LightBox from "../../../components/LightBox";
 import capture from "../../../assets/capture.png";
 import Loader from "../../../components/Loader";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../../../hooks/useUser";
 import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
@@ -20,6 +20,7 @@ import { useLoading } from "../../../hooks/useLoading";
 import NewTraining from "./NewTraining";
 import EditTraining from "./EditTraining";
 import { SideBar } from "../../../Layout/SideBar";
+import { Empty } from "antd";
 
 const MyTrainings = () => {
   //states (modals visibles)
@@ -31,6 +32,7 @@ const MyTrainings = () => {
   //helpers
   const { user } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     isLoading: isDeletingLoading,
     startLoading,
@@ -68,17 +70,17 @@ const MyTrainings = () => {
     {
       name: "My lessons",
       icon: "",
-      to: "#",
+      to: "/",
     },
     {
       name: "Courses",
       icon: "",
-      to: "#",
+      to: `${location.pathname}/courses`,
     },
     {
       name: "Calendar",
       icon: "",
-      to: "#",
+      to: `${location.pathname}/calendar`,
     },
   ];
 
@@ -126,9 +128,11 @@ const MyTrainings = () => {
               item={selectedItem}
             />
           )}
-          <div className="my-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {!isLoading ? (
-              trainings.map((items, key) => (
+          {isLoading ? (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          ) : (
+            <div className="my-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {trainings.map((items, key) => (
                 <div
                   className="max-w-md w-full mx-auto mt-3 shadow-lg border-black rounded-md duration-300 hover:shadow-sm hover:-translate-y-1"
                   key={key}
@@ -246,13 +250,9 @@ const MyTrainings = () => {
                     </p>
                   </div>
                 </div>
-              ))
-            ) : (
-              <div className="flex justify-center items-center">
-                <Loader size={50} />
-              </div>
-            )}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </Fragment>

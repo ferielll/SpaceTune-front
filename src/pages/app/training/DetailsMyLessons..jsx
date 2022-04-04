@@ -53,7 +53,7 @@ const DetailsMyLessons = () => {
               <div className="flex flex-col justify-center p-4 bg-white lg:p-4 lg:pl-10 lg:w-1/2">
                 <div>
                   <p className="bg-green-300 inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-teal-900 uppercase rounded-full bg-teal-accent-400">
-                    Guitar
+                    {training.type}
                   </p>
                 </div>
                 <h5 className="mb-3 text-2xl font-bold leading-none sm:text-4xl">

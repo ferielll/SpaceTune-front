@@ -1,3 +1,4 @@
+import { CloudUploadOutlined } from "@material-ui/icons";
 import { Button, Upload } from "antd";
 import ImgCrop from "antd-img-crop";
 import Modal from "antd/lib/modal/Modal";
@@ -12,19 +13,21 @@ function NewTraining({ isModalVisible, setModalVisible, refetch }) {
   //helpers
   const { user } = useUser();
   const { isLoading, startLoading, stopLoading } = useLoading(false);
+
   const { handleSubmit, control } = useForm({
     defaultValues: {
       name: "",
       description: "",
       price: "",
       type: "",
+      image: "",
     },
     mode: "onChange",
   });
 
   const onSubmit = async (data) => {
     startLoading();
-    const { name, description, price, type } = data;
+    const { name, description, price, type, image } = data;
     const teacher = user._id;
     try {
       await axios
@@ -33,6 +36,7 @@ function NewTraining({ isModalVisible, setModalVisible, refetch }) {
           description,
           price,
           type,
+          image,
           teacher,
         })
         .then((res) => {
