@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment,useState } from "react";
+import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   BellIcon,
@@ -11,11 +11,6 @@ import Spacetune from "../assets/spacetuneWidth.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 import { UserAvatar } from "../components/UserAvatar";
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import Cart from "../pages/app/shop"
-import { Link } from 'react-router-dom'
 
 const navigation = [
   {
@@ -23,7 +18,7 @@ const navigation = [
     to: "shop",
     current: false,
   },
- 
+
   {
     name: "Blogs",
     to: "blogs",
@@ -60,13 +55,11 @@ const navigation = [
   },
 ];
 
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function NavBar() {
- 
   //helpers
   const navigate = useNavigate();
   const { user } = useUser();
@@ -170,11 +163,10 @@ export default function NavBar() {
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-4 flex items-center md:ml-6">
-                      
                       <NavLink
                         type="button"
                         className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                        to = {"cart"}
+                        to={"cart"}
                       >
                         <span className="sr-only">Cart</span>
                         <div className="cart">
@@ -312,11 +304,6 @@ export default function NavBar() {
           )}
         </Disclosure>
       </div>
-     
-        
-          
-      
     </div>
-    
   );
 }
