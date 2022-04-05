@@ -4,13 +4,13 @@ import './styles/index.css';
 import './styles/playhead.css';
 import InstrumentRow from './Components/InstrumentRow';
 import Bpm from './helpers/useBPM';
-import BeatLabel from './Components/BeatLabel';
 import Tempo from './Components/Tempo';
 import { instruments, getBassNote } from './helpers/instruments';
 import PlayButton from './Components/PlayButton';
 import StopButton from './Components/StopButton';
 import Volume from './Components/Volume';
 import { Howl } from 'howler';
+import MyBeats from "./Components/MyBeats";
 const BeatMaker = () => {
  //beat machine initial states
  const [isPlaying, setIsPlaying] = useState(false);
@@ -253,8 +253,10 @@ const BeatMaker = () => {
 
  //App returns the composite of our beat machine and components
  return (
-   <div className="container bg-black">
-    
+   <div className='flex content-center'>
+   
+
+   <div className="container bg-black flex-initial w-64">
      <div className="btnGroup">
        <PlayButton onClick={togglePlay} isPlaying={isPlaying} />
        <StopButton onClick={togglePlay} isPlaying={isPlaying} />
@@ -284,6 +286,12 @@ const BeatMaker = () => {
        </tbody>
      </table>
    </div>
+   <div className='flex-initial w-60 content-center mt-[30vh]	' >
+     <MyBeats/>
+
+     </div>
+   </div>
+
  );
 };
 

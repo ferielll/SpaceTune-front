@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
+import { Fragment,useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   BellIcon,
@@ -12,10 +12,17 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 import { UserAvatar } from "../components/UserAvatar";
 
+
 const navigation = [
   {
     name: "Shop",
     to: "shop",
+    current: false,
+  },
+ 
+  {
+    name: "Blogs",
+    to: "blogs",
     current: false,
   },
   {
@@ -24,8 +31,8 @@ const navigation = [
     current: false,
   },
   {
-    name: "Entertainement",
-    to: "entertainement",
+    name: "Entertainment",
+    to: "entertainment",
     current: false,
   },
   {
@@ -49,11 +56,13 @@ const navigation = [
   },
 ];
 
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function NavBar() {
+ 
   //helpers
   const navigate = useNavigate();
   const { user } = useUser();
@@ -73,7 +82,7 @@ export default function NavBar() {
     },
   ];
   return (
-    <div className="sticky top-0 left-0 right-0  w-full">
+    <div className="sticky top-0 left-0 right-0 z-50  w-full">
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-navbar-color">
           {({ open }) => (
@@ -94,6 +103,7 @@ export default function NavBar() {
                         {navigation.map((item, index) =>
                           item.children ? (
                             <Menu
+                              key={index}
                               as="div"
                               className="relative inline-block text-left"
                             >
@@ -156,9 +166,11 @@ export default function NavBar() {
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-4 flex items-center md:ml-6">
-                      <button
+                      
+                      <NavLink
                         type="button"
                         className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                        to = {"cart"}
                       >
                         <span className="sr-only">Cart</span>
                         <div className="cart">
@@ -169,7 +181,7 @@ export default function NavBar() {
                             />
                           </span>
                         </div>
-                      </button>
+                      </NavLink>
                       <button
                         type="button"
                         className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
@@ -296,6 +308,11 @@ export default function NavBar() {
           )}
         </Disclosure>
       </div>
+     
+        
+          
+      
     </div>
+    
   );
 }

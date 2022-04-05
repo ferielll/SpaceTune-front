@@ -19,7 +19,7 @@ export default function PianoComponent() {
     return (
       <div className='container'>
         <h1 className='text-center'>Simple Piano
-        <div class="robot1"></div>
+        <div className="robot1"></div>
 </h1>
 
 <p className='text-center'>
