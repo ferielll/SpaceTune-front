@@ -1,0 +1,10 @@
+.eartraining{
+    margin: auto;
+    width:70%;
+    padding: 10px
+}
+
+.item:hover{
+    background-color: red;
+    cursor: pointer;
+}

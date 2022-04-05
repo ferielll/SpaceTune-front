@@ -12,13 +12,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 import { UserAvatar } from "../components/UserAvatar";
 
+
 const navigation = [
   {
     name: "Shop",
     to: "shop",
     current: false,
   },
-
   {
     name: "Blogs",
     to: "blogs",
@@ -26,7 +26,7 @@ const navigation = [
   },
   {
     name: "Tools",
-    to: "tools",
+    to: "tools/metronome",
     current: false,
   },
   {
@@ -55,11 +55,13 @@ const navigation = [
   },
 ];
 
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function NavBar() {
+ 
   //helpers
   const navigate = useNavigate();
   const { user } = useUser();
@@ -304,6 +306,11 @@ export default function NavBar() {
           )}
         </Disclosure>
       </div>
+     
+        
+          
+      
     </div>
+    
   );
 }
