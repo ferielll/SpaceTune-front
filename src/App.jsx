@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -13,9 +13,10 @@ import { useAuth } from "./hooks/useAuth";
 const Login = lazy(() => import("./pages/authentification/Login"));
 const Register = lazy(() => import("./pages/authentification/Register"));
 const Application = lazy(() => import("./pages/app"));
-const Error = lazy(() => import("./pages/app/Error"));
+const Single = lazy(() => import("./pages/app/Single/Single"));
 
 function App() {
+ 
   //custom hook to check if user is logged In
   const { isLoggedIn, setLoggedIn } = useAuth();
   const queryClient = new QueryClient({
@@ -27,39 +28,33 @@ function App() {
     },
   });
   return (
-    <Suspense fallback={<FallBackSuspense />}>
-      <QueryClientProvider client={queryClient}>
-        <Router>
-          <Routes>
-            <Route
-              path="/"
-              element={<Navigate to={isLoggedIn ? "/app" : "/login"} />}
-            />
-            <Route
-              path="/login"
-              element={
-                isLoggedIn === false ? (
-                  <Login setLoggedIn={setLoggedIn} />
-                ) : (
-                  <Navigate to="/app" />
-                )
-              }
-            />
-            <Route path="/register" element={<Register />} />
-            <Route
-              path="/app/*"
-              element={
-                isLoggedIn ? (
-                  <Application />
-                ) : (
-                  <Login setLoggedIn={setLoggedIn} />
-                )
-              }
-            />
-          </Routes>
-        </Router>
-      </QueryClientProvider>
-    </Suspense>
+    <QueryClientProvider client={queryClient}>
+      <div className="App">
+        <Suspense fallback={<FallBackSuspense />}>
+          <Router>
+            <Routes>
+              <Route path="/register" element={<Register />} />
+              <Route path="/post/:postId" element={<Single />}></Route>
+              <Route
+                path="/login"
+                element={
+                  !isLoggedIn ? (
+                    <Login setLoggedIn={setLoggedIn} />
+                  ) : (
+                    <Navigate to="/app" />
+                  )
+                }
+              />
+              <Route path="/app/*" element={<Application />} />
+              <Route
+                path="/*"
+                element={<Navigate to={isLoggedIn ? "/app" : "/login"} />}
+              />
+            </Routes>
+          </Router>
+        </Suspense>
+      </div>
+    </QueryClientProvider>
   );
 }
 

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import Breadcrumb from "../../../components/Breadcrum";
 import AllItemsList from "./AllItemsList";
-import NewItemsList from "./NewItemsList";
-import UsedItemsList from "./UsedItemsList";
+import ProductDetail from "./ProductDetail";
+
 import { useState } from "react"
 
 import Drawer from "../../../Layout/Drawer";
@@ -43,9 +43,10 @@ export default function Shop() {
         <div className={`${isOpen ? 'w-11/12' : 'w-full'} flex flex-col p-1`}>
           <Suspense fallback={<FallBackSuspense />}>
             <Routes>
-              <Route path="/" element={<AllItemsList />}></Route>
-              <Route path="/newitems" element={<NewItemsList />}></Route>
-              <Route path="/useditems" element={<UsedItemsList />}></Route>
+              <Route path="/" element={<AllItemsList strr="getAll" />}></Route>
+              <Route path="/newitems" element={<AllItemsList strr="getNewItems" />}></Route>
+              <Route path="/useditems" element={<AllItemsList strr="getUsedItems" />}></Route>
+              <Route path="/productDetail/" element={<ProductDetail />}></Route>
             </Routes>
           </Suspense>
         </div>

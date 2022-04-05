@@ -1,120 +1,139 @@
+import { Button } from "antd";
+import Modal from "antd/lib/modal/Modal";
+import axios from "axios";
 import React from "react";
-import { UserAvatar } from "../../../components/UserAvatar";
+import { Controller, useForm } from "react-hook-form";
+import Input from "../../../components/form/Input";
+import { useLoading } from "../../../hooks/useLoading";
 import { useUser } from "../../../hooks/useUser";
 
-export default function EditTraining() {
+function EditTraining({ item, isModalVisible, setModalVisible, refetch }) {
   //helpers
   const { user } = useUser();
+  const { isLoading, startLoading, stopLoading } = useLoading(false);
+  const { handleSubmit, control } = useForm({
+    defaultValues: {
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      type: item.type,
+    },
+    mode: "onChange",
+  });
+
+  const onSubmit = async (data) => {
+    startLoading();
+    const { name, description, price, type } = data;
+    const teacher = user._id;
+    try {
+      await axios
+        .put(
+          `http://localhost:3000/spacetune/api/formation/update/${item._id}`,
+          {
+            name,
+            description,
+            price,
+            type,
+            teacher,
+          }
+        )
+        .then((res) => {
+          console.log(res, "res");
+          if (!res.data.success) {
+            stopLoading();
+            return;
+          }
+        });
+      stopLoading();
+      setModalVisible(false);
+      refetch();
+    } catch (err) {
+      console.log(err, "error");
+    }
+  };
+
   return (
-    <div className="flex w-1/5">
-      <div className="flex flex-col mx-auto items-center justify-center">
-        <div className="px-4 py-5 sm:px-6 w-full border bg-white shadow mb-2 rounded-md">
-          <h3 className="text-lg leading-6 font-medium text-gray-900 ">
-            List participants
-          </h3>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500 ">
-            Details and informations about participants.
-          </p>
-        </div>
-        <ul className="flex flex-col">
-          <li className="border-gray-400 flex flex-row mb-2">
-            <div className="transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md flex flex-1 items-center p-4">
-              <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
-                <UserAvatar user={user} rounded size={45} />
-              </div>
-              <div className="flex-1 pl-1 md:mr-16">
-                <div className="font-medium ">Jean Marc</div>
-                <div className="text-gray-600  text-sm">Developer</div>
-              </div>
-              <div className="text-gray-600  text-xs">6:00 AM</div>
-              <button className="w-24 text-right flex justify-end">
-                <svg
-                  width="12"
-                  fill="currentColor"
-                  height="12"
-                  className="hover:text-gray-800 text-gray-500"
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z"></path>
-                </svg>
-              </button>
-            </div>
-          </li>
-          <li className="border-gray-400 flex flex-row mb-2">
-            <div className="transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md flex flex-1 items-center p-4">
-              <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
-                <UserAvatar user={user} rounded size={45} />
-              </div>
-              <div className="flex-1 pl-1 md:mr-16">
-                <div className="font-medium ">Jean Marc</div>
-                <div className="text-gray-600  text-sm">Developer</div>
-              </div>
-              <div className="text-gray-600  text-xs">6:00 AM</div>
-              <button className="w-24 text-right flex justify-end">
-                <svg
-                  width="12"
-                  fill="currentColor"
-                  height="12"
-                  className="hover:text-gray-800 text-gray-500"
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z"></path>
-                </svg>
-              </button>
-            </div>
-          </li>
-          <li className="border-gray-400 flex flex-row mb-2">
-            <div className="transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md flex flex-1 items-center p-4">
-              <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
-                <UserAvatar user={user} rounded size={45} />
-              </div>
-              <div className="flex-1 pl-1 md:mr-16">
-                <div className="font-medium ">Jean Marc</div>
-                <div className="text-gray-600  text-sm">Developer</div>
-              </div>
-              <div className="text-gray-600  text-xs">6:00 AM</div>
-              <button className="w-24 text-right flex justify-end">
-                <svg
-                  width="12"
-                  fill="currentColor"
-                  height="12"
-                  className="hover:text-gray-800 text-gray-500"
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z"></path>
-                </svg>
-              </button>
-            </div>
-          </li>
-          <li className="border-gray-400 flex flex-row mb-2">
-            <div className="transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md flex flex-1 items-center p-4">
-              <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
-                <UserAvatar user={user} rounded size={45} />
-              </div>
-              <div className="flex-1 pl-1 md:mr-16">
-                <div className="font-medium ">Jean Marc</div>
-                <div className="text-gray-600  text-sm">Developer</div>
-              </div>
-              <div className="text-gray-600  text-xs">6:00 AM</div>
-              <button className="w-24 text-right flex justify-end">
-                <svg
-                  width="12"
-                  fill="currentColor"
-                  height="12"
-                  className="hover:text-gray-800 text-gray-500"
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z"></path>
-                </svg>
-              </button>
-            </div>
-          </li>
-        </ul>
+    <Modal
+      title="Edit training"
+      visible={isModalVisible}
+      width="350px"
+      onCancel={() => setModalVisible(false)}
+      centered
+      footer={[
+        <Button
+          loading={isLoading}
+          onClick={handleSubmit(onSubmit)}
+          className={` text-white text-sm font-medium py-1 px-4 mr-4 rounded-lg transition-duration-200
+                           shadow-md bg-blue-600 `}
+        >
+          Confirm
+        </Button>,
+      ]}
+    >
+      <div>
+        <Controller
+          name="name"
+          control={control}
+          rules={{
+            required: `Enter name of the training session.`,
+          }}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              label="Name"
+              placeholder="name"
+              hasError={invalid}
+              error={error && error.message}
+            />
+          )}
+        />
+        <Controller
+          name="description"
+          control={control}
+          rules={{
+            required: `Please enter your description.`,
+          }}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              label="Description"
+              placeholder="Write description..."
+              className="whitespace-pre-wrap"
+              hasError={invalid}
+              error={error && error.message}
+            />
+          )}
+        />
+        <Controller
+          name="price"
+          control={control}
+          rules={{
+            pattern: {
+              value: /^[0-9]*$/i,
+              message: "price should be number",
+            },
+          }}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              label="Price"
+              type="text"
+              placeholder="price"
+              hasError={invalid}
+              error={error && error.message}
+            />
+          )}
+        />
+        <Controller
+          name="type"
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input {...field} label="Type" type="text" placeholder="type" />
+          )}
+        />
       </div>
-    </div>
+    </Modal>
   );
 }
+
+export default EditTraining;
