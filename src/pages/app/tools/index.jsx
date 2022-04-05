@@ -6,6 +6,9 @@ import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import MetronomePage from "./metronome";
+import EarTraining from "./earTraining";
+import TabGenerator from "./tabGenerator";
+
 import Tuner from "./tuner";
 import FallBackSuspense from "../../../components/FallBackSuspense";
 import BeatMaker from "./beatMaker"
@@ -72,6 +75,8 @@ export default function Tools() {
               <Route path="/tuner" element={<Tuner />}></Route>
               <Route path="/beatmaker" element={<BeatMaker />}></Route>
               <Route path="/piano" element={<PianoComponent />}></Route>
+              <Route path="/earTraining" element={<EarTraining />}></Route>
+              <Route path="/tabgenerator" element={<TabGenerator />}></Route>
 
             </Routes>
           </Suspense>

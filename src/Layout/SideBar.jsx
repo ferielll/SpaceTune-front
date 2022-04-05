@@ -15,11 +15,9 @@ export const SideBar = ({ items }) => {
                     to={item.to}
                     className="flex justify-start items-center p-2 space-x-3 rounded-md"
                   >
-                    {item.icon && (
-                      <span className="w-5 h-5  dark:text-coolGray-400">
-                        {item.icon}
-                      </span>
-                    )}
+                    <span className="w-5 h-5  dark:text-coolGray-400">
+                      {item.icon}
+                    </span>
                     <span className="text-sm font-semibold">{item.name}</span>
                   </NavLink>
                 </li>

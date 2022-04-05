@@ -13,15 +13,14 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../hooks/useUser";
 import { Fragment } from "react";
 import { useLoading } from "../../../hooks/useLoading";
-import { Button, Pagination } from "antd";
+import { Button, Empty, Pagination } from "antd";
 import { toaster } from "evergreen-ui";
+import { useEffect } from "react";
 
 function ListTraining() {
   //helpers
   const { user } = useUser();
   const navigate = useNavigate();
-  //states
-  const [currentPage, setCurrentPage] = useState(1);
   //loading subscribe
   const {
     isLoading: subscribeLoading,
@@ -30,12 +29,24 @@ function ListTraining() {
   } = useLoading(false);
   // custom hook for handle the lightbox component
   const lightBox = useLightBox();
+  //pagination
+  //states
+  const [currentPage, setCurrentPage] = useState(1);
+  let pagination = { page: currentPage, limit: 8 };
+  const onChange = async (page) => {
+    setCurrentPage(page);
+  };
+
   //fetch List Trainings
   const { data, dataUpdatedAt, isLoading, refetch } = useQuery(
     ["fetchListTraining"],
     () =>
       axios
-        .get(`http://localhost:3000/spacetune/api/formation/getAll`)
+        .get(
+          `http://localhost:3000/spacetune/api/formation/getAll?pagination=${JSON.stringify(
+            pagination
+          )}&sort=${JSON.stringify(1)}`
+        )
         .then((res) => res.data)
   );
 
@@ -43,7 +54,10 @@ function ListTraining() {
     if (isLoading) return [];
     return data.docs;
   }, [dataUpdatedAt]);
-  console.log(data);
+
+  useEffect(() => {
+    refetch();
+  }, [currentPage, refetch]);
 
   //Update training
   async function subscribe(_id) {
@@ -60,10 +74,6 @@ function ListTraining() {
     refetch();
   }
 
-  const onChange = (page) => {
-    console.log(page, "page");
-    setCurrentPage(page);
-  };
   //testing image view
   const images = capture;
   return (
@@ -78,9 +88,11 @@ function ListTraining() {
             />
             <InputSearch />
           </div>
-          <div className="my-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {!isLoading &&
-              trainings?.map((items, key) => (
+          {isLoading ? (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          ) : (
+            <div className="my-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {trainings?.map((items, key) => (
                 <div
                   className="max-w-md w-full mx-auto mt-3 shadow-lg border-black rounded-md duration-300 hover:shadow-sm hover:-translate-y-2"
                   key={items._id}
@@ -152,12 +164,15 @@ function ListTraining() {
                   </div>
                 </div>
               ))}
-          </div>
+            </div>
+          )}
           <Pagination
+            className="flex justify-center my-5"
             current={currentPage}
             total={data?.totalDocs}
+            pageSize={pagination.limit}
             onChange={onChange}
-          />
+          />       
         </div>
       </div>
     </Fragment>
