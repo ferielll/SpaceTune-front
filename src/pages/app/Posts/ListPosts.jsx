@@ -7,6 +7,7 @@ import Post from "../Post/Post";
 import "./posts.css";
 
 export default function ListPosts({ posts }) {
+  const [isModalVisible, setModalVisible] = useState(false);
   return (
     <Fragment>
       <Breadcrumb title={"All posts"} />
@@ -18,6 +19,12 @@ export default function ListPosts({ posts }) {
               subtitle="Posts that are loved by the community. Updated every hour."
             />
             <InputSearch />
+            <button
+                onClick={() => setModalVisible(true)}
+                className={`text-base leading-6 font-medium py-1 px-4 mr-4 rounded-lg tracking-wide shadow-md bg-navbar-color text-gray-100`}
+              >
+                Add new blog
+              </button>
           </div>
           <div className="my-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {posts.map((p) => (
@@ -29,3 +36,5 @@ export default function ListPosts({ posts }) {
     </Fragment>
   );
 }
+
+
