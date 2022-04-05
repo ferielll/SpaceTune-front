@@ -172,7 +172,7 @@ function ListTraining() {
             total={data?.totalDocs}
             pageSize={pagination.limit}
             onChange={onChange}
-          />
+          />       
         </div>
       </div>
     </Fragment>

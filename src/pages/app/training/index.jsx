@@ -7,6 +7,7 @@ import MyTrainings from "./MyTrainings";
 import NewTraining from "./NewTraining";
 import Calendar from "./DashboardCalendar";
 import Courses from "./Courses";
+import OnlineLesson from "./OnlineLesson";
 const Training = () => {
   return (
     <div>
