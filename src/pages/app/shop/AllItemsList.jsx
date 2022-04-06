@@ -46,7 +46,7 @@ function AllItemsList(props) {
   // custom hook for handle the lightbox component
   const lightBox = useLightBox();
   //exemple for test
-  const images = "//placekitten.com/1500/500";
+  const images = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVU30iCxprlRMuAsfRA__QRABNExU3R-XZgw&usqp=CAU";
   //useQuery is function from react-query,  1 param key, second param func()
   //we use it for fetch (method get), create update delete we use useMutation instaed of this hook
   useEffect(()=>{
