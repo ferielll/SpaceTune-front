@@ -13,10 +13,8 @@ import { useAuth } from "./hooks/useAuth";
 const Login = lazy(() => import("./pages/authentification/Login"));
 const Register = lazy(() => import("./pages/authentification/Register"));
 const Application = lazy(() => import("./pages/app"));
-const Single = lazy(() => import("./pages/app/Single/Single"));
-
+const AdminDashboard = lazy(() => import("./pages/dashboard/index"));
 function App() {
- 
   //custom hook to check if user is logged In
   const { isLoggedIn, setLoggedIn } = useAuth();
   const queryClient = new QueryClient({
@@ -33,8 +31,8 @@ function App() {
         <Suspense fallback={<FallBackSuspense />}>
           <Router>
             <Routes>
+              <Route path="/dashboard/*" element={<AdminDashboard />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/post/:postId" element={<Single />}></Route>
               <Route
                 path="/login"
                 element={
