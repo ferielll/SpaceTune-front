@@ -36,44 +36,6 @@ const ChatComponent = ({ setShowChat }) => {
               <a className="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none">
                 <img
                   className="object-cover w-10 h-10 rounded-full"
-                  src="https://cdn.pixabay.com/photo/2018/09/12/12/14/man-3672010__340.jpg"
-                  alt="username"
-                />
-                <div className="w-full pb-2">
-                  <div className="flex justify-between">
-                    <span className="block ml-2 font-semibold text-gray-600">
-                      Omar Elloumi
-                    </span>
-                    <span className="block ml-2 text-sm text-gray-600">
-                      25 minutes
-                    </span>
-                  </div>
-                  <span className="block ml-2 text-sm text-gray-600">bye</span>
-                </div>
-              </a>
-              <a className="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out bg-gray-100 border-b border-gray-300 cursor-pointer focus:outline-none">
-                <img
-                  className="object-cover w-10 h-10 rounded-full"
-                  src="https://cdn.pixabay.com/photo/2016/06/15/15/25/loudspeaker-1459128__340.png"
-                  alt="username"
-                />
-                <div className="w-full pb-2">
-                  <div className="flex justify-between">
-                    <span className="block ml-2 font-semibold text-gray-600">
-                      Mohaned
-                    </span>
-                    <span className="block ml-2 text-sm text-gray-600">
-                      50 minutes
-                    </span>
-                  </div>
-                  <span className="block ml-2 text-sm text-gray-600">
-                    Good night
-                  </span>
-                </div>
-              </a>
-              <a className="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none">
-                <img
-                  className="object-cover w-10 h-10 rounded-full"
                   src="https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083383__340.jpg"
                   alt="username"
                 />
@@ -95,13 +57,13 @@ const ChatComponent = ({ setShowChat }) => {
           </ul>
         </div>
         <div className="hidden lg:col-span-2 lg:block">
-          <div className="flex justify-end">
-            <button
-              className="text-base font-medium"
-              onClick={() => setShowChat(false)}
-            >{`<- back`}</button>
-          </div>
-          <div className="w-full">
+          <div className="">
+            <div className="flex justify-end ">
+              <button
+                className="text-base text-white font-medium bg-slate-600 rounded-tr p-1"
+                onClick={() => setShowChat(false)}
+              >{`back`}</button>
+            </div>
             <div className="relative flex items-center p-3 border-b border-gray-300">
               <div>
                 <img
@@ -146,22 +108,6 @@ const ChatComponent = ({ setShowChat }) => {
               <button>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6 text-gray-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </button>
-              <button>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
                   className="w-5 h-5 text-gray-500"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -183,22 +129,6 @@ const ChatComponent = ({ setShowChat }) => {
                 name="message"
                 required
               />
-              <button>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 text-gray-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-                  />
-                </svg>
-              </button>
               <button type="submit">
                 <svg
                   className="w-5 h-5 text-gray-500 origin-center transform rotate-90"

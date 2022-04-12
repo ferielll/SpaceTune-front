@@ -1,34 +1,27 @@
 import { NavLink } from "react-router-dom";
 
 export default function Drawer({ isOpen, setIsOpen, navigation }) {
-    
-    function classNames(...classes) {
-        return classes.filter(Boolean).join(" ");
-    }
-    return (
-        <>
-            <div
-                className={` fixed  h-full bg-slate-900 p-2  ease-in-out duration-300 ${isOpen ? "translate-x-0 " : "-translate-x-full"
-                    }`}
+  return (
+    <>
+      <div
+        className={` fixed  h-full bg-gray-200 p-2  ease-in-out duration-300 ${
+          isOpen ? "translate-x-0 " : "-translate-x-full"
+        }`}
+      >
+        <h3 className="mt-5 text-2xl  flex flex-col">
+          {navigation.map((item, index) => (
+            <NavLink
+              to={item.to}
+              className="flex justify-start items-center p-2 space-x-3 rounded-md"
             >
-                <h3 className="mt-5 text-2xl text-white flex flex-col">
-                    {navigation.map((item, index) => (
-                        <NavLink
-                            key={index}
-                            to={item.to}
-                            className={classNames(
-                                item.current
-                                    ? "underline underline-offset-4 decoration-blue-700 decoration-4 text-white"
-                                    : "text-gray-300 hover:underline underline-offset-4 decoration-blue-700 decoration-4 hover:text-white",
-                                "px-3 py-2 rounded-md text-base font-medium"
-                            )}
-                            aria-current={item.current ? "page" : undefined}
-                        >
-                            {item.name}
-                        </NavLink>
-                    ))}
-                </h3>
-            </div>
-        </>
-    )
+              <span className={`${item.icon && "w-5 h-5"}`}>
+                {item.icon && item.icon}
+              </span>
+              <span className="text-sm font-semibold">{item.name}</span>
+            </NavLink>
+          ))}
+        </h3>
+      </div>
+    </>
+  );
 }
