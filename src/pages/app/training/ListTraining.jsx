@@ -57,7 +57,7 @@ function ListTraining() {
 
   useEffect(() => {
     refetch();
-  }, [currentPage, refetch]);
+  }, [currentPage]);
 
   //Update training
   async function subscribe(_id) {
@@ -73,6 +73,8 @@ function ListTraining() {
     stopLoadingSubscribe();
     refetch();
   }
+
+  console.log(trainings, "trainings");
 
   //testing image view
   const images = capture;
@@ -95,7 +97,7 @@ function ListTraining() {
               {trainings?.map((items, key) => (
                 <div
                   className="max-w-md w-full mx-auto mt-3 shadow-lg border-black rounded-md duration-300 hover:shadow-sm hover:-translate-y-2"
-                  key={items._id}
+                  key={key}
                 >
                   {/* LightBox component, images can be [String] == group of images || String */}
                   {lightBox.isLightBoxOpen && images && (
@@ -119,7 +121,7 @@ function ListTraining() {
                     >
                       <div className="flex items-center w-10 h-10 rounded-full">
                         <UserAvatar
-                          user={items.teacher}
+                          user={items?.teacher}
                           rounded={true}
                           size={30}
                         />
@@ -172,7 +174,7 @@ function ListTraining() {
             total={data?.totalDocs}
             pageSize={pagination.limit}
             onChange={onChange}
-          />       
+          />
         </div>
       </div>
     </Fragment>

@@ -11,7 +11,6 @@ export const SideBar = ({ items }) => {
               items.map((item, index) => (
                 <li key={index} className="rounded-sm">
                   <NavLink
-                    rel="noopener noreferrer"
                     to={item.to}
                     className="flex justify-start items-center p-2 space-x-3 rounded-md"
                   >

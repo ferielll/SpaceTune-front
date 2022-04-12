@@ -12,7 +12,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 import { UserAvatar } from "../components/UserAvatar";
 
-
 const navigation = [
   {
     name: "Shop",
@@ -55,13 +54,11 @@ const navigation = [
   },
 ];
 
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function NavBar() {
- 
   //helpers
   const navigate = useNavigate();
   const { user } = useUser();
@@ -235,7 +232,7 @@ export default function NavBar() {
                   </div>
                   <div className="-mr-2 flex md:hidden">
                     {/* Mobile menu button */}
-                    <Disclosure.Button className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                    <Disclosure.Button className=" bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                       <span className="sr-only">Open main menu</span>
                       {open ? (
                         <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -251,7 +248,7 @@ export default function NavBar() {
               </div>
 
               <Disclosure.Panel className="md:hidden">
-                <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-gray-300">
                   {navigation.map((item) => (
                     <Disclosure.Button
                       key={item.name}
@@ -306,11 +303,6 @@ export default function NavBar() {
           )}
         </Disclosure>
       </div>
-     
-        
-          
-      
     </div>
-    
   );
 }
