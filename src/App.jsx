@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect , useState} from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,11 +10,16 @@ import FallBackSuspense from "./components/FallBackSuspense";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useAuth } from "./hooks/useAuth";
 
+
 const Login = lazy(() => import("./pages/authentification/Login"));
 const Register = lazy(() => import("./pages/authentification/Register"));
 const Application = lazy(() => import("./pages/app"));
 const AdminDashboard = lazy(() => import("./pages/dashboard/index"));
 function App() {
+  const [cart, setCart] = useState([]);
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  },[]);
   //custom hook to check if user is logged In
   const { isLoggedIn, setLoggedIn } = useAuth();
   const queryClient = new QueryClient({
