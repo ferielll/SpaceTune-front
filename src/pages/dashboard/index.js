@@ -9,6 +9,8 @@ import Dashboard from "./pages/Dashboard";
 import Training from "./pages/Trainings";
 import Modals from "./pages/Modals";
 import Cards from "./pages/Cards";
+import Shop from "./pages/Shop";
+import Order from "./pages/Order";
 
 const Page404 = lazy(() => import("./pages/404"));
 
@@ -35,6 +37,8 @@ function AdminDashboard() {
             <Routes>
               <Route path={`/`} element={<Dashboard />} />
               <Route path={`/training`} element={<Training />} />
+              <Route path={`/shop`} element={<Shop />} />
+              <Route path={`/order`} element={<Order />} />
               <Route path={`/modals`} element={<Modals />} />
               <Route path={`/cards`} element={<Cards />} />
               <Route component={Page404} />

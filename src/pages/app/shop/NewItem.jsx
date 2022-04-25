@@ -6,6 +6,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Input from "../../../components/form/Input";
+import TextArea from "../../../components/form/textArea";
 import { useLoading } from "../../../hooks/useLoading";
 import { useUser } from "../../../hooks/useUser";
 
@@ -124,8 +125,9 @@ function NewItem({ isModalVisible, setModalVisible }) {
             required: `Please enter your description.`,
           }}
           render={({ field, fieldState: { invalid, error } }) => (
-            <Input
+            <TextArea
               {...field}
+              
               label="Description"
               placeholder="Write description..."
               className="whitespace-pre-wrap"

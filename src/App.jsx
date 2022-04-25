@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect , useState} from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -11,12 +11,20 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { useAuth } from "./hooks/useAuth";
 import NavBar from "./Layout/NavBar";
 
+
 const Login = lazy(() => import("./pages/authentification/Login"));
 const Register = lazy(() => import("./pages/authentification/Register"));
 const Application = lazy(() => import("./pages/app"));
 const AdminDashboard = lazy(() => import("./pages/dashboard/index"));
 const Single = lazy(() => import("./pages/app/Single/Single"))
 function App() {
+  const [cart, setCart] = useState([]);
+  useEffect(() => {
+   let s=localStorage.getItem("cart");
+   console.log(s);
+    if (s==null){localStorage.setItem("cart", JSON.stringify(cart));}
+    
+  },[]);
   //custom hook to check if user is logged In
   const { isLoggedIn, setLoggedIn } = useAuth();
   const queryClient = new QueryClient({
