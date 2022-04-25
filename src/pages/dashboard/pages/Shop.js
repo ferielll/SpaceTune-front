@@ -12,7 +12,7 @@ import { Input, HelperText, Label } from "@windmill/react-ui";
 import { CartIcon} from "../icons";
 import { Controller, useForm } from "react-hook-form";
 import RoundIcon from "../components/RoundIcon";
-
+import ConfirmModal from "../../../components/Modal/ConfirmModal";
 import axios from "axios";
 import {
   TableBody,
@@ -57,6 +57,21 @@ function Shop() {
     getAllItems();
   }, []);
 
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  async function deleteItem(selectedItem) {
+    
+    await axios.delete(
+      `http://localhost:3000/spacetune/api/shop/delete/${selectedItem._id}`
+    );
+   
+    setShowDeleteModal(false);
+    setSelectedItem(null);
+    getAllItems();
+  }
+
   
   return (
     <>
@@ -71,6 +86,16 @@ function Shop() {
             className="mr-4"
           />
         </InfoCard> 
+        {showDeleteModal && (
+            <ConfirmModal
+              title={`Are you sure to delete "${selectedItem.name}" ?`}
+              confirmButton="Delete"
+              cancelButton="Cancel"
+              onClickCancel={() => setShowDeleteModal(false)}
+              onClickConfirm={() => deleteItem(selectedItem)}
+            />
+          )}
+
         {isModalOpen && (
           <NewShop isModalOpen={isModalOpen} closeModal={closeModal} />
         )}
@@ -123,7 +148,10 @@ function Shop() {
                       <Button
                         className="bg-red-500"
                         size="small"
-                        onClick={() => openModal()}
+                        onClick={() => {
+                          setShowDeleteModal(true);
+                          setSelectedItem(t);
+                        }}
                       >
                         delete
                       </Button>
