@@ -3,10 +3,13 @@ import React, { useState , useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import ListPosts from "./ListPosts";
 import "./posts.css";
+import { useQuery } from "react-query";
+import { useUser } from "../../../hooks/useUser";
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
   const {search} = useLocation();
+  const { user } = useUser();
   //console.log(location);
 
   useEffect(() => {

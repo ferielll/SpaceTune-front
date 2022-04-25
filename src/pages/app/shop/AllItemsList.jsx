@@ -1,5 +1,5 @@
 import axios from "axios";
-import dayjs from "dayjs";
+
 import React, { useEffect,Fragment, useState } from "react";
 import { DotsVerticalIcon, TrashIcon } from "@heroicons/react/outline";
 import { Menu, Transition } from "@headlessui/react";
@@ -8,12 +8,12 @@ import Title from "../../../components/Title";
 import NewItem from "./NewItem";
 import useLightBox from "../../../hooks/useLightBox";
 import LightBox from "../../../components/LightBox";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { EditIcon } from "evergreen-ui";
 import ConfirmModal from "../../../components/Modal/ConfirmModal";
 function AllItemsList(props) {
   //states
-  const [cart, setCart] = useState([true]);
+  
   const [items,setItems ]= useState([]);
   const url = 'http://localhost:3000/spacetune/api/shop/'+props.strr;
   const getAllItems = () => {
@@ -26,17 +26,11 @@ function AllItemsList(props) {
     .catch(error=> console.error("erreur"))
   }
 
-  const addToCart = (e, item) => {
-    setCart([...cart, item]);
-    e.preventDefault();
-    console.log(cart);
-  };
-  useEffect(() => {
-    setCart(sessionStorage.getItem("cart"));
-  }, []);
-  useEffect(() => {
-    sessionStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+  
+  
+  // useEffect(() => {
+  //   sessionStorage.setItem("cart", JSON.stringify(cart));
+  // }, [cart]);
 
   // const handleClick = (id) => {
   //   fetch('http://localhost:3000/spacetune/api/shop/delete/' + id, {
@@ -103,7 +97,7 @@ function AllItemsList(props) {
                 onClick={() => setModalVisible(true)}
                 className={`text-base leading-6 font-medium py-1 px-4 mr-4 rounded-lg tracking-wide shadow-md bg-navbar-color text-gray-100`}
               >
-                Add new training
+                Add new item
               </button>
           </div>
           {isModalVisible && (
@@ -221,7 +215,7 @@ function AllItemsList(props) {
 
                     
                     <h5 className=" font-semibold text-gray-900">
-                      price: {item.price}
+                      price: ${item.price}
                     </h5>
                     <p className="text-gray-500 text-sm mt-1 line-clamp-3">
                       {item.description}
@@ -229,13 +223,16 @@ function AllItemsList(props) {
                   </div>
                   
                   <div className="flex justify-start pt-2 ml-4 mr-2 mb-3">
-                    <NavLink
+                    <Link
                       className="px-4 py-2 text-sm font-medium text-center text-white rounded-xl transition-colors duration-150 bg-blue-600 border border-transparent active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
                       // onClick={(e) => addToCart(e, item)}
-                      to = {"/app/shop/productDetail"}
+                      
+                      to= "/app/shop/productDetail"
+                      state={{item}}
+                      
                     >
                       Order now
-                    </NavLink>
+                    </Link>
                   </div>
                 </div>
 

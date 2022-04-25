@@ -6,44 +6,37 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Input from "../../../components/form/Input";
-import TextArea from "../../../components/form/textArea";
 import { useLoading } from "../../../hooks/useLoading";
 import { useUser } from "../../../hooks/useUser";
 
-function NewItem({ isModalVisible, setModalVisible }) {
+function NewBlog({ isModalVisible, setModalVisible, refetch }) {
   //helpers
   const { user } = useUser();
   const { isLoading, startLoading, stopLoading } = useLoading(false);
-  // const [name, setName] = useState('');
-  // const [type, setType] = useState('');
-  // const [isUsed, setIsUsed] = useState(false);
-  // const [description, setDescription] = useState('');
-  // const [price, setPrice] = useState(0);
+
   const { handleSubmit, control } = useForm({
     defaultValues: {
-      name: "",
-      description: "",
-      price: "",
-      type: "",
-      // isUsed: "",
+      subject: "",
+      content: "",
+      title: "",
+    //  image: "",
+      username: ""
     },
     mode: "onChange",
   });
 
-  //const history = useHistory();
   const onSubmit = async (data) => {
     startLoading();
-    const { name, description, price, type } = data;
-    const seller = user._id;
+    const { subject, content, title,  username } = data;
+    const user = user._id.name;
     try {
       await axios
-        .post("http://localhost:3000/spacetune/api/shop/create", {
-          name,
-          description,
-          price,
-          type,
-          
-          seller,
+        .post("http://localhost:3000/spacetune/api/post/create", {
+          subject,
+          content,
+          title,
+          username,
+         // user,
         })
         .then((res) => {
           console.log(res, "res");
@@ -54,38 +47,15 @@ function NewItem({ isModalVisible, setModalVisible }) {
         });
       stopLoading();
       setModalVisible(false);
-      
+      refetch();
     } catch (err) {
       console.log(err, "error");
     }
   };
-  // const handleSubmit = async(e) => {
-  //   e.preventDefault();
-  //   const item = { name, type, isUsed,description,price,user };
-
-  //   //startLoading();
-    
-  //   try {
-  //     await axios
-  //       .post("http://localhost:3000/spacetune/api/shop/create", {
-  //         item,
-  //       })
-  //       .then((res) => {
-  //         console.log(res, "res");
-  //        /* if (!res.item.success) {
-  //           //stopLoading();
-  //           return;
-  //         }*/
-  //       });
-  //    // stopLoading();
-  //   } catch (err) {
-  //     console.log(err, "error");
-  //   }
-  // }
 
   return (
     <Modal
-      title="Add new Item"
+      title="Add new blog"
       visible={isModalVisible}
       width="350px"
       onCancel={() => setModalVisible(false)}
@@ -103,33 +73,32 @@ function NewItem({ isModalVisible, setModalVisible }) {
     >
       <div>
         <Controller
-          name="name"
+          name="title"
           control={control}
           rules={{
-            required: `Enter name of the training session.`,
+            required: `Enter the title of the blog.`,
           }}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
               {...field}
-              label="Name"
-              placeholder="name"
+              label="title"
+              placeholder="title"
               hasError={invalid}
               error={error && error.message}
             />
           )}
         />
         <Controller
-          name="description"
+          name="subject"
           control={control}
           rules={{
-            required: `Please enter your description.`,
+            required: `Please enter your subject.`,
           }}
           render={({ field, fieldState: { invalid, error } }) => (
-            <TextArea
+            <Input
               {...field}
-              
-              label="Description"
-              placeholder="Write description..."
+              label="subject"
+              placeholder="Write subject..."
               className="whitespace-pre-wrap"
               hasError={invalid}
               error={error && error.message}
@@ -137,35 +106,42 @@ function NewItem({ isModalVisible, setModalVisible }) {
           )}
         />
         <Controller
-          name="price"
+          name="content"
           control={control}
           rules={{
-            pattern: {
-              value: /^[0-9]*$/i,
-              message: "price should be number",
-            },
+            required: `Please enter your content.`,
           }}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
               {...field}
-              label="Price"
+              label="content"
               type="text"
-              placeholder="price"
+              placeholder="content"
               hasError={invalid}
               error={error && error.message}
             />
           )}
         />
         <Controller
-          name="type"
+          name="username"
           control={control}
+          rules={{
+            required: `Please enter your username.`,
+          }}
           render={({ field, fieldState: { invalid, error } }) => (
-            <Input {...field} label="Type" type="text" placeholder="type" />
+            <Input
+              {...field}
+              label="username"
+              type="text"
+              placeholder="username"
+              hasError={invalid}
+              error={error && error.message}
+            />
           )}
         />
       </div>
     </Modal>
   );
 }
- 
-export default NewItem;
+
+export default NewBlog;

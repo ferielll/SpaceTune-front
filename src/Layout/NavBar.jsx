@@ -29,8 +29,8 @@ const navigation = [
     current: false,
   },
   {
-    name: "Entertainment",
-    to: "entertainment",
+    name: "Entertainement",
+    to: "entertainement",
     current: false,
   },
   {
