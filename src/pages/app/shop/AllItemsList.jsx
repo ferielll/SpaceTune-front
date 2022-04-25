@@ -215,7 +215,7 @@ function AllItemsList(props) {
 
                     
                     <h5 className=" font-semibold text-gray-900">
-                      price: {item.price}
+                      price: ${item.price}
                     </h5>
                     <p className="text-gray-500 text-sm mt-1 line-clamp-3">
                       {item.description}

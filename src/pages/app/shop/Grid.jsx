@@ -49,13 +49,10 @@ useEffect(()=>{
                                 <p className="group-hover:opacity-60 transition duration-500 text-xl leading-5 text-gray-600">{item.title}</p>
                             </div>
                             <div>
-                                <p className="group-hover:opacity-60 transition duration-500 text-xl font-semibold leading-5 text-gray-800">{item.price}</p>
+                                <p className="group-hover:opacity-60 transition duration-500 text-xl font-semibold leading-5 text-gray-800">${item.price}</p>
                             </div>
                         </div>
-                        <div className="group-hover:opacity-60 transition duration-500 absolute bottom-8 right-8 flex justify-start items-start flex-row space-x-2">
-                            <button className="bg-white border rounded-full focus:bg-gray-800 border-gray-600 p-1.5" />
-                            <button className="bg-white border rounded-full focus:bg-gray-800 border-gray-600 p-1.5" />
-                        </div>
+                        
                         
                     </div>
               ))}
