@@ -5,10 +5,9 @@ import { useQuery } from "react-query";
 import Breadcrumb from "../../../components/Breadcrum";
 import InputSearch from "../../../components/InputSearch";
 import Title from "../../../components/Title";
-import { UserAvatar } from "../../../components/UserAvatar";
+import capture from "../../../assets/capture.png";
 import useLightBox from "../../../hooks/useLightBox";
 import LightBox from "../../../components/LightBox";
-import capture from "../../../assets/capture.png";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../hooks/useUser";
 import { Fragment } from "react";
@@ -74,9 +73,7 @@ function ListTraining() {
     refetch();
   }
 
-  console.log(trainings, "trainings");
-
-  //testing image view
+  //exemple for test
   const images = capture;
   return (
     <Fragment>
@@ -109,7 +106,7 @@ function ListTraining() {
                   )}
                   <img
                     onClick={lightBox.open}
-                    src={images}
+                    src={items.image}
                     loading="lazy"
                     alt={items.name}
                     className="w-full h-48 rounded-t-md cursor-pointer"
@@ -119,13 +116,7 @@ function ListTraining() {
                       className="flex items-center pt-2 ml-4 mr-1"
                       onClick={() => navigate(`${items._id}`)}
                     >
-                      <div className="flex items-center w-10 h-10 rounded-full">
-                        <UserAvatar
-                          user={items?.teacher}
-                          rounded={true}
-                          size={30}
-                        />
-                      </div>
+                      <div className="flex items-center w-10 h-10 rounded-full"></div>
                       <div className="ml-3">
                         <span className="block text-gray-900">
                           {items.teacher?.userName}

@@ -8,8 +8,7 @@ import { UserAvatar } from "../../../components/UserAvatar";
 import useLightBox from "../../../hooks/useLightBox";
 import LightBox from "../../../components/LightBox";
 import capture from "../../../assets/capture.png";
-import Loader from "../../../components/Loader";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../hooks/useUser";
 import { Fragment, useMemo, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
@@ -19,7 +18,6 @@ import ConfirmModal from "../../../components/Modal/ConfirmModal";
 import { useLoading } from "../../../hooks/useLoading";
 import NewTraining from "./NewTraining";
 import EditTraining from "./EditTraining";
-import { SideBar } from "../../../Layout/SideBar";
 import { Empty } from "antd";
 import Drawer from "../../../Layout/Drawer";
 const navigation = [
@@ -30,13 +28,13 @@ const navigation = [
   },
   {
     name: "Courses & quizs",
-    to: "courses",
+    to: "/courses",
     current: false,
   },
 
   {
     name: "Calendar",
-    to: "calendar",
+    to: "/calendar",
     current: false,
   },
 ];

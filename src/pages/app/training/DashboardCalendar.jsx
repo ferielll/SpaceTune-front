@@ -1,9 +1,11 @@
 import Breadcrumb from "../../../components/Breadcrum";
 import Title from "../../../components/Title";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { SideBar } from "../../../Layout/SideBar";
 import { Calendar, Badge } from "antd";
 import { CalendarIcon, DocumentIcon } from "@heroicons/react/outline";
+import axios from "axios";
+import { useUser } from "../../../hooks/useUser";
 
 const DashboardCalendar = () => {
   const items = [
@@ -23,37 +25,28 @@ const DashboardCalendar = () => {
       to: "calendar",
     },
   ];
+  const [events, setevents] = useState([]);
+  const { user } = useUser();
+  useEffect(() => {
+    async function fetchData() {
+      await axios
+        .get(
+          `http://localhost:3000/spacetune/api/formation/getAllOnlineLessons/${user._id}`
+        )
+        .then((res) => setevents(res.data));
+    }
+    fetchData();
+  }, []);
 
   function getListData(value) {
-    let listData;
-    switch (value.date()) {
-      case 8:
-        listData = [
-          { type: "warning", content: "This is warning event." },
-          { type: "success", content: "This is usual event." },
-        ];
-        break;
-      case 10:
-        listData = [
-          { type: "warning", content: "This is warning event." },
-          { type: "success", content: "This is usual event." },
-          { type: "error", content: "This is error event." },
-        ];
-        break;
-      case 15:
-        listData = [
-          { type: "warning", content: "This is warning event" },
-          {
-            type: "success",
-            content: "This is very long usual event。。....",
-          },
-          { type: "error", content: "This is error event 1." },
-          { type: "error", content: "This is error event 2." },
-          { type: "error", content: "This is error event 3." },
-          { type: "error", content: "This is error event 4." },
-        ];
-        break;
-      default:
+    let listData = [];
+    if (events && events[value.date()]) {
+      events.forEach((element) => {
+        listData.push({
+          type: "success",
+          content: `${element.name}`,
+        });
+      });
     }
     return listData || [];
   }
@@ -62,7 +55,7 @@ const DashboardCalendar = () => {
     const listData = getListData(value);
     return (
       <ul className="events">
-        {listData.map((item,i) => (
+        {listData.map((item, i) => (
           <li key={i}>
             <Badge status={item.type} text={item.content} />
           </li>

@@ -11,6 +11,7 @@ export default function Drawer({ isOpen, setIsOpen, navigation }) {
         <h3 className="mt-5 text-2xl  flex flex-col">
           {navigation.map((item, index) => (
             <NavLink
+              key={index}
               to={item.to}
               className="flex justify-start items-center p-2 space-x-3 rounded-md"
             >
