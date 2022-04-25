@@ -1,28 +1,68 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState, useEffect } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { XIcon } from '@heroicons/react/outline'
+import {  useState, useEffect } from 'react'
+// import { Dialog, Transition } from '@headlessui/react'
+// import { XIcon } from '@heroicons/react/outline'
+import { useUser } from "../../../hooks/useUser";
 
-
+import axios from "axios";
 
 export default function Cart() {
    
-    
+    const { user } = useUser();
     const[products, setProducts]=useState([]);
     const images = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVU30iCxprlRMuAsfRA__QRABNExU3R-XZgw&usqp=CAU";
     const [price , setPrice]=useState(0);
-    useEffect(()=>{
-    setProducts(JSON.parse(localStorage.getItem("cart")|| "null"));
-    
-    },[]);
+
+    const handleClick = (id) => {
+        const index = products.indexOf(id);
+        const list = products;
+        products.splice(index,1)
+        
+        console.log(products)
+        localStorage.setItem("cart", JSON.stringify(products));
+        
+        //window.location.reload(false);
+      };
 
     useEffect(()=>{
-        const result = products.reduce((total, currentValue) => total = total + currentValue.price,0);
+    setProducts(JSON.parse(localStorage.getItem("cart")|| "null"));
+    const result = products.reduce((total, currentValue) => total = total + currentValue.price,0);
     setPrice(result);
-    console.log(price);
-    },[products])
+    },[products]);
+
+    
     
   const [show, setShow] = useState(true);
+
+
+
+
+//   const onSubmit = async (data) => {
+    
+//     const { name, description, price, type, image } = data;
+//     const userID = user._id;
+//     try {
+//       await axios
+//         .post("http://localhost:3000/spacetune/api/order/create", {
+//           name,
+//           description,
+//           price,
+//           type,
+//           image,
+//           teacher,
+//         })
+//        ;
+      
+//     } catch (err) {
+//       console.log(err, "error");
+//     }
+//   };
+
+
+
+
+
+
   return (
       <>
           <div>
@@ -87,8 +127,7 @@ export default function Cart() {
                                           <p className="w-96 text-xs leading-3 text-gray-600">Description: {product.description}</p>
                                           <div className="flex items-center justify-between pt-5 pr-6">
                                               <div className="flex itemms-center">
-                                                  <p className="text-xs leading-3 underline text-gray-800 cursor-pointer">Add to favorites</p>
-                                                  <p className="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">Remove</p>
+                                                  <p className="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer" onClick={()=>handleClick(product)}>Remove</p>
                                               </div>
                                               <p className="text-base font-black leading-none text-gray-800">${product.price}</p>
                                           </div>
