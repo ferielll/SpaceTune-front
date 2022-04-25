@@ -18,7 +18,10 @@ const AdminDashboard = lazy(() => import("./pages/dashboard/index"));
 function App() {
   const [cart, setCart] = useState([]);
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+   let s=localStorage.getItem("cart");
+   console.log(s);
+    if (s==null){localStorage.setItem("cart", JSON.stringify(cart));}
+    
   },[]);
   //custom hook to check if user is logged In
   const { isLoggedIn, setLoggedIn } = useAuth();
