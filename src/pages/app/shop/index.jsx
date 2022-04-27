@@ -12,6 +12,7 @@ import { Route, Routes } from "react-router-dom";
 import FallBackSuspense from "../../../components/FallBackSuspense";
 import Stripe from "./StripeContainer";
 import Thankyou from "./Thankyou";
+import MyItems from "./MyItems";
 //import NewItem from "./NewItem";
 
 export default function Shop() {
@@ -27,6 +28,12 @@ export default function Shop() {
     {
       name: "Used Items",
       to: "useditems",
+      current: false
+
+    },
+    {
+      name: "My Items",
+      to: "myitems",
       current: false
 
     },]
@@ -51,6 +58,8 @@ export default function Shop() {
               <Route path="/productDetail/" element={<ProductDetail />}></Route>
               <Route path="/checkout/" element={<Stripe />}></Route>
               <Route path="/thankyou/" element={<Thankyou />}></Route>
+              <Route path="/myitems/" element={<MyItems />}></Route>
+
             </Routes>
           </Suspense>
         </div>
