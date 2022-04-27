@@ -35,7 +35,7 @@ function ViewStats() {
       <p className="text-base">{views.details.quizDescription}</p>
 
       <div className="mt-4">
-        <div className="flex-row">
+        <div className="flex">
           {views.stats.map((s, i) => {
             let type = s.typeQuestion;
             switch (type) {

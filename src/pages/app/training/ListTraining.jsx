@@ -15,6 +15,7 @@ import { useLoading } from "../../../hooks/useLoading";
 import { Button, Empty, Pagination } from "antd";
 import { toaster } from "evergreen-ui";
 import { useEffect } from "react";
+import { UserAvatar } from "../../../components/UserAvatar";
 
 function ListTraining() {
   //helpers
@@ -59,11 +60,11 @@ function ListTraining() {
   }, [currentPage]);
 
   //Update training
-  async function subscribe(_id) {
+  async function subscribe(items) {
     startLoadingSubscribe();
     await axios({
       method: "put",
-      url: `http://localhost:3000/spacetune/api/formation/subscribe/${_id}`,
+      url: `http://localhost:3000/spacetune/api/formation/subscribe/${items._id}/${items.teacher._id}`,
       data: { _id: user._id },
     });
     toaster.success("Successfully subscribed", {
@@ -72,7 +73,7 @@ function ListTraining() {
     stopLoadingSubscribe();
     refetch();
   }
-
+  console.log("trainings", trainings);
   //exemple for test
   const images = capture;
   return (
@@ -87,7 +88,7 @@ function ListTraining() {
             />
             <InputSearch />
           </div>
-          {isLoading ? (
+          {isLoading || trainings.length === 0 ? (
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
           ) : (
             <div className="my-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -97,26 +98,36 @@ function ListTraining() {
                   key={key}
                 >
                   {/* LightBox component, images can be [String] == group of images || String */}
-                  {lightBox.isLightBoxOpen && images && (
-                    <LightBox
-                      images={images}
-                      {...lightBox}
-                      closePortal={lightBox.close}
-                    />
-                  )}
+                  {lightBox.isLightBoxOpen && items.image[0].imageURL
+                    ? items.image[0].imageURL
+                    : images && (
+                        <LightBox
+                          images={images}
+                          {...lightBox}
+                          closePortal={lightBox.close}
+                        />
+                      )}
                   <img
                     onClick={lightBox.open}
-                    src={items.image}
+                    src={
+                      items.image[0].imageURL ? items.image[0].imageURL : images
+                    }
                     loading="lazy"
                     alt={items.name}
-                    className="w-full h-48 rounded-t-md cursor-pointer"
+                    className="w-full h-56 object-cover rounded-t-md cursor-pointer"
                   />
                   <div className="flex justify-between">
                     <div
                       className="flex items-center pt-2 ml-4 mr-1"
                       onClick={() => navigate(`${items._id}`)}
                     >
-                      <div className="flex items-center w-10 h-10 rounded-full"></div>
+                      <div className="flex items-center w-10 h-10 rounded-full">
+                        <UserAvatar
+                          user={items.teacher}
+                          rounded={true}
+                          size={35}
+                        />
+                      </div>
                       <div className="ml-3">
                         <span className="block text-gray-900">
                           {items.teacher?.userName}
@@ -147,7 +158,7 @@ function ListTraining() {
                            shadow-md bg-blue-600 focus:shadow-outline focus:outline-none
                          `}
                       disabled={items.users.includes(user._id)}
-                      onClick={() => subscribe(items._id)}
+                      onClick={() => subscribe(items)}
                       loading={subscribeLoading}
                     >
                       {items.users.includes(user._id)
@@ -159,13 +170,15 @@ function ListTraining() {
               ))}
             </div>
           )}
-          <Pagination
-            className="flex justify-center my-5"
-            current={currentPage}
-            total={data?.totalDocs}
-            pageSize={pagination.limit}
-            onChange={onChange}
-          />
+          {(!isLoading || trainings.length < 8) && (
+            <Pagination
+              className="flex justify-center my-5"
+              current={currentPage}
+              total={data?.totalDocs}
+              pageSize={pagination.limit}
+              onChange={onChange}
+            />
+          )}
         </div>
       </div>
     </Fragment>

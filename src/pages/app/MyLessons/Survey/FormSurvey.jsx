@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { TrashIcon } from "evergreen-ui";
 import { Button } from "antd";
+import { useParams } from "react-router-dom";
 
 const typeQuestion = [
   {
@@ -33,7 +34,6 @@ let Select_Type_Question = typeQuestion.map((option, key) => (
 
 const Formquiz = ({ setquiz, editquiz, setEditquiz }) => {
   const [Formquiz, setFormquiz] = useState({
-    id: uuidv4(),
     quizName: "",
     quizDescription: "",
     quizQuestions: [
@@ -45,6 +45,7 @@ const Formquiz = ({ setquiz, editquiz, setEditquiz }) => {
     ],
   });
 
+  const { id } = useParams();
   //handle quizName & quizDescription
   let handleChange = (event) => {
     setFormquiz((prevProps) => ({
@@ -128,12 +129,16 @@ const Formquiz = ({ setquiz, editquiz, setEditquiz }) => {
     //get UserConnected ID
     let token = localStorage.getItem("token");
     axios
-      .post("http://localhost:3000/spacetune/api/survey/create", Formquiz, {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `${token}`,
-        },
-      })
+      .post(
+        `http://localhost:3000/spacetune/api/survey/create/${id}`,
+        Formquiz,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `${token}`,
+          },
+        }
+      )
       .then((res) => {
         const { _id, quizName, quizDescription } = res.data;
         setquiz(

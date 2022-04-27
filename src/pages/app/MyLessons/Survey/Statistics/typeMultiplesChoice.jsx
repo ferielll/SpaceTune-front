@@ -24,8 +24,8 @@ const TypeMultiplesChoice = ({ views }) => {
     ],
   };
   return (
-    <div className="w-1/3">
-      <h5>
+    <div className="w-1/3 mx-2">
+      <h5 className="text-red-500 font-semibold">
         Question {views.nq}: {views.question}
       </h5>
       <Bar data={dataBar} width={50} height={50} />

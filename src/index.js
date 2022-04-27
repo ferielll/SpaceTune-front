@@ -11,9 +11,9 @@ import { Windmill } from "@windmill/react-ui";
 ReactDOM.render(
   <React.StrictMode>
     <SidebarProvider>
-      <Windmill usePreferences>
-        <App />
-      </Windmill>
+      {/* <Windmill usePreferences> */}
+      <App />
+      {/* </Windmill> */}
     </SidebarProvider>
   </React.StrictMode>,
   document.getElementById("root")

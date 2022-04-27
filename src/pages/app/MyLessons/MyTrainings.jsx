@@ -16,7 +16,7 @@ import { DotsVerticalIcon, TrashIcon } from "@heroicons/react/outline";
 import { EditIcon } from "evergreen-ui";
 import ConfirmModal from "../../../components/Modal/ConfirmModal";
 import { useLoading } from "../../../hooks/useLoading";
-import NewTraining from "./NewTraining";
+import NewTraining from "../training/NewTraining";
 import EditTraining from "./EditTraining";
 import { Empty } from "antd";
 import Drawer from "../../../Layout/Drawer";
@@ -27,8 +27,8 @@ const navigation = [
     current: true,
   },
   {
-    name: "Courses & quizs",
-    to: "/courses",
+    name: "Courses & quizzes",
+    to: "courses",
     current: false,
   },
 
@@ -102,7 +102,7 @@ const MyTrainings = () => {
             navigation={navigation}
           />
         </div>
-        <div className={`${isOpen ? "w-11/12" : "w-full"} flex flex-col p-1`}>
+        <div className={`${isOpen ? "w-11/12" : "w-full"}  p-1`}>
           <div className="flex flex-row justify-center pt-1 mx-auto">
             <div className="mt-4 px-2 w-full max-w-7xl lg:px-4">
               <div className="flex justify-between text-start w-full">
@@ -143,7 +143,7 @@ const MyTrainings = () => {
                   item={selectedItem}
                 />
               )}
-              {isLoading ? (
+              {isLoading || trainings.length === 0 ? (
                 <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
               ) : (
                 <div className="my-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -154,17 +154,25 @@ const MyTrainings = () => {
                     >
                       {lightBox.isLightBoxOpen && images && (
                         <LightBox
-                          images={images}
+                          images={
+                            items.image[0].imageURL
+                              ? items.image[0].imageURL
+                              : images
+                          }
                           {...lightBox}
                           closePortal={lightBox.close}
                         />
                       )}
                       <img
                         onClick={lightBox.open}
-                        src={images}
+                        src={
+                          items.image[0].imageURL
+                            ? items.image[0].imageURL
+                            : images
+                        }
                         loading="lazy"
                         alt={items.name}
-                        className="w-full h-48 rounded-t-md cursor-pointer"
+                        className="w-full h-56 object-cover rounded-t-md cursor-pointer"
                       />
                       <div className="flex justify-between">
                         <div className="flex items-center pt-2 ml-4 mr-2">

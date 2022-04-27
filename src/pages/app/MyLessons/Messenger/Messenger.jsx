@@ -1,25 +1,25 @@
 import "./messenger.css";
 import Conversation from "./components/conversations/Conversation";
 import Message from "./components/message/Message";
-import ChatOnline from "./components/chatOnline/ChatOnline";
 import { useEffect, useRef, useState } from "react";
 
 import axios from "axios";
 import { io } from "socket.io-client";
 import { useUser } from "../../../../hooks/useUser";
-import InputSearch from "../../../../components/InputSearch";
 import Breadcrumb from "../../../../components/Breadcrum";
+import { UserAvatar } from "../../../../components/UserAvatar";
 
-export default function Messenger({ setShowChat }) {
+export default function Messenger() {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [shouldRefresh, setShouldRefresh] = useState(true);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const socket = useRef();
   const { user } = useUser();
   const scrollRef = useRef();
-
+  const [profile, setProfile] = useState({ username: "" });
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
     socket.current.on("getMessage", (data) => {
@@ -53,10 +53,10 @@ export default function Messenger({ setShowChat }) {
       }
     };
     getConversations();
-  }, [user._id]);
+  }, [user._id, messages]);
 
   useEffect(() => {
-    const getMessages = async () => {
+    async function getMessages() {
       try {
         const res = await axios.get(
           "http://localhost:3000/spacetune/api/chat/message/" + currentChat?._id
@@ -65,9 +65,9 @@ export default function Messenger({ setShowChat }) {
       } catch (err) {
         console.log(err);
       }
-    };
+    }
     getMessages();
-  }, [currentChat, messages]);
+  }, [currentChat, shouldRefresh]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,16 +92,19 @@ export default function Messenger({ setShowChat }) {
         "http://localhost:3000/spacetune/api/chat/message",
         message
       );
+      setShouldRefresh((prev) => !prev);
       setMessages([...messages, res.data]);
       setNewMessage("");
     } catch (err) {
       console.log(err);
     }
   };
+
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  console.log(messages, "messages");
   return (
     <>
       <Breadcrumb title="My trainings > chat " />
@@ -124,16 +127,27 @@ export default function Messenger({ setShowChat }) {
           <div className="hidden lg:col-span-2 lg:block">
             <div className="">
               <div className="relative flex items-center p-2 border-b border-gray-300">
-                <img
-                  className="object-cover w-10 h-10 rounded-full"
-                  src="https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083383__340.jpg"
-                  alt="username"
-                />
                 <span className="block ml-2 font-bold text-gray-600">
-                  Feriel
+                  Call him
                 </span>
-                <span className="absolute w-3 h-3 bg-green-600 rounded-full left-10 top-3"></span>
+                <span className="cursor-pointer">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    />
+                  </svg>
+                </span>
               </div>
+
               <div className="relative w-full p-6 overflow-y-auto h-[40rem]">
                 <ul className="space-y-2">
                   <div className="chatBoxTop">

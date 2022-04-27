@@ -3,7 +3,7 @@ import { ListGroup } from "react-bootstrap";
 
 function TypeTEXT({ views }) {
   return (
-    <div className="w-1/3">
+    <div className="mx-2 w-1/3">
       <ListGroup className="list-group mt-2">
         <Fragment key={10}>
           <h5 className="text-red-500 font-semibold">

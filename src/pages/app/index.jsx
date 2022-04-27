@@ -4,10 +4,10 @@ import { Route, Routes } from "react-router-dom";
 import FallBackSuspense from "../../components/FallBackSuspense";
 import NavBar from "../../Layout/NavBar";
 import { ErrorComponent } from "./Error";
-import ListPosts from "./Posts/ListPosts";
 import Cart from "./shop/Cart";
 
 const Training = lazy(() => import("./training/"));
+const MyLessons = lazy(() => import("./MyLessons/"));
 const Tools = lazy(() => import("./tools"));
 const Posts = lazy(() => import("./Posts/"));
 const Entertainment = lazy(() => import("./entertainment"));
@@ -26,9 +26,10 @@ export default function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/tools/*" element={<Tools />}></Route>
             <Route path="/blogs" element={<Posts />}></Route>
-            <Route path="/shop/*" element={<Shop  />}></Route>
+            <Route path="/shop/*" element={<Shop />}></Route>
             <Route path="/entertainement/*" element={<Entertainment />}></Route>
             <Route path="/training/*" element={<Training />}></Route>
+            <Route path="/dashboardLessons/*" element={<MyLessons />}></Route>
             <Route path="/contact" element={<Contact />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
             <Route path="/post/:postId" element={<Single />}></Route>
