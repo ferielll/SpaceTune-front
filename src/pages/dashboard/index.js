@@ -9,6 +9,8 @@ import Dashboard from "./pages/Dashboard";
 import Training from "./pages/Trainings";
 import Modals from "./pages/Modals";
 import Cards from "./pages/Cards";
+import TabGenerator from "./pages/TabGenerator";
+import EarTraining from "./pages/EarTraining";
 import Shop from "./pages/Shop";
 import Order from "./pages/Order";
 
@@ -41,6 +43,9 @@ function AdminDashboard() {
               <Route path={`/order`} element={<Order />} />
               <Route path={`/modals`} element={<Modals />} />
               <Route path={`/cards`} element={<Cards />} />
+              <Route path={`/earTraining`} element={<EarTraining />} />
+              <Route path={`/tabGenerator`} element={<TabGenerator />} />
+
               <Route component={Page404} />
             </Routes>
           </Suspense>

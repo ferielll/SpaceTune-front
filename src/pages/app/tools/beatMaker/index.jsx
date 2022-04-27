@@ -11,7 +11,9 @@ import StopButton from './Components/StopButton';
 import Volume from './Components/Volume';
 import { Howl } from 'howler';
 import MyBeats from "./Components/MyBeats";
+
 const BeatMaker = () => {
+
  //beat machine initial states
  const [isPlaying, setIsPlaying] = useState(false);
  const [tempo, setTempo] = useState(120);
@@ -70,6 +72,8 @@ const BeatMaker = () => {
  const togglePlay = () => {
    setIsPlaying(!isPlaying);
  };
+
+ 
 
  //set BPM
  let beats = Bpm(tempo);
@@ -252,9 +256,52 @@ const BeatMaker = () => {
  const playHeadComponent = playHead();
 
  //App returns the composite of our beat machine and components
+
+ 
+ const context = new(window.AudioContext || window.webkitAudioContext)()
+ async function run()
+ {
+     var myArrayBuffer = context.createBuffer(2, context.sampleRate, context.sampleRate);
+     // Fill the buffer with white noise;
+     // just random values between -1.0 and 1.0
+     for (var channel = 0; channel < myArrayBuffer.numberOfChannels; channel++) {
+       // This gives us the actual array that contains the data
+       var nowBuffering = myArrayBuffer.getChannelData(channel);
+       for (var i = 0; i < myArrayBuffer.length; i++) {
+         // audio needs to be in [-1.0; 1.0]
+         nowBuffering[i] = Math.random() * 2 - 1;
+       }
+     }
+     playAudio(myArrayBuffer)
+ }
+ 
+ function playAudio(buf){
+     const streamNode = context.createMediaStreamDestination();
+     const stream = streamNode.stream;
+     const recorder = new MediaRecorder( stream );
+     const chunks = [];
+     recorder.ondataavailable = evt => chunks.push( evt.data );
+     recorder.onstop = evt => exportAudio( new Blob( chunks ) );
+ 
+     const source = context.createBufferSource()
+     source.onended = () => recorder.stop();
+     source.buffer = buf
+     source.playbackRate.value = 0.2
+     source.connect( streamNode );
+     source.connect(context.destination);
+     source.start(0)
+     recorder.start();
+ }
+ 
+ function exportAudio( blob ) {
+   const aud = new Audio( URL.createObjectURL( blob ) );
+   aud.controls = true;
+   document.body.prepend( aud );
+ }
+
  return (
-   <div className='flex content-center'>
-   
+   <div className='flex content-center canvas'>
+
 
    <div className="container bg-black flex-initial w-64">
      <div className="btnGroup">
@@ -286,10 +333,7 @@ const BeatMaker = () => {
        </tbody>
      </table>
    </div>
-   <div className='flex-initial w-60 content-center mt-[30vh]	' >
-     <MyBeats/>
-
-     </div>
+   
    </div>
 
  );

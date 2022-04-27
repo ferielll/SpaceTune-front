@@ -8,11 +8,13 @@ import { Route, Routes } from "react-router-dom";
 import MetronomePage from "./metronome";
 import EarTraining from "./earTraining";
 import TabGenerator from "./tabGenerator";
-
+import LyricsFinder from "./lyricsFinder"
 import Tuner from "./tuner";
 import FallBackSuspense from "../../../components/FallBackSuspense";
 import BeatMaker from "./beatMaker"
 import PianoComponent from "./piano"
+import Questions from "./earTraining/Questions";
+import Lyrics from "./lyricsFinder/lyrics";
 
 export default function Tools() {
   const [isOpen, setIsOpen] = useState(false)
@@ -55,6 +57,10 @@ export default function Tools() {
       to: "piano",
       current: false
 
+    },{
+      name:"Lyrics Generator",
+      to:"lyricsgenerator",
+      current:false
     }]
   return (
     <div>
@@ -76,6 +82,9 @@ export default function Tools() {
               <Route path="/beatmaker" element={<BeatMaker />}></Route>
               <Route path="/piano" element={<PianoComponent />}></Route>
               <Route path="/earTraining" element={<EarTraining />}></Route>
+              <Route path="/questions" element={<Questions />}></Route>
+              <Route path="/lyricsgenerator" element={<LyricsFinder/>}></Route>
+              <Route  path="/lyrics" element={<Lyrics/>} ></Route>
               <Route path="/tabgenerator" element={<TabGenerator />}></Route>
 
             </Routes>

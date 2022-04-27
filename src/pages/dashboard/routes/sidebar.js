@@ -36,6 +36,16 @@ const routes = [
     icon: "ModalsIcon",
     name: "Modals",
   },
+  {
+    path: "/dashboard/earTraining",
+    icon: "CardsIcon",
+    name: "earTraining",
+  },
+  {
+    path: "/dashboard/tabGenerator",
+    icon: "PeopleIcon",
+    name: "tabGenerator",
+  },
 ];
 
 export default routes;
