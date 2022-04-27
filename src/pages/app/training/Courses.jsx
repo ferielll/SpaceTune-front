@@ -5,7 +5,8 @@ import { SideBar } from "../../../Layout/SideBar";
 import { CalendarIcon, DocumentIcon } from "@heroicons/react/outline";
 import { useLocation } from "react-router-dom";
 import ImgCrop from "antd-img-crop";
-import { Upload } from "antd";
+import { Upload, Tabs } from "antd";
+import Survey from "./Survey";
 
 const Courses = () => {
   const location = useLocation();
@@ -26,6 +27,8 @@ const Courses = () => {
       to: `${location.pathname}/courses`,
     },
   ];
+
+  const { TabPane } = Tabs;
 
   const Demo = () => {
     const [fileList, setFileList] = useState([
@@ -72,14 +75,18 @@ const Courses = () => {
   };
   return (
     <Fragment>
-      <Breadcrumb title={"Dashboard > Calendar"} />
+      <Breadcrumb title={"Dashboard > Courses and Quizzes"} />
       <SideBar items={items} />
-      <div className="flex flex-row justify-center pt-1 mx-auto">
+      <div className="flex flex-row justify-center pt-1">
         <div className="mt-4 px-2 w-full max-w-7xl lg:px-4">
-          <div className="flex justify-between text-start w-full">
-            <Title title="Courses" />
-          </div>
-          <Demo />
+          <Tabs defaultActiveKey="1">
+            <TabPane tab={<Title title="Courses" />} key="1">
+              <Demo />
+            </TabPane>
+            <TabPane tab={<Title title="Quizzes" />} key="2">
+              <Survey />
+            </TabPane>
+          </Tabs>
         </div>
       </div>
     </Fragment>

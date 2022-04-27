@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState , useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import UploadTracks from "../entertainment/UploadTracks";
 import ListPosts from "./ListPosts";
 import "./posts.css";
 import { useQuery } from "react-query";
