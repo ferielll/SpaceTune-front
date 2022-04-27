@@ -1,6 +1,4 @@
-import { CloudUploadOutlined } from "@material-ui/icons";
-import { Button, Upload } from "antd";
-import ImgCrop from "antd-img-crop";
+import { Button } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import axios from "axios";
 import React, { useState } from "react";
@@ -13,15 +11,7 @@ function NewTraining({ isModalVisible, setModalVisible, refetch }) {
   //helpers
   const { user } = useUser();
   const { isLoading, startLoading, stopLoading } = useLoading(false);
-
-  const { handleSubmit, control } = useForm({
-    defaultValues: {
-      name: "",
-      description: "",
-      price: "",
-      type: "",
-      image: "",
-    },
+  const { handleSubmit, control, register } = useForm({
     mode: "onChange",
   });
 
@@ -29,6 +19,8 @@ function NewTraining({ isModalVisible, setModalVisible, refetch }) {
     startLoading();
     const { name, description, price, type, image } = data;
     const teacher = user._id;
+    const formData = new FormData();
+    formData.append("image", image);
     try {
       await axios
         .post("http://localhost:3000/spacetune/api/formation/create", {
@@ -133,6 +125,7 @@ function NewTraining({ isModalVisible, setModalVisible, refetch }) {
             <Input {...field} label="Type" type="text" placeholder="type" />
           )}
         />
+        <input type="file" {...register("image")} />
       </div>
     </Modal>
   );

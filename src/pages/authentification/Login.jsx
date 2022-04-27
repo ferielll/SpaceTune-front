@@ -33,6 +33,7 @@ export default function Login({ setLoggedIn }) {
           password,
         })
         .then((res) => {
+          console.log("res.data.token",res.data)
           setLoggedIn(true);
           if (!res.data.success) {
             stopLoading();

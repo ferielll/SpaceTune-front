@@ -6,7 +6,6 @@ import NavBar from "../../Layout/NavBar";
 import { ErrorComponent } from "./Error";
 import Cart from "./shop/Cart";
 
-
 const Training = lazy(() => import("./training/"));
 const Tools = lazy(() => import("./tools"));
 const Posts = lazy(() => import("./Posts/"));
@@ -17,7 +16,7 @@ const Single = lazy(() => import("./Single/Single"));
 const Shop = lazy(() => import("./shop"));
 
 export default function App() {
-   return (
+  return (
     <div>
       <NavBar />
       <div>
@@ -31,7 +30,7 @@ export default function App() {
             <Route path="/training/*" element={<Training />}></Route>
             <Route path="/contact" element={<Contact />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
-            <Route path="/post/:postId" element={<Single/>}></Route>
+            <Route path="/post/:postId" element={<Single />}></Route>
             <Route path="*" element={<ErrorComponent />}></Route>
           </Routes>
         </Suspense>

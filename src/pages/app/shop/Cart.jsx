@@ -3,6 +3,7 @@ import {  useState, useEffect } from 'react'
 // import { Dialog, Transition } from '@headlessui/react'
 // import { XIcon } from '@heroicons/react/outline'
 import { useUser } from "../../../hooks/useUser";
+import { Link } from "react-router-dom";
 
 import axios from "axios";
 
@@ -11,7 +12,7 @@ export default function Cart() {
     const { user } = useUser();
     const[products, setProducts]=useState([]);
     const images = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVU30iCxprlRMuAsfRA__QRABNExU3R-XZgw&usqp=CAU";
-    const [price , setPrice]=useState(0);
+    const [price , setPrice]=useState(75);
 
     const handleClick = (id) => {
         const index = products.indexOf(id);
@@ -158,11 +159,12 @@ export default function Cart() {
                                       <div>
                                           <div className="flex items-center pb-6 justify-between lg:pt-5 pt-20">
                                               <p className="text-2xl leading-normal text-gray-800">Total</p>
-                                              <p className="text-2xl font-bold leading-normal text-right text-gray-800">${price+30+35}</p>
-                                          </div>
-                                          <button onClick={() => setShow(!show)} className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white">
+                                              <p className="text-2xl font-bold leading-normal text-right text-gray-800">${price+75}</p>
+                                          </div><center><Link to= "/app/shop/checkout"
+                      state={{products,price}}className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white">
                                               Checkout
-                                          </button>
+                                          </Link></center>
+                                          
                                       </div>
                                   </div>
                               </div>

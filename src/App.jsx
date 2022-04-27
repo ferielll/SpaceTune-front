@@ -9,8 +9,7 @@ import "./App.css";
 import FallBackSuspense from "./components/FallBackSuspense";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useAuth } from "./hooks/useAuth";
-import NavBar from "./Layout/NavBar";
-
+import { ContextProvider } from "./context/VideoCall_Context";
 
 const Login = lazy(() => import("./pages/authentification/Login"));
 const Register = lazy(() => import("./pages/authentification/Register"));
@@ -37,32 +36,34 @@ function App() {
   });
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="App">
-        <Suspense fallback={<FallBackSuspense />}>
-          <Router>
-            <Routes>
-              <Route path="/dashboard/*" element={<AdminDashboard />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/post/:postId" element={<Single />}></Route>
-              <Route
-                path="/login"
-                element={
-                  !isLoggedIn ? (
-                    <Login setLoggedIn={setLoggedIn} />
-                  ) : (
-                    <Navigate to="/app" />
-                  )
-                }
-              />
-              <Route path="/app/*" element={<Application />} />
-              <Route
-                path="/*"
-                element={<Navigate to={isLoggedIn ? "/app" : "/login"} />}
-              />
-            </Routes>
-          </Router>
-        </Suspense>
-      </div>
+      <ContextProvider>
+        <div className="App">
+          <Suspense fallback={<FallBackSuspense />}>
+            <Router>
+              <Routes>
+                <Route path="/dashboard/*" element={<AdminDashboard />} />
+                <Route path="/register" element={<Register />} />
+                 <Route path="/post/:postId" element={<Single />}></Route>
+                <Route
+                  path="/login"
+                  element={
+                    !isLoggedIn ? (
+                      <Login setLoggedIn={setLoggedIn} />
+                    ) : (
+                      <Navigate to="/app" />
+                    )
+                  }
+                />
+                <Route path="/app/*" element={<Application />} />
+                <Route
+                  path="/*"
+                  element={<Navigate to={isLoggedIn ? "/app" : "/login"} />}
+                />
+              </Routes>
+            </Router>
+          </Suspense>
+        </div>
+      </ContextProvider>
     </QueryClientProvider>
   );
 }

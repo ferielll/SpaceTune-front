@@ -12,7 +12,7 @@ import { useUser } from "../../../hooks/useUser";
 
 function NewItem({ isModalVisible, setModalVisible }) {
   //helpers
-  const { user } = useUser();
+  const { user1 } = useUser();
   const { isLoading, startLoading, stopLoading } = useLoading(false);
   // const [name, setName] = useState('');
   // const [type, setType] = useState('');
@@ -34,7 +34,7 @@ function NewItem({ isModalVisible, setModalVisible }) {
   const onSubmit = async (data) => {
     startLoading();
     const { name, description, price, type } = data;
-    const seller = user._id;
+    const user = user1._id;
     try {
       await axios
         .post("http://localhost:3000/spacetune/api/shop/create", {
@@ -43,7 +43,7 @@ function NewItem({ isModalVisible, setModalVisible }) {
           price,
           type,
           
-          seller,
+          user,
         })
         .then((res) => {
           console.log(res, "res");
