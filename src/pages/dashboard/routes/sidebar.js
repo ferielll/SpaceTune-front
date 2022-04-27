@@ -36,6 +36,11 @@ const routes = [
     icon: "ModalsIcon",
     name: "Modals",
   },
+  {
+    path: "/dashboard/blogs",
+    icon: "ModalsIcon",
+    name: "Blogs",
+  },
 ];
 
 export default routes;

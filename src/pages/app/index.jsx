@@ -4,7 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import FallBackSuspense from "../../components/FallBackSuspense";
 import NavBar from "../../Layout/NavBar";
 import { ErrorComponent } from "./Error";
-import ListPosts from "./Posts/ListPosts";
 import Cart from "./shop/Cart";
 
 

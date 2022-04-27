@@ -11,6 +11,7 @@ import Modals from "./pages/Modals";
 import Cards from "./pages/Cards";
 import Shop from "./pages/Shop";
 import Order from "./pages/Order";
+import Blogs from "./pages/Blogs";
 
 const Page404 = lazy(() => import("./pages/404"));
 
@@ -41,6 +42,7 @@ function AdminDashboard() {
               <Route path={`/order`} element={<Order />} />
               <Route path={`/modals`} element={<Modals />} />
               <Route path={`/cards`} element={<Cards />} />
+              <Route path={`/blogs`} element={<Blogs />} />
               <Route component={Page404} />
             </Routes>
           </Suspense>
