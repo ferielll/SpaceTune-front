@@ -37,11 +37,9 @@ const routes = [
     name: "Modals",
   },
   {
-<<<<<<< HEAD
     path: "/dashboard/blogs",
     icon: "ModalsIcon",
     name: "Blogs",
-=======
     path: "/dashboard/earTraining",
     icon: "CardsIcon",
     name: "earTraining",
@@ -50,7 +48,6 @@ const routes = [
     path: "/dashboard/tabGenerator",
     icon: "PeopleIcon",
     name: "tabGenerator",
->>>>>>> 8e6ae8a144e68a4b83b7c82731c150a05adf7529
   },
 ];
 
