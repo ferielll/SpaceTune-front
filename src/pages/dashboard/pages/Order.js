@@ -27,7 +27,7 @@ import {
 function Order() {
   //New order
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+const [selected , setSelected] = useState(null);
   function openModal() {
     setIsModalOpen(true);
   }
@@ -97,9 +97,11 @@ function Order() {
               onClickConfirm={() => deleteItem(selectedItem)}
             />
           )}
-        {isModalOpen && (
-          <NewOrder isModalOpen={isModalOpen} closeModal={closeModal} />
-        )}
+          
+          {isModalOpen && (
+                  <NewOrder isModalOpen={isModalOpen} closeModal={closeModal}  selected={selected}/>
+                )}
+       
       </div>
 
       <TableContainer>
@@ -116,7 +118,12 @@ function Order() {
           <TableBody>
             {
               orders.map((t, i) => (
+
+
+
                 <TableRow key={i}>
+
+
                   <TableCell>
                     <div className="flex items-center text-sm">
                       <p className="font-semibold">{t._id}</p>
@@ -138,7 +145,8 @@ function Order() {
                   </TableCell> */}
                   <TableCell>
                     <div className="space-x-2">
-                      <Button size="small" onClick={() => openModal()}>
+                      <Button size="small" onClick={() => {openModal();
+                        setSelected(t)}}>
                         detail
                       </Button>
                       <Button
@@ -165,114 +173,28 @@ function Order() {
 
 export default Order;
 
-export const NewOrder = ({ isModalOpen, closeModal }) => {
-  const { handleSubmit, control } = useForm({
-    defaultValues: {
-      name: "",
-      description: "",
-      price: "",
-      type: "",
-      
-    },
-    mode: "onChange",
-  });
-
-  const onSubmit = async (data) => {
-    const { name, description, price, type } = data;
-    console.log("I started working");
-    try {
-       await axios
-      .post("http://localhost:3000/spacetune/api/order/create", {
-        name,
-        description,
-        price,
-        type,
-       
-      })
-        .then((res) => {
-          console.log(res, "res");
-        });
-    } catch (err) {
-      console.log(err, "error");
-    }
-  };
+export const NewOrder = ({ isModalOpen, closeModal, selected }) => {
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" }
+    return new Date(dateString).toLocaleDateString(undefined, options)
+  }
+  console.log("this is selected",selected)
   return (
     <Modal isOpen={isModalOpen} onClose={closeModal}>
-      <ModalHeader>Add new item</ModalHeader>
+      {/* <ModalHeader>{selected._id} details</ModalHeader> */}
       <ModalBody>
         <div>
-          <Controller
-            name="name"
-            control={control}
-            rules={{
-              required: `Enter name of the order session.`,
-            }}
-            render={({ field, fieldState: { invalid, error } }) => (
-              <Label {...field}>
-                  <span>Name</span>
-                <Input
-                  className="mt-1"
-                  valid={invalid ? false : true}
-                  placeholder="Enter your name"
-                />
-                <HelperText valid={false}>{error && error.message}</HelperText>
-              </Label>
-            )}
-          />
-          <Controller
-            name="description"
-            control={control}
-            rules={{
-              required: `Please enter your description.`,
-            }}
-            render={({ field, fieldState: { invalid, error } }) => (
-              <Label {...field}>
-                <span>Description</span>
-                <Input
-                  className="mt-1"
-                  valid={invalid ? false : true}
-                  placeholder="Write description..."
-                />
-                <HelperText valid={false}>{error && error.message}</HelperText>
-              </Label>
-            )}
-          />
-          <Controller
-            name="price"
-            control={control}
-            rules={{
-              pattern: {
-                value: /^[0-9]*$/i,
-                message: "price should be number",
-              },
-            }}
-            render={({ field, fieldState: { invalid, error } }) => (
-              <Label {...field}>
-                <span>Price</span>
-                <Input
-                  className="mt-1"
-                  valid={invalid ? false : true}
-                  placeholder="Enter price"
-                />
-                <HelperText valid={false}>{error && error.message}</HelperText>
-              </Label>
-            )}
-          />
-          <Controller
-            name="type"
-            control={control}
-            render={({ field, fieldState: { invalid, error } }) => (
-              <Label {...field}>
-                <span>Type</span>
-                <Input
-                  className="mt-1"
-                  valid={invalid ? false : true}
-                  placeholder="type"
-                />
-                <HelperText valid={false}>{error && error.message}</HelperText>
-              </Label>
-            )}
-          />
+          <h1>User : {selected.userID.userName}</h1><br></br>
+         <h1>Total Money : {selected.totalMoney}</h1><br></br>
+          <h1>Date Ordered : {formatDate(selected.createdAt)}</h1><br></br>
+          <h1>Items</h1>
+          <br></br>
+          {
+              selected.orderItems.map((t, i) => (
+                <div key={i}>
+                  <h2>{t._id} : {t.name}</h2>
+                </div>))}
+
         </div>
       </ModalBody>
       <ModalFooter>
@@ -281,9 +203,7 @@ export const NewOrder = ({ isModalOpen, closeModal }) => {
             Cancel
           </Button>
         </div>
-        <div className="hidden sm:block">
-          <Button onClick={handleSubmit(onSubmit)}>Confirm</Button>
-        </div>
+        
       </ModalFooter>
     </Modal>
   );
