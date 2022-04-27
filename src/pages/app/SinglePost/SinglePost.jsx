@@ -18,7 +18,7 @@ import Comments from "./Comments";
 export default function SinglePost() {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
-  console.log('trackid',location.pathname.split("/"));
+  console.log('trackid',location);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -36,7 +36,6 @@ export default function SinglePost() {
     if (isLoading) return {};
     return data;
   }, [dataUpdatedAt]);
-console.log(post,'mmmm')
   const {
     isLoading: isDeletingLoading,
     startLoading,

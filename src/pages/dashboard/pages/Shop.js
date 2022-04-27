@@ -27,7 +27,8 @@ import {
 function Shop() {
   //New shop
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
   function openModal() {
     setIsModalOpen(true);
   }
@@ -35,8 +36,17 @@ function Shop() {
   function closeModal() {
     setIsModalOpen(false);
   }
+
+  function openEditModal() {
+    setShowEditModal(true);
+  }
+
+  function closeEditModal() {
+    setShowEditModal(false);
+  }
+
   
-  
+  const [refetch,setRefetch] = useState(0);
   //fetch List Shops
   const [shops,setShops ]= useState([]);
   const url = 'http://localhost:3000/spacetune/api/shop/getAll';
@@ -55,11 +65,11 @@ function Shop() {
 
   useEffect(() => {
     getAllItems();
-  }, []);
+  }, [refetch]);
 
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+ 
 
   async function deleteItem(selectedItem) {
     
@@ -97,8 +107,15 @@ function Shop() {
           )}
 
         {isModalOpen && (
-          <NewShop isModalOpen={isModalOpen} closeModal={closeModal} />
+          <NewShop isModalOpen={isModalOpen} closeModal={closeModal} setRefetch = {setRefetch}
+          refetch={refetch}/>
         )}
+
+{showEditModal && (
+          <EditShop item={selectedItem} isModalOpen={showEditModal} closeModal={closeEditModal} setRefetch = {setRefetch}
+          refetch={refetch}/>
+        )}
+
       </div>
       <h1
         className="w-1/6 text-blue font-semibold cursor-pointer p-3"
@@ -142,7 +159,7 @@ function Shop() {
                   </TableCell> */}
                   <TableCell>
                     <div className="space-x-2">
-                      <Button size="small" onClick={() => openModal()}>
+                      <Button size="small" onClick={() => { setSelectedItem(t); openEditModal()}}>
                         edit
                       </Button>
                       <Button
@@ -169,7 +186,7 @@ function Shop() {
 
 export default Shop;
 
-export const NewShop = ({ isModalOpen, closeModal }) => {
+export const NewShop = ({ isModalOpen, closeModal,refetch ,setRefetch }) => {
   const { handleSubmit, control } = useForm({
     defaultValues: {
       name: "",
@@ -194,6 +211,8 @@ export const NewShop = ({ isModalOpen, closeModal }) => {
        
       })
         .then((res) => {
+          setRefetch(refetch+1);
+          closeModal();
           console.log(res, "res");
         });
     } catch (err) {
@@ -203,6 +222,139 @@ export const NewShop = ({ isModalOpen, closeModal }) => {
   return (
     <Modal isOpen={isModalOpen} onClose={closeModal}>
       <ModalHeader>Add new item</ModalHeader>
+      <ModalBody>
+        <div>
+          <Controller
+            name="name"
+            control={control}
+            rules={{
+              required: `Enter name of the shop session.`,
+            }}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Label {...field}>
+                  <span>Name</span>
+                <Input
+                  className="mt-1"
+                  valid={invalid ? false : true}
+                  placeholder="Enter your name"
+                />
+                <HelperText valid={false}>{error && error.message}</HelperText>
+              </Label>
+            )}
+          />
+          <Controller
+            name="description"
+            control={control}
+            rules={{
+              required: `Please enter your description.`,
+            }}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Label {...field}>
+                <span>Description</span>
+                <Input
+                  className="mt-1"
+                  valid={invalid ? false : true}
+                  placeholder="Write description..."
+                />
+                <HelperText valid={false}>{error && error.message}</HelperText>
+              </Label>
+            )}
+          />
+          <Controller
+            name="price"
+            control={control}
+            rules={{
+              pattern: {
+                value: /^[0-9]*$/i,
+                message: "price should be number",
+              },
+            }}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Label {...field}>
+                <span>Price</span>
+                <Input
+                  className="mt-1"
+                  valid={invalid ? false : true}
+                  placeholder="Enter price"
+                />
+                <HelperText valid={false}>{error && error.message}</HelperText>
+              </Label>
+            )}
+          />
+          <Controller
+            name="type"
+            control={control}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Label {...field}>
+                <span>Type</span>
+                <Input
+                  className="mt-1"
+                  valid={invalid ? false : true}
+                  placeholder="type"
+                />
+                <HelperText valid={false}>{error && error.message}</HelperText>
+              </Label>
+            )}
+          />
+        </div>
+      </ModalBody>
+      <ModalFooter>
+        <div className="hidden sm:block">
+          <Button layout="outline" onClick={closeModal}>
+            Cancel
+          </Button>
+        </div>
+        <div className="hidden sm:block">
+          <Button onClick={handleSubmit(onSubmit)}>Confirm</Button>
+        </div>
+      </ModalFooter>
+    </Modal>
+  );
+};
+
+
+
+
+
+
+
+
+export const EditShop = ({ item,isModalOpen, closeModal,refetch ,setRefetch }) => {
+  const { handleSubmit, control } = useForm({
+    defaultValues: {
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      type: item.type,
+      
+    },
+    mode: "onChange",
+  });
+
+  const onSubmit = async (data) => {
+    const { name, description, price, type } = data;
+    console.log("I started working");
+    try {
+       await axios
+      .put("http://localhost:3000/spacetune/api/shop/update/"+item._id, {
+        name,
+        description,
+        price,
+        type,
+       
+      })
+        .then((res) => {
+          setRefetch(refetch+1);
+          closeModal();
+          console.log(res, "res");
+        });
+    } catch (err) {
+      console.log(err, "error");
+    }
+  };
+  return (
+    <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <ModalHeader>Edit {item.name}</ModalHeader>
       <ModalBody>
         <div>
           <Controller

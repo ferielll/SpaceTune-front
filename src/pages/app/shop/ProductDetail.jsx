@@ -8,8 +8,9 @@ const ProductDetail = () => {
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart") || "null"));
     const images = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVU30iCxprlRMuAsfRA__QRABNExU3R-XZgw&usqp=CAU";
     const location = useLocation();
-    const [condition, setCondition] = useState("")
+    
     const { item } = location.state;
+    const [condition, setCondition] = useState("")
     const [showConfirmModal, setShowConfirmModal] = useState(false);
 
     const [selectedItem, setSelectedItem] = useState(null);

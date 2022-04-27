@@ -1,6 +1,31 @@
+import { Button } from "@mui/material";
+import axios from "axios";
+import { useState } from "react";
+import LightBox from "../../../../components/LightBox";
+import useLightBox from "../../../../hooks/useLightBox";
 
 
 export default function TabGenerator() {
+  const lightBox = useLightBox();
+
+  const [search,setSearch]=useState('');
+  const [tab,setTab]=useState();
+  const [loading,setLoading]=useState(false);
+  const [success,setSuccess]=useState(false)
+  const handleSubmit=async (e)=>{
+
+    const res = await axios.post("http://localhost:3000/spacetune/api/tools/fetchTab",{name:search});
+    if(res.data.success==false)
+    {
+      setSuccess(false)
+      setTab(null);
+
+    }else {
+      setTab(res.data.content.photo);
+setSuccess(true)
+    }
+  
+  }
     return (<div className="metronome text-center" >
     <h2 className="text-3xl">Type the name of the song</h2>
 
@@ -28,61 +53,26 @@ export default function TabGenerator() {
       "
       id="exampleSearch"
       placeholder="Type song name"
+      onChange={(e)=>setSearch(e.target.value)}
     />
-  </div>
+ <Button fullWidth variant="contained" type="submit" onClick={handleSubmit}>
+          Search
+        </Button>
+        {lightBox.isLightBoxOpen && tab && (
+                    <LightBox
+                      images={"http://localhost:3000/"+tab}
+                      {...lightBox}
+                      closePortal={lightBox.close}
+                    />
+                  )}
+        {tab && <img src={"http://localhost:3000/"+tab} alt="tab" className="w-full h-auto"     onClick={lightBox.open} />}
+        {!success && <p className="text-lg m-5"> Tabs not found</p>}
+          </div>
 </div>
 
 
     
-<p className="text-xl">
-kirk fletcher - silver spoon
-</p>
-<div>
-e---------------------------------------------------------|
-B---------------------------------------------------------|
-G---------------------------------------------------------|
-D----------7--------7----------7--------7-----------7-----|
-A-------8--------8----------8---------8----------8--------|
-E--/10--------10--------10---------10--------10-----------|
 
-
-
-e---------------------------------------------------------|
-B---------------------------------------------------------|
-G---------------------------------------------------------|
-D---------5-----5-------5---------5-----------5-----------|
-A-------7-----7-------7--------7----------7---------------|
-E--10\8-----8-------8--------8--------8-------------------|
-
-
-
-
-e---------------------------------------------------------|
-B---------------------------------------------------------|
-G---------------------------------------------------------|
-D----------7--------7----------7--------7-----------7-----|
-A-------8--------8----------8---------8----------8--------|
-E--/10--------10--------10---------10--------10-----------|
-
-
-
-e---------------------------------------------------------|
-B---------------------------------------------------------|
-G---------------------------------------------------------|
-D---------5-----5-------5---------5-----------5-----------|
-A-------7-----7-------7--------7----------7---------------|
-E--10\8-----8-------8--------8--------8-------------------|
-
-
-
-e---------------------------------------------------------|
-B---------------------------------------------------------|
-G---------------------------------------------------------|
-D----------7--------7----------7--------7-----------7-----|
-A-------8--------8----------8---------8----------8--------|
-E---10--------10--------10---------10--------10-----------|
-
-</div>
 
 
 

@@ -10,6 +10,8 @@ const Blank = lazy(() => import("../pages/Blank"));
 const Trainings = lazy(() => import("../pages/Trainings"));
 const Shop = lazy(() => import("../pages/Shop"));
 const Order = lazy(() => import("../pages/Order"));
+const Blogs = lazy(() => import("../pages/Blogs"));
+
 /**
  * ⚠ These are internal routes!
  * They will be rendered inside the app, using the default `containers/Layout`.
@@ -52,6 +54,10 @@ const routes = [
   {
     path: "/blank",
     element: Blank,
+  },
+  {
+    path: "/blogs",
+    element: Blogs,
   },
 ];
 
