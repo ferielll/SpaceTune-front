@@ -200,7 +200,7 @@ export const NewOrder = ({ isModalOpen, closeModal, selected }) => {
       <ModalFooter>
         <div className="hidden sm:block">
           <Button layout="outline" onClick={closeModal}>
-            Cancel
+            Close
           </Button>
         </div>
         
