@@ -70,11 +70,9 @@ export default function EarTraining() {
           fullWidth
         >
           {earTrainingList.map((option) => (
-           <div className='text-center'>
-              <MenuItem key={option._id} value={option}>
+            <MenuItem key={option._id} value={option}>
               Name:{option.name} Level: {option.level}
             </MenuItem>
-           </div>
           ))}
           
           
