@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import EditItem from "./EditItem";
 import React, { useEffect,Fragment, useState } from "react";
 import { DotsVerticalIcon, TrashIcon } from "@heroicons/react/outline";
 import { Menu, Transition } from "@headlessui/react";
@@ -44,14 +44,17 @@ function MyItems() {
   const images = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVU30iCxprlRMuAsfRA__QRABNExU3R-XZgw&usqp=CAU";
   //useQuery is function from react-query,  1 param key, second param func()
   //we use it for fetch (method get), create update delete we use useMutation instaed of this hook
-  useEffect(()=>{
-    getAllItems();
-  },[]);
+ 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   //select item to delete
   const [selectedItem, setSelectedItem] = useState(null);
+  
+  const [refetch, setRefetch] = useState(0);  
+  useEffect(()=>{
+    getAllItems();
+  },[refetch]);
   
   //  const{
   //   data: items,
@@ -94,6 +97,15 @@ function MyItems() {
               onClickConfirm={() => deleteItem(selectedItem)}
             />
           )}
+          {showEditModal && (
+                <EditItem
+                  isModalVisible={showEditModal}
+                  setModalVisible={setShowEditModal}
+                  setRefetch = {setRefetch}
+                  refetch={refetch}
+                  item={selectedItem}
+                />
+              )}
             <button
                 onClick={() => setModalVisible(true)}
                 className={`text-base leading-6 font-medium py-1 px-4 mr-4 rounded-lg tracking-wide shadow-md bg-navbar-color text-gray-100`}
@@ -155,7 +167,7 @@ function MyItems() {
                                 <button
                                   onClick={() => {
                                     setShowEditModal(true);
-                                    setSelectedItem(items);
+                                    setSelectedItem(item);
                                   }}
                                   className={`${
                                     active ? `bg-gray-100` : "text-gray-700"
