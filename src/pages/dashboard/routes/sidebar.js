@@ -17,6 +17,16 @@ const routes = [
     name: "Training",
   },
   {
+    path: "/dashboard/shop",
+    icon: "CartIcon",
+    name: "Shop",
+  },
+  {
+    path: "/dashboard/order",
+    icon: "CartIcon",
+    name: "Order",
+  },
+  {
     path: "/dashboard/cards",
     icon: "CardsIcon",
     name: "Cards",

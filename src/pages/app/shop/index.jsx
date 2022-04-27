@@ -10,6 +10,8 @@ import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import FallBackSuspense from "../../../components/FallBackSuspense";
+import Stripe from "./StripeContainer";
+import Thankyou from "./Thankyou";
 //import NewItem from "./NewItem";
 
 export default function Shop() {
@@ -47,6 +49,8 @@ export default function Shop() {
               <Route path="/newitems" element={<AllItemsList strr="getNewItems" />}></Route>
               <Route path="/useditems" element={<AllItemsList strr="getUsedItems" />}></Route>
               <Route path="/productDetail/" element={<ProductDetail />}></Route>
+              <Route path="/checkout/" element={<Stripe />}></Route>
+              <Route path="/thankyou/" element={<Thankyou />}></Route>
             </Routes>
           </Suspense>
         </div>

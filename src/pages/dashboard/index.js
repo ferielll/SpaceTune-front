@@ -11,6 +11,8 @@ import Modals from "./pages/Modals";
 import Cards from "./pages/Cards";
 import TabGenerator from "./pages/TabGenerator";
 import EarTraining from "./pages/EarTraining";
+import Shop from "./pages/Shop";
+import Order from "./pages/Order";
 
 const Page404 = lazy(() => import("./pages/404"));
 
@@ -37,6 +39,8 @@ function AdminDashboard() {
             <Routes>
               <Route path={`/`} element={<Dashboard />} />
               <Route path={`/training`} element={<Training />} />
+              <Route path={`/shop`} element={<Shop />} />
+              <Route path={`/order`} element={<Order />} />
               <Route path={`/modals`} element={<Modals />} />
               <Route path={`/cards`} element={<Cards />} />
               <Route path={`/earTraining`} element={<EarTraining />} />

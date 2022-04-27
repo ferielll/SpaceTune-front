@@ -1,5 +1,6 @@
 import { lazy } from "react";
 
+
 // use lazy for better code splitting, a.k.a. load faster
 const Dashboard = lazy(() => import("../pages/Dashboard"));
 const Cards = lazy(() => import("../pages/Cards"));
@@ -7,7 +8,8 @@ const Modals = lazy(() => import("../pages/Modals"));
 const Page404 = lazy(() => import("../pages/404"));
 const Blank = lazy(() => import("../pages/Blank"));
 const Trainings = lazy(() => import("../pages/Trainings"));
-
+const Shop = lazy(() => import("../pages/Shop"));
+const Order = lazy(() => import("../pages/Order"));
 /**
  * ⚠ These are internal routes!
  * They will be rendered inside the app, using the default `containers/Layout`.
@@ -30,6 +32,14 @@ const routes = [
   {
     path: "/trainings",
     element: Trainings,
+  },
+  {
+    path: "/shops",
+    element: Shop,
+  },
+  {
+    path: "/orders",
+    element: Order,
   },
   {
     path: "/modals",
