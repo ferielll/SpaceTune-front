@@ -90,7 +90,7 @@ function Order() {
         </InfoCard> 
         {showDeleteModal && (
             <ConfirmModal
-              title={`Are you sure to delete "${selectedItem.id}" ?`}
+              title={`Are you sure to delete this order ?`}
               confirmButton="Delete"
               cancelButton="Cancel"
               onClickCancel={() => setShowDeleteModal(false)}
