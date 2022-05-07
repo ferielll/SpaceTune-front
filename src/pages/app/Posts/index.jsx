@@ -10,20 +10,26 @@ export default function Posts() {
   const [posts, setPosts] = useState([]);
   const {search} = useLocation();
   const { user } = useUser();
+  const [refetch, setRefetch] = useState(0);  
+  const fetchPosts = async () => {
+    const res = await axios.get("http://localhost:3000/spacetune/api/post/getAll" + search);
+    setPosts(res.data);
+   //console.log(res)
+  };
   //console.log(location);
-
+  useEffect(()=>{
+    fetchPosts();
+  },[refetch]);
   useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await axios.get("http://localhost:3000/spacetune/api/post/getAll" + search);
-      setPosts(res.data);
-     //console.log(res)
-    };
+    
     fetchPosts();
   }, [search]);
+  
   //console.log('posts', posts)
   return (
     <div>
-      <ListPosts posts={posts}/>
+      <ListPosts posts={posts} setRefetch = {setRefetch}
+                refetch={refetch}/>
     </div>
   );
 }

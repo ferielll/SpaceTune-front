@@ -117,7 +117,8 @@ function MyItems() {
               <NewItem
                 isModalVisible={isModalVisible}
                 setModalVisible={setModalVisible}
-             
+                setRefetch = {setRefetch}
+                refetch={refetch}
               />
             )}
           <div className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
@@ -137,7 +138,7 @@ function MyItems() {
                   )}
                   <img
                     onClick={lightBox.open}
-                    src={images}
+                    src={`http://localhost:3000/${item?.photos}`}
                     loading="lazy"
                     alt={items.name}
                     className="w-full h-48 rounded-t-md cursor-pointer"

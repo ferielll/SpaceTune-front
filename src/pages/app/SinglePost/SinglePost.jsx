@@ -1,13 +1,11 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./SinglePost.css";
 import Music from "../../../assets/music.png";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import axios from "axios";
-import NavBar from "../../../Layout/NavBar";
 import { useLoading } from "../../../hooks/useLoading";
 import ConfirmModal from "../../../components/Modal/ConfirmModal";
 import { TrashIcon } from "@heroicons/react/outline";
-import { Menu } from "@headlessui/react";
 import { useQuery } from "react-query";
 import EditPost from "./EditPost";
 import { EditIcon } from "evergreen-ui";
@@ -65,7 +63,7 @@ export default function SinglePost() {
       </button>
       <div className="relative overflow-hidden shadow-md mb-6">
         <img
-          src={Music}
+          src={`http://localhost:3000/${post.Image}`}
           alt=""
           className="object-top h-full w-auto object-cover shadow-lg rounded-t-lg lg:rounded-lg ml-72 mb-20"
         />

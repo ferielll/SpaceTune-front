@@ -43,14 +43,19 @@ function AllItemsList(props) {
   const images = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVU30iCxprlRMuAsfRA__QRABNExU3R-XZgw&usqp=CAU";
   //useQuery is function from react-query,  1 param key, second param func()
   //we use it for fetch (method get), create update delete we use useMutation instaed of this hook
+  const [refetch, setRefetch] = useState(0);  
   useEffect(()=>{
     getAllItems();
-  },[props]);
+  },[props ]);
+  useEffect(()=>{
+    getAllItems();
+  },[refetch ]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   //select item to delete
   const [selectedItem, setSelectedItem] = useState(null);
+  
   
   //  const{
   //   data: items,
@@ -104,7 +109,8 @@ function AllItemsList(props) {
               <NewItem
                 isModalVisible={isModalVisible}
                 setModalVisible={setModalVisible}
-             
+                setRefetch = {setRefetch}
+                refetch={refetch}
               />
             )}
           <div className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
@@ -124,7 +130,7 @@ function AllItemsList(props) {
                   )}
                   <img
                     onClick={lightBox.open}
-                    src={images}
+                    src={`http://localhost:3000/${item?.photos}`}
                     loading="lazy"
                     alt={items.name}
                     className="w-full h-48 rounded-t-md cursor-pointer"
@@ -132,7 +138,7 @@ function AllItemsList(props) {
                  
                   <div className="space-y-1 pt-2 ml-4 mr-2 mb-3">
                     <h3 className="text-xl font-semibold text-gray-900">
-                      {item.name}
+                      {item?.name}
                     </h3>
 
 
@@ -148,10 +154,10 @@ function AllItemsList(props) {
 
                     
                     <h5 className=" font-semibold text-gray-900">
-                      price: ${item.price}
+                      price: ${item?.price}
                     </h5>
                     <p className="text-gray-500 text-sm mt-1 line-clamp-3">
-                      {item.description}
+                      {item?.description}
                     </p>
                   </div>
                   
