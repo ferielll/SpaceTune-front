@@ -7,7 +7,10 @@ import capture from "../../../assets/capture.png";
 import { useLoading } from "../../../hooks/useLoading";
 import { toaster } from "evergreen-ui";
 import { useUser } from "../../../hooks/useUser";
-import { Button } from "antd";
+import { Button, Tabs } from "antd";
+import DisplaySurveys from "../MyLessons/Survey/preview";
+import { TabPane } from "react-bootstrap";
+import Title from "../../../components/Title";
 
 const DetailsTraining = () => {
   //réperer id in param
@@ -29,7 +32,6 @@ const DetailsTraining = () => {
       .get(`http://localhost:3000/spacetune/api/formation/findOne/${id}`)
       .then((res) => res.data)
   );
-  console.log(training, "training");
 
   async function subscribe(id) {
     startLoadingSubscribe();
@@ -50,7 +52,11 @@ const DetailsTraining = () => {
           <div className="flex flex-col max-w-screen-lg overflow-hidden bg-white border rounded shadow-sm lg:flex-row sm:mx-auto">
             <div className="relative lg:w-1/2">
               <img
-                src={capture}
+                src={
+                  training.image[0].imageURL
+                    ? training.image[0].imageURL
+                    : capture
+                }
                 alt=""
                 className="object-cover w-full lg:absolute h-80 lg:h-full"
               />
@@ -106,6 +112,14 @@ const DetailsTraining = () => {
             </div>
           </div>
         )}
+        <Tabs defaultActiveKey="1">
+          <TabPane tab={<Title title="Courses" />} key="1">
+            {/* {training?.images && <DisplaySurveys survey={training.courses} />} */}
+          </TabPane>
+          <TabPane tab={<Title title="Quizzes" />} key="2">
+            {training?.courses && <DisplaySurveys survey={training.courses} />}
+          </TabPane>
+        </Tabs>
       </div>
     </div>
   );

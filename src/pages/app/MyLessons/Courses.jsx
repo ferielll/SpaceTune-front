@@ -6,7 +6,7 @@ import { CalendarIcon, DocumentIcon } from "@heroicons/react/outline";
 import { useLocation } from "react-router-dom";
 import ImgCrop from "antd-img-crop";
 import { Upload, Tabs } from "antd";
-import Survey from "./Survey";
+import Survey from "../MyLessons/Survey";
 
 const Courses = () => {
   const location = useLocation();
@@ -75,7 +75,7 @@ const Courses = () => {
   };
   return (
     <Fragment>
-      <Breadcrumb title={"Dashboard > Courses and Quizzes"} />
+      <Breadcrumb title={"Courses and Quizzes"} />
       <SideBar items={items} />
       <div className="flex flex-row justify-center pt-1">
         <div className="mt-4 px-2 w-full max-w-7xl lg:px-4">

@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { ListGroup } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./survey.css";
 import axios from "axios";
 import { DeleteIcon } from "evergreen-ui";
@@ -14,7 +14,7 @@ function ListSurvey({ survey, setEditquiz }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const { startLoading, stopLoading } = useLoading(false);
-
+  const { id } = useParams();
   async function deleteQuiz(selectedItem) {
     startLoading();
     await axios
@@ -37,17 +37,19 @@ function ListSurvey({ survey, setEditquiz }) {
     //get UserConnected ID
     let token = localStorage.getItem("token");
     axios
-      .get("http://localhost:3000/spacetune/api/survey/listSurveys", {
+      .get(`http://localhost:3000/spacetune/api/survey/listSurveys/${id}`, {
         headers: {
           "Content-Type": "application/json",
           authorization: `${token}`,
         },
       })
       .then((response) => {
-        setlistSurvey(response.data);
+        setlistSurvey(response.data.courses);
         console.log(response.data, "response");
       });
   }, [survey, shouldRefresh]);
+
+  console.log(list, "list");
 
   return (
     <div className="mt-3">

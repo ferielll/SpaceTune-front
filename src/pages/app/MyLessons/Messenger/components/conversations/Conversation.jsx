@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { UserAvatar } from "../../../../../../components/UserAvatar";
 import "./conversation.css";
+import { format } from "timeago.js";
 
 export default function Conversation({ conversation, currentUser }) {
   const [user, setUser] = useState(null);
@@ -35,10 +36,12 @@ export default function Conversation({ conversation, currentUser }) {
               <span className="block ml-2 font-semibold text-gray-600">
                 {user.userName}
               </span>
-              <span className="block ml-2 text-sm text-gray-600">6 hour</span>
+              <span className="block ml-2 text-sm text-gray-600">
+                {format(conversation.updatedAt)}
+              </span>
             </div>
             <span className="block ml-2 text-sm text-gray-600">
-              Good Morning
+              {conversation.lastMessage}
             </span>
           </div>
         </>

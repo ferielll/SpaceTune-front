@@ -17,10 +17,8 @@ function NewTraining({ isModalVisible, setModalVisible, refetch }) {
 
   const onSubmit = async (data) => {
     startLoading();
-    const { name, description, price, type, image } = data;
+    const { name, description, price, type } = data;
     const teacher = user._id;
-    const formData = new FormData();
-    formData.append("image", image);
     try {
       await axios
         .post("http://localhost:3000/spacetune/api/formation/create", {
@@ -28,7 +26,6 @@ function NewTraining({ isModalVisible, setModalVisible, refetch }) {
           description,
           price,
           type,
-          image,
           teacher,
         })
         .then((res) => {
@@ -125,7 +122,6 @@ function NewTraining({ isModalVisible, setModalVisible, refetch }) {
             <Input {...field} label="Type" type="text" placeholder="type" />
           )}
         />
-        <input type="file" {...register("image")} />
       </div>
     </Modal>
   );

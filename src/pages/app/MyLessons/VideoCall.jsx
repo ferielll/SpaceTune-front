@@ -1,10 +1,10 @@
 import React from "react";
-import { Typography, AppBar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import VideoPlayer from "./VideoCallComponents/VideoPlayer";
 import Sidebar from "./VideoCallComponents/Sidebar";
 import Notifications from "./VideoCallComponents/Notifications";
+import { ContextProvider } from "../../../context/VideoCall_Context";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -36,12 +36,14 @@ const VideoCall = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.wrapper}>
-      <VideoPlayer />
-      <Sidebar>
-        <Notifications />
-      </Sidebar>
-    </div>
+    <ContextProvider>
+      <div className={classes.wrapper}>
+        <VideoPlayer />
+        <Sidebar>
+          <Notifications />
+        </Sidebar>
+      </div>
+    </ContextProvider>
   );
 };
 

@@ -24,8 +24,8 @@ const TypeUniqueChoice = ({ views }) => {
     ],
   };
   return (
-    <div className="w-1/3">
-      <h5>
+    <div className="mx-2 w-1/3">
+      <h5 className="text-red-500 font-semibold">
         Question {views.nq}: {views.question}
       </h5>
       <Doughnut data={pieData} />

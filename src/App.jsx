@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect , useState} from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,15 +15,16 @@ const Login = lazy(() => import("./pages/authentification/Login"));
 const Register = lazy(() => import("./pages/authentification/Register"));
 const Application = lazy(() => import("./pages/app"));
 const AdminDashboard = lazy(() => import("./pages/dashboard/index"));
-const Single = lazy(() => import("./pages/app/Single/Single"))
+const Single = lazy(() => import("./pages/app/Single/Single"));
 function App() {
   const [cart, setCart] = useState([]);
   useEffect(() => {
-   let s=localStorage.getItem("cart");
-   console.log(s);
-    if (s==null){localStorage.setItem("cart", JSON.stringify(cart));}
-    
-  },[]);
+    let s = localStorage.getItem("cart");
+    console.log(s);
+    if (s == null) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, []);
   //custom hook to check if user is logged In
   const { isLoggedIn, setLoggedIn } = useAuth();
   const queryClient = new QueryClient({
@@ -36,34 +37,34 @@ function App() {
   });
   return (
     <QueryClientProvider client={queryClient}>
-      <ContextProvider>
-        <div className="App">
-          <Suspense fallback={<FallBackSuspense />}>
-            <Router>
-              <Routes>
-                <Route path="/dashboard/*" element={<AdminDashboard />} />
-                <Route path="/register" element={<Register />} />
-                 <Route path="/post/:postId" element={<Single />}></Route>
-                <Route
-                  path="/login"
-                  element={
-                    !isLoggedIn ? (
-                      <Login setLoggedIn={setLoggedIn} />
-                    ) : (
-                      <Navigate to="/app" />
-                    )
-                  }
-                />
-                <Route path="/app/*" element={<Application />} />
-                <Route
-                  path="/*"
-                  element={<Navigate to={isLoggedIn ? "/app" : "/login"} />}
-                />
-              </Routes>
-            </Router>
-          </Suspense>
-        </div>
-      </ContextProvider>
+      {/* <ContextProvider> */}
+      <div className="App">
+        <Suspense fallback={<FallBackSuspense />}>
+          <Router>
+            <Routes>
+              <Route path="/dashboard/*" element={<AdminDashboard />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/post/:postId" element={<Single />}></Route>
+              <Route
+                path="/login"
+                element={
+                  !isLoggedIn ? (
+                    <Login setLoggedIn={setLoggedIn} />
+                  ) : (
+                    <Navigate to="/app" />
+                  )
+                }
+              />
+              <Route path="/app/*" element={<Application />} />
+              <Route
+                path="/*"
+                element={<Navigate to={isLoggedIn ? "/app" : "/login"} />}
+              />
+            </Routes>
+          </Router>
+        </Suspense>
+      </div>
+      {/* </ContextProvider> */}
     </QueryClientProvider>
   );
 }

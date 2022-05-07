@@ -43,7 +43,7 @@ const navigation = [
       },
       {
         name: "My lessons",
-        to: "training/dashboardLessons",
+        to: "dashboardLessons",
       },
     ],
   },
