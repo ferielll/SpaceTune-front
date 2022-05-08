@@ -50,7 +50,6 @@ export default function UploadTracks() {
             onChange={updateName}
           />
         </div>
-
         <div className="mt-5 text-center">
           <TextField
             type="file"

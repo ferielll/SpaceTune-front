@@ -26,7 +26,6 @@
     "axios": "^0.26.1",
     "bootstrap": "^5.0.2",
     "bootstrap-icons": "^1.5.0",
-   
     "classnames": "2.2.6",
     "dayjs": "^1.10.8",
     "evergreen-ui": "^6.8.2",
@@ -58,6 +57,7 @@
     "react-query": "^3.34.16",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
+    "react-select": "^5.3.1",
     "react-toastify": "^8.2.0",
     "react-transition-group": "4.4.1",
     "react-validation": "^3.0.7",

@@ -1,3 +1,4 @@
+import MenuItem from '@mui/material/MenuItem';
 import { CloudUploadOutlined } from "@material-ui/icons";
 import { Button, Upload } from "antd";
 import ImgCrop from "antd-img-crop";
@@ -9,9 +10,15 @@ import Input from "../../../components/form/Input";
 import TextArea from "../../../components/form/textArea";
 import { useLoading } from "../../../hooks/useLoading";
 import { useUser } from "../../../hooks/useUser";
-
-function NewItem({ isModalVisible, setModalVisible,refetch ,setRefetch  }) {
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+function NewItem({ isModalVisible, setModalVisible,refetch ,setRefetch }) {
   //helpers
+  const options = [
+    { value: true, label: 'Used'},
+    { value: false, label: 'New'},
+    
+   ];
+   const default_value = 1;
   const { user } = useUser();
   const { isLoading, startLoading, stopLoading } = useLoading(false);
   // const [name, setName] = useState('');
@@ -19,48 +26,88 @@ function NewItem({ isModalVisible, setModalVisible,refetch ,setRefetch  }) {
   // const [isUsed, setIsUsed] = useState(false);
   // const [description, setDescription] = useState('');
   // const [price, setPrice] = useState(0);
-  const { handleSubmit, control } = useForm({
-    defaultValues: {
-      name: "",
-      description: "",
-      price: "",
-      type: "",
-      // isUsed: "",
-    },
-    mode: "onChange",
-  });
+  const [file, setFile] = useState();
+  const [fileName, setFileName] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
+  const [type, setType] = useState("");
+  const [condition, setCondition] = useState(false);
+  const saveFile = (e) => {
+    setFile(e.target.files[0]);
+    setFileName(e.target.files[0].name);
+  };
+  // const { handleSubmit, control } = useForm({
+  //   defaultValues: {
+  //     name: "",
+  //     description: "",
+  //     price: "",
+  //     type: "",
+  //     // isUsed: "",
+  //   },
+  //   mode: "onChange",
+  // });
 
   //const history = useHistory();
   const onSubmit = async (data) => {
-    startLoading();
-    const { name, description, price, type } = data;
+     startLoading();
+    // const { name, description, price, type } = data;
     
+    const formData = new FormData();
+    formData.append("photos", file);
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("type", type);
+    formData.append("fileName", fileName);
+    formData.append("user", user._id);
+    formData.append("isUsed", condition);
     try {
       console.log("I xgqf")
       await axios
-        .post("http://localhost:3000/spacetune/api/shop/create", {
-          name,
-          description,
-          price,
-          type,
-          
-          user : user._id,
-        })
+        .post("http://localhost:3000/spacetune/api/shop/create", formData
+        )
         .then((res) => {
           console.log(res, "res");
           if (!res.data.success) {
-            setRefetch(refetch+1);
+            
             stopLoading();
             return;
           }
         });
+        setRefetch(refetch+1);
       stopLoading();
       setModalVisible(false);
+      
       
     } catch (err) {
       console.log(err, "error");
     }
   };
+
+  const updateName = async (e) => {
+    setName(e.target.value);
+    console.log("name", name);
+  };
+
+  const updateDescription = async (e) => {
+    setDescription(e.target.value);
+    console.log("description", description);
+  };
+
+  const updatePrice = async (e) => {
+    setPrice(e.target.value);
+    console.log("price", price);
+  };
+
+  const updateType = async (e) => {
+    setType(e.target.value);
+    console.log("type", type);
+  };
+  const handleChange = async (event) => {
+    setCondition(event.target.value );
+  };
+
   // const handleSubmit = async(e) => {
   //   e.preventDefault();
   //   const item = { name, type, isUsed,description,price,user };
@@ -95,7 +142,7 @@ function NewItem({ isModalVisible, setModalVisible,refetch ,setRefetch  }) {
       footer={[
         <Button
           loading={isLoading}
-          onClick={handleSubmit(onSubmit)}
+          onClick={onSubmit}
           className={` text-white text-sm font-medium py-1 px-4 mr-4 rounded-lg transition-duration-200
                            shadow-md bg-blue-600 `}
         >
@@ -104,67 +151,50 @@ function NewItem({ isModalVisible, setModalVisible,refetch ,setRefetch  }) {
       ]}
     >
       <div>
-        <Controller
-          name="name"
-          control={control}
-          rules={{
-            required: `Enter name of the training session.`,
-          }}
-          render={({ field, fieldState: { invalid, error } }) => (
             <Input
-              {...field}
+       
               label="Name"
               placeholder="name"
-              hasError={invalid}
-              error={error && error.message}
+              onChange={updateName}
+        
             />
-          )}
-        />
-        <Controller
-          name="description"
-          control={control}
-          rules={{
-            required: `Please enter your description.`,
-          }}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <TextArea
-              {...field}
-              
+         
+            <TextArea           
               label="Description"
               placeholder="Write description..."
               className="whitespace-pre-wrap"
-              hasError={invalid}
-              error={error && error.message}
+              onChange={updateDescription}
             />
-          )}
-        />
-        <Controller
-          name="price"
-          control={control}
-          rules={{
-            pattern: {
-              value: /^[0-9]*$/i,
-              message: "price should be number",
-            },
-          }}
-          render={({ field, fieldState: { invalid, error } }) => (
+   
             <Input
-              {...field}
               label="Price"
               type="text"
               placeholder="price"
-              hasError={invalid}
-              error={error && error.message}
+              onChange={updatePrice}
             />
-          )}
-        />
-        <Controller
-          name="type"
-          control={control}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Input {...field} label="Type" type="text" placeholder="type" />
-          )}
-        />
+         
+     
+            <Input label="Type" type="text" placeholder="type" onChange={updateType} />
+            <Input
+            type="file"
+            label="Photo"
+            // name="uploaded_file"
+            variant="outlined"
+            onChange={saveFile}
+            /><br></br>
+
+<Select
+    labelId="Condition"
+    id="demo-simple-select"
+    value={condition}
+    label="Condition"
+    onChange={handleChange}
+  >
+    <MenuItem value={true}>Used</MenuItem>
+    <MenuItem value={false}>New</MenuItem>
+    
+  </Select>
+                    
       </div>
     </Modal>
   );

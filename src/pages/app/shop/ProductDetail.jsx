@@ -44,7 +44,7 @@ const ProductDetail = () => {
         <div className={`${isModalVisible && 'flex'}`}>
             <div className={`${isModalVisible && 'flex w-1/2'} md:flex items-start justify-center py-12 2xl:px-20 md:px-6 px-4`}>
                 <div className="xl:w-2/6 lg:w-2/5 w-80 md:block hidden">
-                    <img className="w-full" alt="img of a girl posing" src={images} />
+                    <img className="w-full" alt="img of a girl posing" src={`http://localhost:3000/${item.photos}`} />
                     {/* <img className="mt-6 w-full" alt="img of a girl posing" src="https://i.ibb.co/qxkRXSq/component-image-two.png" /> */}
                 </div>
                 {showConfirmModal && (

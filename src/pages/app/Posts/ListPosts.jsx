@@ -10,7 +10,8 @@ import Post from "../Post/Post";
 import NewBlog from "../Posts/NewBlog";
 import "./posts.css";
 
-export default function ListPosts({posts}) {
+export default function ListPosts({posts,refetch ,setRefetch}) {
+  
    //states (modals visibles)
    const [showDeleteModal, setShowDeleteModal] = useState(false);
    const [showEditModal, setShowEditModal] = useState(false);
@@ -23,17 +24,15 @@ export default function ListPosts({posts}) {
     startLoading,
     stopLoading,
   } = useLoading(false);
-  const {
-    data: trainings,
-    isLoading,
-    refetch,
-  } = useQuery(["fetchMyLessons"], () =>
+   const getAllBlogs= () =>{
     axios
       .get(
-        `http://localhost:3000/spacetune/api/post/getAll/${user._id}`
+        `http://localhost:3000/spacetune/api/post/getAll`
       )
       .then((res) => res.data)
-  );
+      
+    };
+  
   async function deleteTraining(selectedItem) {
     startLoading();
     await axios.delete(
@@ -42,8 +41,9 @@ export default function ListPosts({posts}) {
     stopLoading();
     setShowDeleteModal(false);
     setSelectedItem(null);
-    refetch();
+    
   }
+  
   return (
     <Fragment>
       <Breadcrumb title={"All posts"} />
@@ -65,7 +65,8 @@ export default function ListPosts({posts}) {
               < NewBlog
                 isModalVisible={isModalVisible}
                 setModalVisible={setModalVisible}
-                 refetch={refetch}
+                setRefetch = {setRefetch}
+                refetch={refetch}
               />
             )}
           </div>

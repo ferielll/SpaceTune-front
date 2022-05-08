@@ -117,12 +117,12 @@ function Shop() {
         )}
 
       </div>
-      <h1
+      {/* <h1
         className="w-1/6 text-blue font-semibold cursor-pointer p-3"
         onClick={() => openModal()}
       >
         + Add new item
-      </h1>
+      </h1> */}
       <TableContainer>
         <Table>
           <TableHeader>

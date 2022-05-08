@@ -99,8 +99,8 @@ function MyItems() {
               <NewItem
                 isModalVisible={isModalVisible}
                 setModalVisible={setModalVisible}
+                setRefetch = {setRefetch}
                 refetch={refetch}
-                setRefetch={setRefetch}
               />
             )}
           </div>
@@ -148,43 +148,29 @@ function MyItems() {
                   className="flex justify-end items-center relative"
                   as="div"
                 >
-                  <div>
-                    <Menu.Button className="flex cursor-pointer p-1 text-gay-500">
-                      <DotsVerticalIcon className="w-6 h-5 " />
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute z-50 w-24 mt-14 origin-bottom bg-white divide-y divide-gray-100 rounded-md shadow-xl right-5 ring-2 ring-gray-900 ring-opacity-5 focus:outline-none">
-                      <div className="px-1 py-1">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              onClick={() => {
-                                setShowEditModal(true);
-                                setSelectedItem(item);
-                              }}
-                              className={`${
-                                active ? `bg-gray-100` : "text-gray-700"
-                              } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                            >
-                              <>
-                                <EditIcon
-                                  className={`w-5 h-5 mr-2 text-blue-500`}
-                                  aria-hidden="true"
-                                />
-                                Edit
-                              </>
-                            </button>
-                          )}
-                        </Menu.Item>
+                  {/* LightBox component, images can be [String] == group of images || String */}
+                  {lightBox.isLightBoxOpen && images && (
+                    <LightBox
+                      images={images}
+                      {...lightBox}
+                      closePortal={lightBox.close}
+                    />
+                  )}
+                  <img
+                    onClick={lightBox.open}
+                    src={`http://localhost:3000/${item?.photos}`}
+                    loading="lazy"
+                    alt={items.name}
+                    className="w-full h-48 rounded-t-md cursor-pointer"
+                  /><br></br>
+                 <Menu
+                      className="flex justify-end items-center relative"
+                      as="div"
+                    >
+                      <div>
+                        <Menu.Button className="flex cursor-pointer p-1 text-gay-500">
+                          <DotsVerticalIcon className="w-6 h-5 " />
+                        </Menu.Button>
                       </div>
                       <div className="px-1 py-1">
                         <Menu.Item>

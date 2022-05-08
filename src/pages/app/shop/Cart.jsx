@@ -97,7 +97,7 @@ export default function Cart() {
                                   >
                                       
                                       <div className="w-1/4">
-                                          <img src= {images} alt className="w-full h-full object-center object-cover" />
+                                          <img src= {`http://localhost:3000/${product.photos}`} alt className="w-full h-full object-center object-cover" />
                                       </div>
                                       <div className="md:pl-3 md:w-3/4">
                                           {/* <p className="text-xs leading-3 text-gray-800 md:pt-0 pt-4">RF293</p> */}
@@ -112,6 +112,7 @@ export default function Cart() {
                                           <p className="text-xs leading-3 text-gray-600 pt-2">Type: {product.type}</p>
                                            
                                           <p className="text-xs leading-3 text-gray-600 py-4">Condition: {(() => {
+                                             
                                              // setPrice(price+product.price);
           switch(product.isUsed) {
             case true: return "Used";
