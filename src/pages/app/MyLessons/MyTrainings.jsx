@@ -152,7 +152,7 @@ const MyTrainings = () => {
                       className="max-w-md w-full mx-auto mt-3 shadow-lg border-black rounded-md duration-300 hover:shadow-sm hover:-translate-y-1"
                       key={key}
                     >
-                      {lightBox.isLightBoxOpen && images && (
+                      {lightBox.isLightBoxOpen &&  (
                         <LightBox
                           images={
                             items.image[0].imageURL

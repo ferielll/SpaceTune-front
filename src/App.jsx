@@ -9,7 +9,6 @@ import "./App.css";
 import FallBackSuspense from "./components/FallBackSuspense";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useAuth } from "./hooks/useAuth";
-import { ContextProvider } from "./context/VideoCall_Context";
 
 const Login = lazy(() => import("./pages/authentification/Login"));
 const Register = lazy(() => import("./pages/authentification/Register"));
@@ -37,13 +36,15 @@ function App() {
   });
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <ContextProvider> */}
       <div className="App">
         <Suspense fallback={<FallBackSuspense />}>
           <Router>
             <Routes>
               <Route path="/dashboard/*" element={<AdminDashboard />} />
-              <Route path="/register" element={<Register />} />
+              <Route
+                path="/register"
+                element={!isLoggedIn ? <Register /> : <Navigate to="/app" />}
+              />
               <Route path="/post/:postId" element={<Single />}></Route>
               <Route
                 path="/login"
@@ -64,7 +65,6 @@ function App() {
           </Router>
         </Suspense>
       </div>
-      {/* </ContextProvider> */}
     </QueryClientProvider>
   );
 }

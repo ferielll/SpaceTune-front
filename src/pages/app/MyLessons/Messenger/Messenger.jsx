@@ -19,7 +19,18 @@ export default function Messenger() {
   const socket = useRef();
   const { user } = useUser();
   const scrollRef = useRef();
-  const [profile, setProfile] = useState({ username: "" });
+
+  async function getMessages() {
+    try {
+      const res = await axios.get(
+        "http://localhost:3000/spacetune/api/chat/message/" + currentChat?._id
+      );
+      setMessages(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
     socket.current.on("getMessage", (data) => {
@@ -56,18 +67,8 @@ export default function Messenger() {
   }, [user._id, messages]);
 
   useEffect(() => {
-    async function getMessages() {
-      try {
-        const res = await axios.get(
-          "http://localhost:3000/spacetune/api/chat/message/" + currentChat?._id
-        );
-        setMessages(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
     getMessages();
-  }, [currentChat, shouldRefresh]);
+  }, [currentChat]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,6 +93,7 @@ export default function Messenger() {
         "http://localhost:3000/spacetune/api/chat/message",
         message
       );
+      getMessages();
       setShouldRefresh((prev) => !prev);
       setMessages([...messages, res.data]);
       setNewMessage("");
@@ -104,7 +106,6 @@ export default function Messenger() {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  console.log(messages, "messages");
   return (
     <>
       <Breadcrumb title="My trainings > chat " />

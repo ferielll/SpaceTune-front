@@ -8,6 +8,7 @@ import {
   ShoppingCartIcon,
 } from "@heroicons/react/outline";
 import Spacetune from "../assets/spacetuneWidth.png";
+import Freshmusic from "../assets/avatar.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 import { UserAvatar } from "../components/UserAvatar";
@@ -191,8 +192,8 @@ export default function NavBar() {
                           <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                             <span className="sr-only">Open user menu</span>
                             <img
-                              className="h-8 w-8 rounded-full"
-                              src={user.avatar}
+                              className="bg-white h-8 w-8 rounded-full"
+                              src={Freshmusic}
                               alt=""
                             />
                           </Menu.Button>

@@ -97,16 +97,17 @@ function ListTraining() {
                   className="max-w-md w-full mx-auto mt-3 shadow-lg border-black rounded-md duration-300 hover:shadow-sm hover:-translate-y-2"
                   key={key}
                 >
-                  {/* LightBox component, images can be [String] == group of images || String */}
-                  {lightBox.isLightBoxOpen && items.image[0].imageURL
-                    ? items.image[0].imageURL
-                    : images && (
-                        <LightBox
-                          images={images}
-                          {...lightBox}
-                          closePortal={lightBox.close}
-                        />
-                      )}
+                  {lightBox.isLightBoxOpen && (
+                    <LightBox
+                      images={
+                        items.image[0].imageURL
+                          ? items.image[0].imageURL
+                          : images
+                      }
+                      {...lightBox}
+                      closePortal={lightBox.close}
+                    />
+                  )}
                   <img
                     onClick={lightBox.open}
                     src={

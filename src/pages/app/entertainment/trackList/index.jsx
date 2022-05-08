@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useQuery } from "react-query";
+import Title from "../../../../components/Title";
 import Track from "../Track";
 
 export default function TrackList() {
@@ -18,11 +19,13 @@ export default function TrackList() {
   );
   return (
     <div>
-      <h1 className="text-5xl text-center mt-5 ">Home</h1>
-      <div className="grid grid-cols-4 gap-4">
-        {tracks.map((p) => (
-          <Track track={p} />
-        ))}
+      <div className="mt-4 px-2 w-full max-w-7xl lg:px-4">
+        <Title title="Tracks" subtitle="Listen to your favorite track." />
+        <div className="grid grid-cols-4 gap-4">
+          {tracks.map((p) => (
+            <Track track={p} />
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -47,17 +47,17 @@ export default function DetailTracks() {
   }
   return (
     <div className="flex h-full">
-      <div className="w-1/2">
-        <div className="w-3/5 mx-12">
-        {showDeleteModal && (
-          <ConfirmModal
-            title={`Are you sure to delete lesson "${selectedItem.name}" ?`}
-            confirmButton="Delete"
-            cancelButton="Cancel"
-            onClickCancel={() => setShowDeleteModal(false)}
-            onClickConfirm={() => deleteTrack(selectedItem)}
-          />
-        )}
+      <div className="w-1/3">
+        <div className="mx-12">
+          {showDeleteModal && (
+            <ConfirmModal
+              title={`Are you sure to delete lesson "${selectedItem.name}" ?`}
+              confirmButton="Delete"
+              cancelButton="Cancel"
+              onClickCancel={() => setShowDeleteModal(false)}
+              onClickConfirm={() => deleteTrack(selectedItem)}
+            />
+          )}
           {lightBox.isLightBoxOpen && images && (
             <LightBox
               images={images}
@@ -74,26 +74,23 @@ export default function DetailTracks() {
           <h3 className="text-2xl mb-3 lg:text-3xl font-bold sm:text-4xl">
             {tracks?.name}
           </h3>
-          <audio controls src={`http://localhost:3000/${tracks?.song}`}>
-            Your browser does not support the
-            <code>audio</code> element.
-          </audio>
-          <button
-            className="bg-gray-100 text-gray-700  group flex rounded-md items-center w-full px-2 py-2 text-sm"
-            onClick={() => {
-              setShowDeleteModal(true);
-              setSelectedItem(tracks);
-            }}
-          >
-            <TrashIcon
-              className={`w-5 h-5 mr-2 text-red-500`}
-              aria-hidden="true"
-            />
-            Delete
-          </button>
+          <div className="flex w-full">
+            <audio controls src={`http://localhost:3000/${tracks?.song}`} />
+            <button
+              className="rounded-md items-center text-sm"
+              onClick={() => {
+                setShowDeleteModal(true);
+                setSelectedItem(tracks);
+              }}
+            >
+              <TrashIcon
+                className={`w-5 h-5 mr-2 text-red-500`}
+                aria-hidden="true"
+              />
+            </button>
+          </div>
         </div>
       </div>
-      <div className="w-1/2 bg-red-400"></div>
     </div>
   );
 }

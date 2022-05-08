@@ -10,9 +10,9 @@ import TextArea from "../../../components/form/textArea";
 import { useLoading } from "../../../hooks/useLoading";
 import { useUser } from "../../../hooks/useUser";
 
-function NewItem({ isModalVisible, setModalVisible }) {
+function NewItem({ isModalVisible, setModalVisible,refetch ,setRefetch  }) {
   //helpers
-  const { user1 } = useUser();
+  const { user } = useUser();
   const { isLoading, startLoading, stopLoading } = useLoading(false);
   // const [name, setName] = useState('');
   // const [type, setType] = useState('');
@@ -34,8 +34,9 @@ function NewItem({ isModalVisible, setModalVisible }) {
   const onSubmit = async (data) => {
     startLoading();
     const { name, description, price, type } = data;
-    const user = user1._id;
+    
     try {
+      console.log("I xgqf")
       await axios
         .post("http://localhost:3000/spacetune/api/shop/create", {
           name,
@@ -43,11 +44,12 @@ function NewItem({ isModalVisible, setModalVisible }) {
           price,
           type,
           
-          user,
+          user : user._id,
         })
         .then((res) => {
           console.log(res, "res");
           if (!res.data.success) {
+            setRefetch(refetch+1);
             stopLoading();
             return;
           }

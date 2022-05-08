@@ -1,8 +1,7 @@
 import { React, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { Col, Row, Button, Form } from "react-bootstrap";
 import axios from "axios";
-import Modal from "antd/lib/modal/Modal";
+import { Modal } from "antd";
 
 function Answer({ idPreview, showModal, setShowModal }) {
   //initialise Collect answer
@@ -102,15 +101,19 @@ function Answer({ idPreview, showModal, setShowModal }) {
 
   return (
     <Modal
-      title="Add new training"
+      title={`Answer ${SurveyJsonObjects.quizName}`}
       visible={showModal}
-      width={800}
+      width={500}
+      height={"h-full"}
+      footer={null}
       onCancel={() => setShowModal(false)}
       centered
     >
-      <div key={SurveyJsonObjects._id} className="container mt-3">
-        <h3> {SurveyJsonObjects.quizName}</h3>
-        <p> {SurveyJsonObjects.quizDescription} </p>
+      <div key={SurveyJsonObjects._id} className="container">
+        <h3 className="text-base mb-5">
+          <span className="font-medium text-blue-600">Description: </span>
+          {SurveyJsonObjects.quizDescription}
+        </h3>
         <Form onSubmit={handleSubmit}>
           {SurveyJsonObjects.quizQuestions.map((question, i) => {
             return (
@@ -216,7 +219,10 @@ function Answer({ idPreview, showModal, setShowModal }) {
               </div>
             );
           })}
-          <Button type="submit" className="mt-2 mb-5">
+          <Button
+            type="submit"
+            className="flex justify-end mt-5 mb-2 bg-slate-100 text-blue-600"
+          >
             Submit your answers
           </Button>
         </Form>

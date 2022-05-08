@@ -18,7 +18,7 @@ export default function Entertainment() {
   const navigation = [
     {
       name: "Home",
-      to: "RandomTracks",
+      to: "",
       current: true,
     },
     {
@@ -60,7 +60,7 @@ export default function Entertainment() {
         <div className={`${isOpen ? "w-11/12" : "w-full"} flex flex-col p-1 mx-6`}>
           <Suspense fallback={<FallBackSuspense />}>
             <Routes>
-              <Route path="/RandomTracks" element={<TracksList />}></Route>
+              <Route path="/" element={<TracksList />}></Route>
               <Route path="/uploadtracks" element={<UploadTracks />}></Route>
               <Route path="/myTracks" element={<MyTracks />}></Route>
               <Route path="/likedTracks" element={<LikedTracks />}></Route>
